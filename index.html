@@ -1,0 +1,3195 @@
+<!DOCTYPE html>
+<html lang="el" data-time-theme="night">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ο χρόνος είναι χρήμα</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0f1729;--navy2:#1a2540;--navy3:#243050;
+  --teal:#1D9E75;--teal2:#0F6E56;--teal3:#9FE1CB;
+  --blue:#185FA5;--blue2:#378ADD;--blue3:#B5D4F4;
+  --amber:#BA7517;--amber2:#EF9F27;--amber3:#FAC775;
+  --coral:#993C1D;--coral2:#D85A30;--coral3:#F0997B;
+  --white:#F8F7F2;--gray:#D3D1C7;--muted:#888780;
+  --border:rgba(255,255,255,0.08);
+}
+html,body{font-family:"DM Sans",sans-serif;background:var(--navy);color:var(--white);min-height:100vh;font-size:16px;line-height:1.65}
+.app{max-width:720px;margin:0 auto}
+.top-nav{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:14px 24px;border-bottom:1px solid var(--border);background:rgba(15,23,41,0.97);backdrop-filter:blur(8px);position:sticky;top:0;z-index:100;gap:12px 16px}
+.top-nav .logo{justify-self:start}
+.top-nav .nav-tabs{justify-self:center;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:4px}
+.top-nav .theme-ctl{justify-self:end}
+@media (max-width:600px){
+  .top-nav{grid-template-columns:1fr auto;grid-template-rows:auto auto}
+  .top-nav .logo{grid-column:1;grid-row:1;justify-self:start}
+  .top-nav .theme-ctl{grid-column:2;grid-row:1;justify-self:end;align-self:center}
+  .top-nav .nav-tabs{grid-column:1/-1;grid-row:2;justify-self:center}
+}
+.logo{font-family:"DM Serif Display",serif;font-size:20px;color:var(--white)}
+.logo span{color:var(--teal)}
+.nav-tabs{display:flex;gap:4px}
+.nav-tab{padding:6px 13px;border-radius:20px;border:none;background:transparent;color:var(--muted);font-family:"DM Sans",sans-serif;font-size:13px;cursor:pointer;transition:all .2s}
+.nav-tab.active{background:rgba(29,158,117,0.18);color:var(--teal3)}
+.nav-tab:hover:not(.active){color:var(--white);background:rgba(255,255,255,0.05)}
+.screen{display:none;padding:24px 24px 48px;animation:fadeUp .3s ease}
+.screen.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.card{background:var(--navy2);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:12px}
+.badge{display:inline-block;font-size:10px;font-weight:500;padding:3px 10px;border-radius:20px;letter-spacing:0.4px;text-transform:uppercase;margin-bottom:8px}
+.badge.teal{background:rgba(29,158,117,0.2);color:var(--teal3)}
+.badge.blue{background:rgba(24,95,165,0.2);color:var(--blue3)}
+.badge.amber{background:rgba(186,117,23,0.2);color:var(--amber3)}
+.badge.coral{background:rgba(153,60,29,0.2);color:var(--coral3)}
+.slbl{font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:12px}
+.fbox{background:rgba(24,95,165,0.12);border:1px solid rgba(24,95,165,0.3);border-radius:12px;padding:16px 20px;text-align:center;margin:14px 0}
+.fbox-main{font-family:"DM Serif Display",serif;font-size:22px;font-weight:500;color:var(--blue3);letter-spacing:1px;margin-bottom:5px}
+.fbox-sub{font-size:11px;color:var(--muted);line-height:1.6}
+.tbox{background:rgba(186,117,23,0.1);border:1px solid rgba(186,117,23,0.25);border-radius:10px;padding:12px 16px;margin:12px 0}
+.tbox p{font-size:12px;color:var(--amber3);line-height:1.6}
+.ibox{background:rgba(29,158,117,0.08);border:1px solid rgba(29,158,117,0.2);border-radius:10px;padding:12px 16px;margin:12px 0}
+.ibox p{font-size:12px;color:var(--teal3);line-height:1.6}
+.btn-p{background:var(--teal);color:#fff;border:none;padding:10px 22px;border-radius:9px;font-family:"DM Sans",sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all .2s}
+.btn-p:hover{background:var(--teal2)}
+.btn-s{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.1);padding:10px 18px;border-radius:9px;font-family:"DM Sans",sans-serif;font-size:14px;cursor:pointer;transition:all .2s}
+.btn-s:hover{color:var(--white);border-color:rgba(255,255,255,0.25)}
+/* HOME */
+.hero{background:var(--navy2);border:1px solid var(--border);border-radius:18px;padding:32px;margin-bottom:20px;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;top:-60px;right:-60px;width:280px;height:280px;background:radial-gradient(circle,rgba(29,158,117,0.10),transparent 70%);pointer-events:none}
+.hero-title{font-family:"DM Serif Display",serif;font-size:32px;line-height:1.15;margin-bottom:10px}
+.hero-title em{color:var(--teal3);font-style:italic}
+.hero-sub{font-size:14px;color:var(--muted);line-height:1.7;max-width:440px;margin-bottom:20px}
+.hero-axiom{padding:14px 18px;background:rgba(255,255,255,0.03);border-left:3px solid var(--teal);border-radius:0 10px 10px 0;font-family:"DM Serif Display",serif;font-size:15px;color:var(--gray);font-style:italic}
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
+.stat-card{background:var(--navy2);border:1px solid var(--border);border-radius:14px;padding:16px;text-align:center}
+.stat-num{font-family:"DM Serif Display",serif;font-size:28px;margin-bottom:3px}
+.stat-lbl{font-size:11px;color:var(--muted)}
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
+.pcard{background:var(--navy2);border:1px solid var(--border);border-radius:14px;padding:18px;cursor:pointer;transition:all .25s}
+.pcard:hover{border-color:rgba(255,255,255,0.2);transform:translateY(-2px)}
+.picon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:"DM Serif Display",serif;font-size:17px;margin-bottom:12px}
+.picon.teal{background:rgba(29,158,117,0.2);color:var(--teal3)}
+.picon.blue{background:rgba(24,95,165,0.2);color:var(--blue3)}
+.picon.amber{background:rgba(186,117,23,0.2);color:var(--amber3)}
+.picon.coral{background:rgba(153,60,29,0.2);color:var(--coral3)}
+.pname{font-size:14px;font-weight:500;margin-bottom:4px}
+.pdesc{font-size:11px;color:var(--muted);line-height:1.5}
+/* CHAPTERS */
+.parts-list{display:flex;flex-direction:column;gap:12px}
+.psec{background:var(--navy2);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.phdr{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;cursor:pointer;transition:background .2s}
+.phdr:hover{background:rgba(255,255,255,0.03)}
+.phdr-left{display:flex;align-items:center;gap:12px}
+.pnum{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:"DM Serif Display",serif;font-size:15px;flex-shrink:0}
+.pnum.teal{background:rgba(29,158,117,0.2);color:var(--teal3)}
+.pnum.blue{background:rgba(24,95,165,0.2);color:var(--blue3)}
+.pnum.amber{background:rgba(186,117,23,0.2);color:var(--amber3)}
+.pnum.coral{background:rgba(153,60,29,0.2);color:var(--coral3)}
+.phdr-title{font-size:14px;font-weight:500}
+.phdr-sub{font-size:11px;color:var(--muted);margin-top:2px}
+.parr{color:var(--muted);font-size:16px;transition:transform .25s}
+.parr.open{transform:rotate(90deg)}
+.cgrid{display:none;padding:0 12px 12px;grid-template-columns:1fr 1fr;gap:8px}
+.cgrid.open{display:grid}
+.citem{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:10px;padding:12px 14px;cursor:pointer;transition:all .2s;display:flex;align-items:flex-start;gap:10px}
+.citem:hover{background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.2)}
+.citem.done{border-color:rgba(29,158,117,0.3);background:rgba(29,158,117,0.05)}
+.citem.curr{border-color:rgba(55,138,221,0.4);background:rgba(24,95,165,0.08)}
+.cnum{width:24px;height:24px;border-radius:6px;background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;color:var(--muted);flex-shrink:0;margin-top:1px}
+.cnum.done{background:rgba(29,158,117,0.2);color:var(--teal3)}
+.cnum.curr{background:rgba(24,95,165,0.2);color:var(--blue3)}
+.ctitle{font-size:12px;font-weight:500;line-height:1.4;margin-bottom:2px}
+#praCatMount .citem.yli-agent-unit .ctitle,
+#qmPraCatMount .citem.yli-agent-unit .ctitle{font-size:16px;font-weight:600;line-height:1.35}
+.csub{font-size:10px;color:var(--muted)}
+/* CHAPTER VIEW */
+.chap-hdr{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:22px}
+.chap-title{font-family:"DM Serif Display",serif;font-size:26px;line-height:1.2;margin-top:8px}
+.ring-wrap{position:relative;width:56px;height:56px;flex-shrink:0}
+.ring-wrap svg{transform:rotate(-90deg)}
+.ring-bg{fill:none;stroke:rgba(255,255,255,0.08);stroke-width:4}
+.ring-fill{fill:none;stroke:var(--teal);stroke-width:4;stroke-linecap:round;stroke-dasharray:141;stroke-dashoffset:141;transition:stroke-dashoffset 1s ease}
+.ring-lbl{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--teal3)}
+.sflow{display:flex;align-items:center;gap:0;margin-bottom:20px;overflow-x:auto;padding-bottom:4px}
+.snode{background:var(--navy2);border:1px solid var(--border);border-radius:10px;padding:10px 14px;min-width:90px;text-align:center;flex-shrink:0;cursor:pointer;transition:all .2s}
+.snode.active{background:rgba(29,158,117,0.18);border-color:var(--teal)}
+.snode:hover:not(.active){border-color:rgba(255,255,255,0.2)}
+.snum{font-size:9px;color:var(--muted);margin-bottom:3px}
+.slbl2{font-size:11px;font-weight:500}
+.sarr{color:rgba(255,255,255,0.2);font-size:16px;padding:0 4px;flex-shrink:0}
+.cpanel{background:var(--navy2);border:1px solid var(--border);border-radius:16px;padding:22px;margin-bottom:18px;min-height:160px;animation:fadeUp .3s ease}
+.cpanel h3{font-size:12px;font-weight:500;color:var(--teal3);margin-bottom:12px;text-transform:uppercase;letter-spacing:0.4px}
+.cpanel p{font-size:15px;color:var(--gray);line-height:1.75;margin-bottom:8px}
+.chap-nav{display:flex;justify-content:space-between;align-items:center;padding-top:16px;border-top:1px solid var(--border)}
+.chap-nav-info{font-size:11px;color:var(--muted)}
+/* BARS */
+.bwrap{display:flex;align-items:flex-end;gap:6px;height:110px;padding:0 4px}
+.bcol{display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;height:100%;justify-content:flex-end}
+.bc,.bs{width:100%;border-radius:4px 4px 0 0;transition:height 1.3s cubic-bezier(.34,1.36,.64,1)}
+.bc{background:linear-gradient(180deg,rgba(29,158,117,0.95),rgba(15,110,86,0.75));border:1px solid rgba(29,158,117,0.4)}
+.bs{background:rgba(55,138,221,0.55);border:1px solid rgba(55,138,221,0.35)}
+.byr{font-size:9px;color:var(--muted);text-align:center;margin-top:5px}
+.legend{display:flex;gap:20px;justify-content:center;margin-top:8px}
+.leg{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted)}
+.ldot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+/* CALC */
+.ctabs{display:flex;gap:6px;margin-bottom:20px;flex-wrap:wrap}
+.ctab{padding:7px 16px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:var(--muted);font-family:"DM Sans",sans-serif;font-size:13px;cursor:pointer;transition:all .2s}
+.ctab.active{background:rgba(186,117,23,0.18);border-color:var(--amber);color:var(--amber3)}
+.ctab:hover:not(.active){color:var(--white)}
+.cgrid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.panel{background:var(--navy2);border:1px solid var(--border);border-radius:14px;padding:18px}
+.ptitle{font-size:10px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:16px}
+.slg{margin-bottom:18px}
+.sll{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px}
+.sln{font-size:15px;color:var(--gray)}
+.slv{font-size:15px;font-weight:500}
+.slv .u{font-size:11px;color:var(--muted);font-weight:400}
+input[type=range]{width:100%;height:3px;border-radius:2px;appearance:none;background:rgba(255,255,255,0.1);outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{appearance:none;width:17px;height:17px;border-radius:50%;background:var(--amber2);border:2px solid var(--navy);cursor:pointer}
+input[type=range].tr::-webkit-slider-thumb{background:var(--teal)}
+input[type=range].br::-webkit-slider-thumb{background:var(--blue2)}
+.resmain{text-align:center;padding:18px 0 14px;border-bottom:1px solid var(--border);margin-bottom:14px}
+.reslbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px}
+.resnum{font-family:"DM Serif Display",serif;font-size:36px;color:var(--teal3);line-height:1}
+.reshint{font-size:11px;color:var(--muted);margin-top:4px}
+.bkdn{display:flex;flex-direction:column;gap:9px}
+.br2{display:flex;justify-content:space-between;font-size:15px}
+.br2 span:first-child{color:var(--muted)}
+.br2 span:last-child{font-weight:500}
+.br2.hl span:last-child{color:var(--teal3)}
+.br2.wn span:last-child{color:var(--coral3)}
+.brdiv{border:none;border-top:1px solid var(--border);margin:6px 0}
+.cpan2{background:var(--navy2);border:1px solid var(--border);border-radius:14px;padding:18px;margin-top:14px;grid-column:1/-1}
+.cpan2 h3{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:14px}
+canvas{width:100%;display:block}
+.r72c{background:var(--navy2);border:1px solid var(--border);border-radius:14px;padding:28px;text-align:center}
+.r72big{font-family:"DM Serif Display",serif;font-size:72px;line-height:1;color:var(--teal3);margin:20px 0 6px;transition:all .3s}
+/* QUIZ */
+.quiz-screen-title{font-family:"DM Serif Display",serif;font-size:24px;margin-bottom:20px;color:var(--white);letter-spacing:0.02em}
+.quiz-mode-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:24px;align-items:stretch}
+.quiz-mode-ul-group{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  min-width:0;
+  padding:12px;
+  border:1px solid rgba(29,158,117,0.42);
+  border-radius:16px;
+  background:transparent;
+  box-shadow:none;
+  transition:border-color .25s,box-shadow .25s;
+}
+.quiz-mode-ul-group:has(#quizModeCardUl.quiz-mode-selected-ul){
+  border-color:rgba(29,158,117,0.75);
+}
+.quiz-mode-ul-group:has(#quizModeCardUl.quiz-mode-card:not(.quiz-mode-selected-ul):hover){
+  border-color:var(--teal);
+}
+/* Κάρτα Unit Linked · ίδιο perimeter με το εξωτερικό group (όχι επιλεγμένη) */
+#quizModeCardUl.quiz-mode-card:not(.quiz-mode-selected-ul){
+  border-color:rgba(29,158,117,0.42);
+}
+#quizModeCardUl.quiz-mode-card:not(.quiz-mode-selected-ul):hover{
+  border-color:var(--teal);
+}
+.quiz-mode-card{background:var(--navy2);border:1px solid var(--border);border-radius:14px;padding:20px;cursor:pointer;transition:border-color .25s,background .25s,box-shadow .25s;min-width:0;
+  box-shadow:
+    0 8px 28px rgba(0,0,0,0.32),
+    0 2px 10px rgba(0,0,0,0.2),
+    inset 0 1px 0 rgba(255,255,255,0.06)}
+.quiz-mode-card:hover{border-color:var(--teal);background:rgba(29,158,117,0.08)}
+.quiz-mode-card h3{font-size:14px;margin-bottom:6px;color:var(--white)}
+.quiz-mode-card p{font-size:11px;color:var(--muted);line-height:1.5}
+.quiz-mode-card.quiz-mode-selected-ul{border-color:rgba(29,158,117,0.75);
+  box-shadow:
+    0 8px 28px rgba(0,0,0,0.32),
+    0 2px 10px rgba(0,0,0,0.2),
+    0 0 0 2px rgba(29,158,117,0.55),
+    inset 0 1px 0 rgba(255,255,255,0.08)}
+.quiz-mode-card.praktoras{border-color:rgba(186,117,23,0.4)}
+.quiz-mode-card.praktoras:hover{border-color:var(--amber2);background:rgba(186,117,23,0.1)}
+.quiz-mode-card.quiz-mode-selected-praktoras{border-color:rgba(239,159,39,0.9);
+  box-shadow:
+    0 8px 28px rgba(0,0,0,0.32),
+    0 2px 10px rgba(0,0,0,0.2),
+    0 0 0 2px rgba(186,117,23,0.5),
+    inset 0 1px 0 rgba(255,255,255,0.08)}
+.quiz-mode-card.praktoras.quiz-mode-selected-praktoras:hover{border-color:rgba(250,180,60,0.95);background:rgba(186,117,23,0.12)}
+.quiz-mode-card.quiz-mode-selected-ul:hover{border-color:rgba(45,200,150,0.9);background:rgba(29,158,117,0.1)}
+html[data-time-theme="day"] #quizModeCardUl.quiz-mode-card:not(.quiz-mode-selected-ul){
+  border-color:rgba(29,158,117,0.38);
+}
+html[data-time-theme="day"] #quizModeCardUl.quiz-mode-card:not(.quiz-mode-selected-ul):hover{
+  border-color:var(--teal);
+}
+html[data-time-theme="day"] .quiz-mode-ul-group{
+  border-color:rgba(29,158,117,0.38);
+  box-shadow:none;
+}
+html[data-time-theme="day"] .quiz-mode-ul-group:has(#quizModeCardUl.quiz-mode-selected-ul){
+  border-color:rgba(29,158,117,0.75);
+}
+html[data-time-theme="day"] .quiz-mode-ul-group:has(#quizModeCardUl.quiz-mode-card:not(.quiz-mode-selected-ul):hover){
+  border-color:var(--teal);
+}
+/* Συνοχή χρώματος: κάρτα λειτουργίας → πλαίσιο επιλογών από κάτω */
+#qCatOpts.quiz-options-accent-ul > .quiz-filters{
+  border-color:rgba(29,158,117,0.72);
+  background:rgba(29,158,117,0.09);
+  box-shadow:
+    0 8px 28px rgba(0,0,0,0.32),
+    0 2px 10px rgba(0,0,0,0.2),
+    0 0 0 2px rgba(29,158,117,0.42),
+    inset 0 1px 0 rgba(255,255,255,0.08)}
+#qCatOpts.quiz-options-accent-ul > div:nth-child(2){
+  margin-top:2px;
+  padding:14px 16px;
+  border-radius:14px;
+  border:1px solid rgba(29,158,117,0.45);
+  background:rgba(29,158,117,0.07);
+  box-shadow:
+    0 4px 18px rgba(0,0,0,0.22),
+    0 0 0 1px rgba(29,158,117,0.2),
+    inset 0 1px 0 rgba(255,255,255,0.06)}
+#qPraktorasOpts.quiz-options-accent-praktoras #qmPraBrowse{
+  padding:14px 16px 16px;
+  border-radius:14px;
+  border:1px solid rgba(186,117,23,0.55);
+  background:rgba(186,117,23,0.1);
+  box-shadow:
+    0 8px 28px rgba(0,0,0,0.32),
+    0 2px 10px rgba(0,0,0,0.2),
+    0 0 0 2px rgba(186,117,23,0.35),
+    inset 0 1px 0 rgba(255,255,255,0.08)}
+#qPraktorasOpts.quiz-options-accent-praktoras #qmPraktorasFooter{
+  margin-top:12px;
+  padding:14px 16px;
+  border-radius:14px;
+  border:1px solid rgba(186,117,23,0.5);
+  background:rgba(186,117,23,0.08);
+  box-shadow:
+    0 4px 18px rgba(0,0,0,0.22),
+    0 0 0 1px rgba(186,117,23,0.2),
+    inset 0 1px 0 rgba(255,255,255,0.06)}
+.quiz-filters{background:var(--navy2);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:16px}
+.quiz-filters label{display:block;font-size:11px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px}
+.quiz-filters select{width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--border);background:var(--navy3);color:var(--white);font-family:"DM Sans",sans-serif;font-size:14px;margin-bottom:14px;cursor:pointer}
+.quiz-filters select:last-of-type{margin-bottom:0}
+.quiz-chapter-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin-bottom:14px}
+.quiz-chapter-wrap{position:relative;flex:1 1 200px;min-width:0}
+.quiz-cat-sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;opacity:0;pointer-events:none}
+.quiz-chapter-trigger{width:100%;text-align:left;padding:10px 12px;border-radius:8px;border:1px solid var(--border);background:var(--navy3);color:var(--white);font-family:"DM Sans",sans-serif;font-size:14px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.quiz-chapter-trigger::after{content:"▾";opacity:.55;font-size:11px;flex-shrink:0}
+.quiz-chapter-menu{position:absolute;left:0;right:0;top:calc(100% + 5px);z-index:80;max-height:min(300px,55vh);overflow-y:auto;background:var(--navy2);border:1px solid var(--border);border-radius:10px;box-shadow:0 16px 40px rgba(0,0,0,0.35);padding:6px 0}
+.quiz-chapter-menu-footer{margin:0;padding:10px 10px 8px 12px;border-top:1px solid var(--border);background:var(--navy2);font-size:12px;line-height:1.35;color:var(--muted);position:sticky;bottom:0;z-index:2;text-align:right}
+.quiz-chapter-item{display:block;width:100%;text-align:left;padding:10px 14px;border:none;background:transparent;color:var(--gray);font-family:"DM Sans",sans-serif;font-size:14px;cursor:pointer;line-height:1.35}
+.quiz-chapter-item:hover,.quiz-chapter-item:focus{background:rgba(255,255,255,0.08);color:var(--white);outline:none}
+.quiz-chapter-item[aria-selected="true"]{background:rgba(29,158,117,0.14);color:var(--teal3)}
+.quiz-chapter-menu-row{display:flex;align-items:center;gap:10px;width:100%;padding:2px 4px 2px 10px;box-sizing:border-box}
+.quiz-chapter-menu-row .quiz-chapter-item{flex:1;min-width:0;text-align:left}
+.quiz-chapter-menu-row .quiz-chapter-done-cb{flex:0 0 auto;width:18px;height:18px;margin:0 6px 0 0;cursor:pointer;accent-color:var(--teal3)}
+.quiz-chapter-menu-row .quiz-chapter-done-spacer{flex:0 0 auto;width:18px;height:18px;margin:0 6px 0 0;visibility:hidden;pointer-events:none}
+#qmPraUnitMenu .quiz-chapter-menu-row .quiz-chapter-done-cb,
+#praUnitMenu .quiz-chapter-menu-row .quiz-chapter-done-cb{accent-color:var(--amber2)}
+.quiz-chapter-count{flex:0 0 auto;font-size:14px;font-weight:500;color:var(--teal3);white-space:nowrap;min-height:1.4em}
+.quiz-loading{text-align:center;padding:40px 20px;color:var(--muted)}
+.quiz-load-err{background:rgba(153,60,29,0.15);border:1px solid rgba(153,60,29,0.3);border-radius:12px;padding:16px;margin-bottom:16px;color:var(--coral3);font-size:14px}
+.quiz-load-err a{color:var(--teal3);text-decoration:underline}
+.qprow{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.qptimer{font-size:12px;color:var(--amber3);font-weight:500}
+.qpbar{flex:1;height:3px;background:rgba(255,255,255,0.08);border-radius:2px;overflow:hidden}
+.qpfill{height:100%;background:var(--teal);border-radius:2px;transition:width .4s ease}
+.qplbl{font-size:11px;color:var(--muted);white-space:nowrap}
+.qcard{background:var(--navy2);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:14px;position:relative;overflow:hidden;animation:fadeUp .25s ease}
+.qcard::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--teal),var(--blue2))}
+.qmeta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+.qmeta.qmeta-row-split{justify-content:space-between;align-items:center;gap:8px 12px}
+.qmeta-main{display:flex;gap:8px;flex-wrap:wrap;align-items:center;flex:1;min-width:0}
+.qmetatag{font-size:9px;padding:2px 8px;border-radius:10px;background:rgba(255,255,255,0.06);color:var(--muted)}
+.qjsonid{font-size:10px;font-weight:600;font-variant-numeric:tabular-nums;padding:3px 9px;border-radius:8px;border:1px solid rgba(186,117,23,0.35);background:rgba(186,117,23,0.12);color:var(--amber3);line-height:1.2;flex-shrink:0}
+.qtag{font-size:10px;color:var(--teal3);font-weight:500;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px}
+.qtag-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 14px;margin-bottom:12px}
+.qtag-row .qtag{margin-bottom:0;flex:1 1 auto;min-width:0}
+/* Κουμπί θεωρίας · «θαμπό γυαλί» χρυσό πάνω στην κάρτα ερώτησης */
+.btn-s.qtag-theory-btn{
+  flex-shrink:0;
+  position:relative;
+  overflow:hidden;
+  text-transform:none;
+  letter-spacing:0.02em;
+  font-size:13px;
+  line-height:1.25;
+  font-weight:600;
+  padding:10px 18px;
+  border-radius:12px;
+  color:rgba(255,248,235,0.96);
+  border:1px solid rgba(250,199,117,0.38);
+  background:linear-gradient(
+    145deg,
+    rgba(186,117,23,0.42) 0%,
+    rgba(239,159,39,0.18) 42%,
+    rgba(255,255,255,0.06) 100%
+  );
+  -webkit-backdrop-filter:saturate(180%) blur(14px);
+  backdrop-filter:saturate(180%) blur(14px);
+  box-shadow:
+    0 4px 18px rgba(0,0,0,0.18),
+    inset 0 1px 1px rgba(255,236,200,0.35),
+    inset 0 -1px 1px rgba(90,55,12,0.2);
+  transition:transform .15s ease,box-shadow .22s ease,border-color .2s ease,background .22s ease,color .2s ease;
+}
+.btn-s.qtag-theory-btn:hover{
+  color:#fffdf8;
+  border-color:rgba(250,199,117,0.58);
+  background:linear-gradient(
+    145deg,
+    rgba(186,117,23,0.55) 0%,
+    rgba(239,159,39,0.28) 45%,
+    rgba(255,255,255,0.12) 100%
+  );
+  box-shadow:
+    0 6px 26px rgba(239,159,39,0.32),
+    0 2px 10px rgba(0,0,0,0.22),
+    inset 0 1px 1px rgba(255,245,215,0.45),
+    inset 0 -1px 1px rgba(90,55,12,0.18);
+  transform:translateY(-1px);
+}
+.btn-s.qtag-theory-btn:active{
+  transform:translateY(0);
+  border-color:rgba(250,199,117,0.42);
+  box-shadow:
+    0 2px 12px rgba(0,0,0,0.22),
+    inset 0 2px 8px rgba(60,38,10,0.2);
+}
+.btn-s.qtag-theory-btn:focus-visible{
+  outline:2px solid var(--amber2);
+  outline-offset:3px;
+}
+html[data-time-theme="day"] .btn-s.qtag-theory-btn{
+  color:rgba(72,46,8,0.94);
+  border-color:rgba(186,117,23,0.42);
+  background:linear-gradient(
+    145deg,
+    rgba(239,159,39,0.28) 0%,
+    rgba(255,252,245,0.55) 52%,
+    rgba(250,235,200,0.35) 100%
+  );
+  box-shadow:
+    0 3px 16px rgba(186,117,23,0.2),
+    0 1px 2px rgba(90,55,12,0.08),
+    inset 0 1px 1px rgba(255,255,255,0.88),
+    inset 0 -1px 1px rgba(186,117,23,0.12);
+}
+html[data-time-theme="day"] .btn-s.qtag-theory-btn:hover{
+  color:#3d2606;
+  border-color:rgba(186,117,23,0.58);
+  background:linear-gradient(
+    145deg,
+    rgba(239,159,39,0.38) 0%,
+    rgba(255,255,255,0.72) 48%,
+    rgba(252,238,205,0.5) 100%
+  );
+  box-shadow:
+    0 6px 24px rgba(239,159,39,0.28),
+    0 2px 6px rgba(90,55,12,0.06),
+    inset 0 1px 1px rgba(255,255,255,0.95),
+    inset 0 -1px 1px rgba(186,117,23,0.1);
+}
+.ul-theory-section{margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.ul-theory-section:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.ul-theory-h4{margin:0 0 10px;font-size:14px;font-weight:600;color:var(--teal3)}
+.ul-theory-section p{margin:.45em 0;font-size:14px;line-height:1.62}
+.ul-theory-section ul{margin:.4em 0;padding-left:1.2em}
+.ul-theory-section li{margin:.25em 0}
+html[data-time-theme="day"] .ul-theory-section{border-bottom-color:rgba(0,0,0,0.08)}
+.qtext{font-size:18px;line-height:1.55;margin-bottom:20px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.ans-only{padding:14px 16px;border-radius:10px;border:1px solid rgba(29,158,117,0.45);background:rgba(29,158,117,0.12);color:var(--teal3);font-size:15px;line-height:1.55;margin-bottom:12px}
+.ans-only.seen{opacity:1}
+.ans-continue-btn{margin-top:4px}
+.opt{padding:13px 16px;border-radius:10px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.03);color:var(--gray);font-family:"DM Sans",sans-serif;font-size:15px;cursor:pointer;transition:all .2s;text-align:left}
+.opt:hover:not(.dis){border-color:rgba(255,255,255,0.25);background:rgba(255,255,255,0.07);color:var(--white)}
+.opt.ok{background:rgba(29,158,117,0.22);border:2px solid var(--teal);color:var(--teal3);box-shadow:0 0 0 1px rgba(29,158,117,0.45),inset 0 0 0 1px rgba(29,158,117,0.12)}
+.opt.ko{background:rgba(153,60,29,0.22);border:2px solid var(--coral2);color:var(--coral3);box-shadow:0 0 0 1px rgba(216,90,48,0.4),inset 0 0 0 1px rgba(216,90,48,0.1)}
+.opt.dis{cursor:default;pointer-events:none}
+.quiz-fb-line{font-size:14px;line-height:1.65}
+.quiz-fb-exp{font-size:13px;line-height:1.65;margin-top:10px;opacity:.95}
+.quiz-fb-sol{margin-top:12px;border-top:1px solid rgba(255,255,255,0.08);padding-top:10px}
+.quiz-fb-sol>summary.quiz-fb-sum{cursor:pointer;font-size:13px;opacity:.92;user-select:none;list-style-position:outside}
+.fbbox.ko .quiz-fb-sol{border-top-color:rgba(255,255,255,0.06)}
+.quiz-fb-solbody{font-size:13px;line-height:1.6;opacity:.93}
+.quiz-fb-solbody .sol-hl-yellow,.quiz-fb-solbody .sol-hl-yellow strong{color:#fcd34d;font-weight:700}
+.quiz-fb-solbody .sol-hl-neon-red,.quiz-fb-solbody .sol-hl-neon-red strong{color:#ff4d6a;font-weight:700;text-shadow:0 0 10px rgba(255,77,106,0.5),0 0 2px rgba(255,61,94,0.85)}
+.ul-sol-hr{border:none;border-top:1px solid var(--border);margin:14px 0;opacity:.7}
+.ul-sol-modal-actions{margin-top:12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.ul-modal-overlay{display:none;position:fixed;inset:0;z-index:10050;background:rgba(6,14,26,0.72);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:18px}
+.ul-modal-panel{max-width:min(620px,calc(100vw - 32px));max-height:min(86vh,calc(100dvh - 36px));width:100%;display:flex;flex-direction:column;background:var(--navy2);border:1px solid var(--border);border-radius:16px;box-shadow:0 22px 64px rgba(0,0,0,0.45);overflow:hidden;animation:fadeUp .22s ease}
+.ul-modal-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:16px 18px;border-bottom:1px solid var(--border);flex-shrink:0}
+.ul-modal-title{margin:0;font-size:17px;font-weight:600;line-height:1.35;color:var(--white);flex:1;min-width:0}
+.ul-modal-close{flex-shrink:0;width:38px;height:38px;padding:0;border-radius:10px;border:1px solid var(--border);background:var(--navy3);color:var(--white);font-size:22px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.ul-modal-close:hover{border-color:rgba(29,158,117,0.45);background:rgba(29,158,117,0.12)}
+.ul-modal-meta{padding:10px 18px 0;font-size:11px;line-height:1.5;color:var(--muted);flex-shrink:0}
+.ul-modal-meta-line{display:block}
+.ul-modal-muted{opacity:.9}
+.ul-modal-body{padding:14px 18px 18px;overflow-y:auto;font-size:14px;line-height:1.62;color:var(--gray)}
+.ul-modal-body strong{color:var(--teal3);font-weight:600}
+.ul-modal-body .sol-hl-yellow,.ul-modal-body .sol-hl-yellow strong{color:#fcd34d;font-weight:700}
+.ul-modal-body .sol-hl-neon-red,.ul-modal-body .sol-hl-neon-red strong{color:#ff4d6a;font-weight:700;text-shadow:0 0 10px rgba(255,77,106,0.45),0 0 2px rgba(255,61,94,0.8)}
+.ul-modal-body code{font-family:ui-monospace,SFMono-Regular,monospace;font-size:12px;background:rgba(255,255,255,0.06);padding:2px 6px;border-radius:6px}
+.ul-guide-lead{font-size:13px;color:var(--muted);margin:0 0 12px}
+.ul-guide-ul{margin:8px 0 14px;padding-left:1.2em}
+.ul-guide-ul li{margin-bottom:8px}
+.ul-guide-pdfs{font-size:12px;color:var(--muted);margin-top:14px;padding-top:12px;border-top:1px solid var(--border)}
+html[data-time-theme="day"] .ul-modal-overlay{background:rgba(248,251,253,0.82)}
+html[data-time-theme="day"] .ul-modal-close{background:var(--navy3)}
+html[data-time-theme="day"] .ul-modal-body .sol-hl-yellow,html[data-time-theme="day"] .ul-modal-body .sol-hl-yellow strong{color:#ca8a04}
+html[data-time-theme="day"] .quiz-fb-solbody .sol-hl-yellow,html[data-time-theme="day"] .quiz-fb-solbody .sol-hl-yellow strong{color:#ca8a04}
+html[data-time-theme="day"] .ul-modal-body .sol-hl-neon-red,html[data-time-theme="day"] .ul-modal-body .sol-hl-neon-red strong,
+html[data-time-theme="day"] .quiz-fb-solbody .sol-hl-neon-red,html[data-time-theme="day"] .quiz-fb-solbody .sol-hl-neon-red strong{color:#e11d48;text-shadow:0 0 12px rgba(225,29,72,0.35)}
+.fbbox{background:rgba(29,158,117,0.1);border:1px solid rgba(29,158,117,0.25);border-radius:10px;padding:14px 16px;margin-top:14px;display:none;animation:fadeUp .25s ease}
+.fbbox p{font-size:14px;color:var(--teal3);line-height:1.65}
+.fbbox.ko{background:rgba(153,60,29,0.1);border-color:rgba(153,60,29,0.3)}
+.fbbox.ko p{color:var(--coral3)}
+.rscreen{text-align:center;padding:40px 20px;animation:fadeUp .3s ease}
+.rscore{font-family:"DM Serif Display",serif;font-size:56px;color:var(--teal3);margin-bottom:8px}
+.rmsg{font-size:15px;color:var(--muted);margin-bottom:28px;line-height:1.6}
+.rreview{font-size:12px;color:var(--muted);margin-top:16px}
+.qnav{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap;justify-content:space-between}
+/* APPENDICES */
+.app-tabs{display:flex;gap:6px;margin-bottom:20px;flex-wrap:wrap}
+.app-tab{padding:8px 14px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:var(--muted);font-size:12px;cursor:pointer;transition:all .2s}
+.app-tab.active{background:rgba(24,95,165,0.2);border-color:var(--blue);color:var(--blue3)}
+.app-tab:hover:not(.active){color:var(--white)}
+.app-panel{display:none;animation:fadeUp .3s ease}
+.app-panel.active{display:block}
+.calc-ctx{margin:0 0 16px;padding:11px 14px;border-radius:10px;background:rgba(255,255,255,0.035);border:1px solid rgba(255,255,255,0.07);font-size:12px;line-height:1.5}
+.calc-ctx-heads{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px}
+.calc-ctx-eq{font-family:ui-monospace,SFMono-Regular,monospace;font-size:11px;color:var(--blue3);opacity:.95}
+.calc-ctx-map{margin:8px 0 0;font-size:11px;color:var(--muted);line-height:1.45}
+.calc-ctx-live{margin-top:9px;padding-top:9px;border-top:1px solid rgba(255,255,255,0.07);font-family:ui-monospace,SFMono-Regular,monospace;font-size:11px;color:var(--teal3);min-height:1.2em;word-break:break-word}
+.calc-ref-drawer{margin-top:22px;border-top:1px solid var(--border);padding-top:14px}
+.calc-ref-drawer>summary{cursor:pointer;font-size:12px;color:var(--muted);list-style-position:outside;user-select:none;max-width:42em;line-height:1.45}
+.calc-ref-drawer[open]>summary{color:var(--white);margin-bottom:12px}
+#calcRefMount .app-tabs{margin-bottom:14px}
+html[data-time-theme="day"] .calc-ctx{background:rgba(0,0,0,0.03);border-color:rgba(0,0,0,0.08)}
+html[data-time-theme="day"] .calc-ctx-live{border-top-color:rgba(0,0,0,0.08)}
+.formula-row{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--border);gap:12px;flex-wrap:wrap}
+.formula-row:last-child{border-bottom:none}
+.formula-phrase{font-size:12px;color:var(--gray);flex:1;min-width:140px}
+.formula-eq{font-family:"DM Serif Display",serif;font-size:16px;color:var(--blue3);font-weight:500}
+.chart-table{width:100%;border-collapse:collapse;font-size:12px}
+.chart-table th,.chart-table td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--border)}
+.chart-table th{color:var(--muted);font-weight:500;text-transform:uppercase;font-size:10px;letter-spacing:0.5px}
+.chart-table td:last-child{color:var(--blue3);font-family:"DM Serif Display",serif}
+.ex-card{background:var(--navy2);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:12px}
+.ex-card summary{cursor:pointer;font-weight:500;color:var(--white);margin-bottom:8px}
+.ex-card .ex-data{font-size:12px;color:var(--muted);margin-bottom:10px}
+.ex-card .ex-sol{background:rgba(29,158,117,0.1);border:1px solid rgba(29,158,117,0.25);border-radius:8px;padding:12px;font-size:14px;color:var(--teal3);margin-top:10px}
+.gloss-search{width:100%;padding:12px 16px;border-radius:10px;border:1px solid var(--border);background:var(--navy3);color:var(--white);font-size:14px;margin-bottom:16px}
+.gloss-search::placeholder{color:var(--muted)}
+.gloss-item{background:var(--navy2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:10px;cursor:pointer;transition:all .2s}
+.gloss-item:hover{border-color:var(--teal)}
+.gloss-term{font-weight:500;color:var(--teal3);margin-bottom:4px}
+.gloss-def{font-size:12px;color:var(--gray);line-height:1.5}
+.gloss-ref{font-size:10px;color:var(--muted);margin-top:6px}
+/* Θέμα ημέρας: συμπαγής ράγα — 3D όψη (χωνευτό αυλάκι + σφαιρικό thumb) */
+.theme-sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.theme-ctl{
+  flex-shrink:0;width:60px;padding:4px;border:none;border-radius:16px;outline:none;-webkit-tap-highlight-color:transparent;
+  background:linear-gradient(165deg,rgba(255,255,255,0.14) 0%,rgba(255,255,255,0.04) 42%,rgba(0,0,0,0.22) 100%);
+  box-shadow:
+    0 4px 8px rgba(0,0,0,0.4),
+    0 1px 0 rgba(255,255,255,0.12) inset,
+    0 -2px 4px rgba(0,0,0,0.35) inset,
+    1px 0 0 rgba(255,255,255,0.06) inset,
+    -1px 0 0 rgba(0,0,0,0.2) inset;
+  transform:perspective(140px) rotateX(4deg);
+  transform-origin:50% 50%;
+  transition:transform .18s ease,box-shadow .18s ease;
+}
+.theme-ctl:hover{transform:perspective(140px) rotateX(2deg);box-shadow:0 5px 10px rgba(0,0,0,0.45),0 1px 0 rgba(255,255,255,0.14) inset,0 -2px 4px rgba(0,0,0,0.32) inset,1px 0 0 rgba(255,255,255,0.08) inset,-1px 0 0 rgba(0,0,0,0.18) inset}
+.theme-ctl:active{transform:perspective(140px) rotateX(5deg) scale(0.98)}
+.theme-ctl:focus-visible{box-shadow:0 0 0 2px rgba(29,158,117,0.55),0 4px 8px rgba(0,0,0,0.4);border-radius:16px}
+.theme-track{
+  position:relative;height:24px;width:100%;border-radius:12px;cursor:pointer;touch-action:none;
+  border:1px solid rgba(0,0,0,0.45);
+  background:
+    linear-gradient(180deg,rgba(255,255,255,0.16) 0%,transparent 38%),
+    linear-gradient(90deg,rgba(242,246,238,0.96) 0%,rgba(88,98,94,0.42) 47%,rgba(12,18,36,0.99) 100%);
+  box-shadow:
+    inset 0 4px 10px rgba(0,0,0,0.55),
+    inset 0 2px 3px rgba(0,0,0,0.35),
+    inset 0 1px 0 rgba(255,255,255,0.12),
+    0 1px 0 rgba(255,255,255,0.05);
+}
+.theme-thumb{
+  position:absolute;top:50%;width:20px;height:20px;margin-top:-10px;border-radius:50%;left:calc(50% - 10px);
+  display:flex;align-items:center;justify-content:center;
+  transition:left .14s ease,box-shadow .18s ease,transform .18s ease,background .2s ease,border-color .2s ease,color .2s ease;pointer-events:none;
+  border:1px solid rgba(255,255,255,0.28);
+  background:
+    radial-gradient(ellipse 95% 80% at 32% 24%,rgba(255,255,255,0.98) 0%,rgba(235,237,232,0.92) 28%,rgba(195,200,198,0.88) 55%,rgba(110,118,122,0.82) 92%);
+  box-shadow:
+    0 4px 6px rgba(0,0,0,0.5),
+    0 2px 3px rgba(0,0,0,0.35),
+    0 1px 0 rgba(255,255,255,0.55) inset,
+    inset 0 -4px 8px rgba(0,0,0,0.28),
+    inset 0 3px 6px rgba(255,255,255,0.45);
+  color:#c97810;
+}
+.theme-ico{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;transition:opacity .16s ease}
+.theme-ico svg{width:12px;height:12px;display:block}
+.theme-ico-moon{opacity:0}
+.theme-ico-sun{opacity:1}
+html[data-time-theme="day"] .theme-ico-moon{opacity:1}
+html[data-time-theme="day"] .theme-ico-sun{opacity:0}
+.theme-ctl:hover .theme-thumb{box-shadow:0 5px 8px rgba(0,0,0,0.55),0 2px 3px rgba(0,0,0,0.35),0 1px 0 rgba(255,255,255,0.6) inset,inset 0 -4px 8px rgba(0,0,0,0.3),inset 0 3px 7px rgba(255,255,255,0.5)}
+.theme-ctl[data-mode="day"] .theme-thumb{left:2px}
+.theme-ctl[data-mode="night"] .theme-thumb{left:calc(100% - 22px)}
+.theme-ctl[data-mode="auto"] .theme-thumb{left:calc(50% - 10px)}
+.theme-ctl.theme-dragging .theme-thumb{transition:none}
+@media (prefers-reduced-motion:reduce){
+  .theme-ctl,.theme-ctl:hover,.theme-ctl:active{transform:none;transition:none}
+  .theme-thumb{transition:left .14s ease}
+}
+html[data-time-theme="day"]{
+  color-scheme:light;
+  --navy:#d8dfd4;
+  --navy2:#f2f5ef;
+  --navy3:#e6ebe2;
+  --white:#152028;
+  --gray:#2a3440;
+  --muted:#5c6a72;
+  --border:rgba(20,45,35,0.12);
+  /* Σκούρα accent για ανάγνωση σε ανοιχτό φόντο (αντί για mint #9FE1CB κ.λπ.) */
+  --teal3:#0a5a45;
+  --blue3:#1a5490;
+  --amber3:#9a5a0c;
+  --coral3:#8b3a22;
+}
+html[data-time-theme="day"] .badge.teal,
+html[data-time-theme="day"] .badge.blue,
+html[data-time-theme="day"] .badge.amber,
+html[data-time-theme="day"] .badge.coral{font-weight:600}
+html[data-time-theme="day"] body{
+  background:linear-gradient(168deg,#eef3ea 0%,#e4ebe0 42%,#dbe3d5 100%);
+  color:var(--white);
+}
+html[data-time-theme="day"] .top-nav{
+  background:rgba(248,250,245,0.92);
+  border-bottom-color:var(--border);
+  backdrop-filter:blur(10px);
+}
+html[data-time-theme="day"] .nav-tab{color:var(--muted)}
+html[data-time-theme="day"] .nav-tab.active{background:rgba(29,158,117,0.14);color:var(--teal2)}
+html[data-time-theme="day"] .nav-tab:hover:not(.active){color:var(--white);background:rgba(0,0,0,0.04)}
+html[data-time-theme="day"] .logo{color:var(--white)}
+html[data-time-theme="day"] .card,
+html[data-time-theme="day"] .hero,
+html[data-time-theme="day"] .stat-card,
+html[data-time-theme="day"] .pcard,
+html[data-time-theme="day"] .psec,
+html[data-time-theme="day"] .cpanel,
+html[data-time-theme="day"] .snode,
+html[data-time-theme="day"] .panel,
+html[data-time-theme="day"] .cpan2,
+html[data-time-theme="day"] .r72c,
+html[data-time-theme="day"] .quiz-filters,
+html[data-time-theme="day"] .qcard,
+html[data-time-theme="day"] .yli-run-title,
+html[data-time-theme="day"] .ex-card,
+html[data-time-theme="day"] .gloss-item{
+  box-shadow:0 1px 3px rgba(30,50,40,0.06);
+}
+html[data-time-theme="day"] .quiz-mode-card{
+  box-shadow:
+    0 6px 22px rgba(30,50,40,0.09),
+    0 2px 8px rgba(30,50,40,0.06),
+    inset 0 1px 0 rgba(255,255,255,0.72)}
+html[data-time-theme="day"] .quiz-mode-card.quiz-mode-selected-ul{
+  box-shadow:
+    0 6px 22px rgba(30,50,40,0.1),
+    0 2px 8px rgba(30,50,40,0.06),
+    0 0 0 2px rgba(29,158,117,0.45),
+    inset 0 1px 0 rgba(255,255,255,0.75)}
+html[data-time-theme="day"] .quiz-mode-card.praktoras:hover{border-color:var(--amber2);background:rgba(186,117,23,0.07)}
+html[data-time-theme="day"] .quiz-mode-card.quiz-mode-selected-praktoras{
+  box-shadow:
+    0 6px 22px rgba(30,50,40,0.1),
+    0 2px 8px rgba(30,50,40,0.06),
+    0 0 0 2px rgba(186,117,23,0.45),
+    inset 0 1px 0 rgba(255,255,255,0.75)}
+html[data-time-theme="day"] #qCatOpts.quiz-options-accent-ul > .quiz-filters{
+  border-color:rgba(29,158,117,0.55);
+  background:rgba(29,158,117,0.07);
+  box-shadow:
+    0 6px 22px rgba(30,50,40,0.09),
+    0 2px 8px rgba(30,50,40,0.06),
+    0 0 0 2px rgba(29,158,117,0.38),
+    inset 0 1px 0 rgba(255,255,255,0.75)}
+html[data-time-theme="day"] #qCatOpts.quiz-options-accent-ul > div:nth-child(2){
+  border-color:rgba(29,158,117,0.4);
+  background:rgba(29,158,117,0.06);
+  box-shadow:0 2px 10px rgba(30,50,40,0.06),0 0 0 1px rgba(29,158,117,0.18),inset 0 1px 0 rgba(255,255,255,0.65)}
+html[data-time-theme="day"] #qPraktorasOpts.quiz-options-accent-praktoras #qmPraBrowse{
+  border-color:rgba(186,117,23,0.45);
+  background:rgba(186,117,23,0.06);
+  box-shadow:
+    0 6px 22px rgba(30,50,40,0.09),
+    0 2px 8px rgba(30,50,40,0.06),
+    0 0 0 2px rgba(186,117,23,0.32),
+    inset 0 1px 0 rgba(255,255,255,0.75)}
+html[data-time-theme="day"] #qPraktorasOpts.quiz-options-accent-praktoras #qmPraktorasFooter{
+  border-color:rgba(186,117,23,0.4);
+  background:rgba(186,117,23,0.05);
+  box-shadow:0 2px 10px rgba(30,50,40,0.06),0 0 0 1px rgba(186,117,23,0.16),inset 0 1px 0 rgba(255,255,255,0.65)}
+html[data-time-theme="day"] .citem{background:rgba(255,255,255,0.65);border-color:var(--border)}
+html[data-time-theme="day"] .citem:hover{background:#fff;border-color:rgba(29,158,117,0.25)}
+html[data-time-theme="day"] input[type=range]{background:rgba(0,0,0,0.08)}
+html[data-time-theme="day"] .quiz-filters select,
+html[data-time-theme="day"] .gloss-search{background:var(--navy3);color:var(--white);border-color:var(--border)}
+html[data-time-theme="day"] .qjsonid{border-color:rgba(186,117,23,0.4);background:rgba(186,117,23,0.14);color:var(--amber2)}
+html[data-time-theme="day"] .quiz-chapter-count{color:var(--teal2)}
+html[data-time-theme="day"] .quiz-chapter-trigger,
+html[data-time-theme="day"] .quiz-chapter-menu,
+html[data-time-theme="day"] .quiz-chapter-menu-footer{background:var(--navy3);color:var(--white);border-color:var(--border)}
+html[data-time-theme="day"] .quiz-chapter-menu-footer{border-top-color:var(--border)}
+html[data-time-theme="day"] .quiz-chapter-item:hover,
+html[data-time-theme="day"] .quiz-chapter-item:focus{background:rgba(0,0,0,0.06);color:var(--white)}
+#praUnitMenu .quiz-chapter-item.yli-agent-unit,
+#qmPraUnitMenu .quiz-chapter-item.yli-agent-unit{font-size:15px;font-weight:600;line-height:1.35}
+html[data-time-theme="day"] .ans-only{background:rgba(29,158,117,0.1);border-color:rgba(15,110,86,0.35);color:var(--teal2)}
+html[data-time-theme="day"] .opt{background:rgba(255,255,255,0.7);border-color:rgba(0,0,0,0.1);color:var(--gray)}
+html[data-time-theme="day"] .opt:hover:not(.dis){border-color:rgba(29,158,117,0.35);background:#fff;color:var(--white)}
+html[data-time-theme="day"] .opt.ok{border-color:var(--teal2);box-shadow:0 0 0 2px rgba(15,110,86,0.25)}
+html[data-time-theme="day"] .opt.ko{border-color:var(--coral2);box-shadow:0 0 0 2px rgba(216,90,48,0.22)}
+html[data-time-theme="day"] .qpbar{background:rgba(0,0,0,0.08)}
+html[data-time-theme="day"] .hero::before{background:radial-gradient(circle,rgba(29,158,117,0.12),transparent 70%)}
+html[data-time-theme="night"]{color-scheme:dark}
+/* Σκοτεινό φόντο: ήλιος + θερμοί τόνοι στο κουμπί */
+html[data-time-theme="night"] .theme-ctl{
+  background:linear-gradient(165deg,rgba(255,210,140,0.16) 0%,rgba(70,55,30,0.38) 48%,rgba(18,14,8,0.62) 100%);
+  box-shadow:
+    0 4px 9px rgba(0,0,0,0.5),
+    0 1px 0 rgba(255,230,180,0.18) inset,
+    0 -2px 5px rgba(0,0,0,0.45) inset,
+    1px 0 0 rgba(255,200,120,0.1) inset,
+    -1px 0 0 rgba(0,0,0,0.28) inset;
+}
+html[data-time-theme="night"] .theme-ctl:hover{
+  box-shadow:
+    0 5px 11px rgba(0,0,0,0.55),
+    0 1px 0 rgba(255,235,190,0.22) inset,
+    0 -2px 5px rgba(0,0,0,0.42) inset,
+    1px 0 0 rgba(255,210,130,0.14) inset,
+    -1px 0 0 rgba(0,0,0,0.24) inset;
+}
+html[data-time-theme="night"] .theme-track{
+  border-color:rgba(255,160,70,0.32);
+  background:
+    linear-gradient(180deg,rgba(255,200,110,0.18) 0%,transparent 36%),
+    linear-gradient(90deg,rgba(248,240,220,0.95) 0%,rgba(100,92,78,0.45) 46%,rgba(10,14,28,0.98) 100%);
+  box-shadow:
+    inset 0 4px 10px rgba(0,0,0,0.58),
+    inset 0 1px 0 rgba(255,200,100,0.14),
+    0 1px 0 rgba(255,200,120,0.06);
+}
+html[data-time-theme="night"] .theme-thumb{
+  border-color:rgba(255,200,110,0.42);
+  background:
+    radial-gradient(ellipse 95% 82% at 30% 22%,#fff6e4 0%,#f2d8a0 32%,#d9a862 68%,#a67430 100%);
+  color:#b45309;
+  box-shadow:
+    0 4px 7px rgba(0,0,0,0.45),
+    0 1px 0 rgba(255,250,235,0.65) inset,
+    inset 0 -5px 10px rgba(120,70,20,0.35),
+    inset 0 4px 8px rgba(255,255,255,0.45);
+}
+html[data-time-theme="night"] .theme-ctl:hover .theme-thumb{
+  box-shadow:
+    0 5px 9px rgba(0,0,0,0.5),
+    0 1px 0 rgba(255,252,240,0.75) inset,
+    inset 0 -5px 10px rgba(120,70,20,0.38),
+    inset 0 4px 9px rgba(255,255,255,0.5);
+}
+/* Ανοιχτό φόντο: φεγγάρι + δροσεροί τόνοι */
+html[data-time-theme="day"] .theme-ctl{
+  background:linear-gradient(165deg,rgba(230,240,255,0.65) 0%,rgba(255,255,255,0.5) 42%,rgba(170,190,210,0.45) 100%);
+  box-shadow:
+    0 3px 8px rgba(40,70,100,0.16),
+    0 1px 0 rgba(255,255,255,0.98) inset,
+    0 -2px 5px rgba(60,90,120,0.08) inset,
+    1px 0 0 rgba(255,255,255,0.65) inset,
+    -1px 0 0 rgba(80,110,140,0.08) inset;
+}
+html[data-time-theme="day"] .theme-ctl:hover{
+  box-shadow:
+    0 4px 10px rgba(40,70,100,0.2),
+    0 1px 0 #fff inset,
+    0 -2px 5px rgba(60,90,120,0.07) inset,
+    1px 0 0 rgba(255,255,255,0.7) inset,
+    -1px 0 0 rgba(80,110,140,0.06) inset;
+}
+html[data-time-theme="day"] .theme-track{
+  border-color:rgba(70,100,130,0.2);
+  background:
+    linear-gradient(180deg,rgba(220,235,255,0.5) 0%,transparent 40%),
+    linear-gradient(90deg,rgba(252,253,255,0.98) 0%,rgba(130,150,175,0.35) 48%,rgba(32,44,62,0.94) 100%);
+  box-shadow:
+    inset 0 4px 9px rgba(40,70,100,0.12),
+    inset 0 1px 0 rgba(255,255,255,0.75),
+    0 1px 0 rgba(255,255,255,0.55);
+}
+html[data-time-theme="day"] .theme-thumb{
+  border-color:rgba(120,150,185,0.45);
+  background:
+    radial-gradient(ellipse 100% 86% at 28% 20%,#f8fbff 0%,#e2eaf4 35%,#b8c9dc 62%,#7a92ad 100%);
+  color:#2d4a66;
+  box-shadow:
+    0 4px 7px rgba(40,70,100,0.2),
+    0 1px 0 rgba(255,255,255,0.95) inset,
+    inset 0 -5px 10px rgba(40,60,90,0.12),
+    inset 0 4px 8px rgba(255,255,255,0.85);
+}
+html[data-time-theme="day"] .theme-ctl:hover .theme-thumb{
+  box-shadow:
+    0 5px 9px rgba(40,70,100,0.22),
+    0 1px 0 #fff inset,
+    inset 0 -5px 10px rgba(40,60,90,0.14),
+    inset 0 4px 9px rgba(255,255,255,0.9);
+}
+</style>
+</head>
+<body>
+<div class="app">
+<nav class="top-nav">
+  <div class="logo">ο χρόνος <span>είναι χρήμα</span></div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="go('quiz')">Αρχική</button>
+  </div>
+  <div class="theme-ctl" id="themeCtl" role="slider" tabindex="0" aria-label="Φόντο εφαρμογής" aria-describedby="themeHelpDesc" aria-valuemin="0" aria-valuemax="2" aria-valuenow="1" aria-valuetext="Αυτόματα ανά ώρα" aria-orientation="horizontal">
+    <span id="themeHelpDesc" class="theme-sr">Σύρετε ή πατήστε: αριστερά ημέρα, μέση αυτόματο ανά ώρα, δεξιά νύχτα. Μετά από μία ώρα χωρίς αλλαγή επανέρχεται στο αυτόματο.</span>
+    <div class="theme-track" id="themeTrack" title="Ημέρα · Αυτόματο · Νύχτα">
+      <div class="theme-thumb" aria-hidden="true">
+        <span class="theme-ico theme-ico-sun" aria-hidden="true">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="12" cy="12" r="4" fill="currentColor"/>
+            <path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 2v2.5M12 19.5V22M4.5 12H2M22 12h-2.5M6.3 6.3l1.8 1.8M15.9 15.9l1.8 1.8M17.7 6.3l-1.8 1.8M8.1 15.9l-1.8 1.8"/>
+          </svg>
+        </span>
+        <span class="theme-ico theme-ico-moon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path fill="currentColor" fill-rule="evenodd" d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 003.463-.69.75.75 0 01.981.98 10.503 10.503 0 01-9.694 6.46c-5.799 0-10.5-4.701-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 01.818.162z" clip-rule="evenodd"/>
+          </svg>
+        </span>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- HOME -->
+<div id="s-home" class="screen">
+  <div class="hero">
+    <div class="badge teal">Εκπαιδευτική Πλατφόρμα · Beta</div>
+    <div class="hero-title">Χρηματοοικονομική<br><em>Θεωρία &amp; Πρακτική</em></div>
+    <p class="hero-sub">Για σπουδαστές εξετάσεων και επαγγελματίες συμβούλους. 19 κεφάλαια, διαδραστικά εργαλεία και πιστοποίηση.</p>
+    <div class="hero-axiom">«Ένα ευρώ σήμερα αξίζει περισσότερο από ένα ευρώ που θα λάβεις στο μέλλον»</div>
+  </div>
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-num" id="statChCount" style="color:var(--teal3)">19</div><div class="stat-lbl">Κεφάλαια</div></div>
+    <div class="stat-card"><div class="stat-num" id="statQCount" style="color:var(--blue3)">608</div><div class="stat-lbl">Ερωτήσεις Quiz</div></div>
+    <div class="stat-card"><div class="stat-num" id="statPartCount" style="color:var(--amber3)">4</div><div class="stat-lbl">Ενότητες</div></div>
+  </div>
+  <div class="slbl">Ενότητες Μαθήματος</div>
+  <p style="font-size:12px;color:var(--muted);line-height:1.55;margin:-6px 0 14px">Οι τέσσερις ενότητες οργανώνουν την ύλη και τα κεφάλαια· το <strong>Quiz</strong> (tab Αρχική) περιλαμβάνει Unit Linked ΤτΕ και την τράπεζα <strong>ασφαλιστικού πράκτορα</strong>.</p>
+  <div class="pgrid">
+    <div class="pcard" onclick="go('chapters')"><div class="picon teal">Α</div><div class="badge teal">Μέρος Α</div><div class="pname">Φιλοσοφία Αξίας</div><div class="pdesc">Αξία, επιτόκιο, χρόνος</div></div>
+    <div class="pcard" onclick="go('chapters')"><div class="picon blue">Β</div><div class="badge blue">Μέρος Β</div><div class="pname">Μαθηματικά Εργαλεία</div><div class="pdesc">Τύποι, ράντες, NPV, IRR</div></div>
+    <div class="pcard" onclick="go('chapters')"><div class="picon amber">Γ</div><div class="badge amber">Μέρος Γ</div><div class="pname">Αγορά &amp; Προϊόντα</div><div class="pdesc">Ομόλογα, μετοχές, Unit-Linked</div></div>
+    <div class="pcard" onclick="go('chapters')"><div class="picon coral">Δ</div><div class="badge coral">Μέρος Δ</div><div class="pname">Κανονιστικό Πλαίσιο</div><div class="pdesc">KID, IDD, Solvency II</div></div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px">
+    <div class="card" style="cursor:pointer;grid-column:1/-1" onclick="go('calc')"><div style="font-size:18px;margin-bottom:8px">⚡</div><div style="font-size:15px;font-weight:500;margin-bottom:4px">Εργαλεία &amp; αναφορά</div><div style="font-size:11px;color:var(--muted)">Υπολογιστές live · τύποι ανά εργαλείο · κάτω (άνοιγμα) πλήρης πίνακας, χάρτης, 10 ασκήσεις, γλωσσάριο</div></div>
+    <div class="card" style="cursor:pointer;min-width:0" onclick="go('quiz')"><div style="font-size:18px;margin-bottom:8px">📝</div><div style="font-size:15px;font-weight:500;margin-bottom:4px">Quiz · Unit Linked</div><div style="font-size:11px;color:var(--muted)">608 θέματα · Τράπεζα ΤτΕ</div></div>
+    <div class="card" style="cursor:pointer;min-width:0;border-color:rgba(186,117,23,0.4)" onclick="go('praktoras')"><div style="font-size:18px;margin-bottom:8px">📋</div><div style="font-size:15px;font-weight:500;margin-bottom:4px">Ασφαλιστικός πράκτορας</div><div style="font-size:11px;color:var(--muted)">600 θέματα ΤτΕ · πιστοποίηση πράκτορα (χωριστή τράπεζα)</div></div>
+  </div>
+</div>
+
+<!-- CHAPTERS LIST -->
+<div id="s-chapters" class="screen">
+  <div style="margin-bottom:20px"><div style="font-family:'DM Serif Display',serif;font-size:24px;margin-bottom:4px">Κεφάλαια</div><div style="font-size:12px;color:var(--muted)">Επέλεξε κεφάλαιο για να ξεκινήσεις</div></div>
+  <div class="parts-list">
+    <div class="psec">
+      <div class="phdr" onclick="toggleP('pA')"><div class="phdr-left"><div class="pnum teal">Α</div><div><div class="phdr-title">Φιλοσοφία Αξίας</div><div class="phdr-sub">2 κεφάλαια · Ολοκληρωμένο</div></div></div><div class="parr" id="arr-pA">›</div></div>
+      <div class="cgrid" id="pA">
+        <div class="citem done" onclick="openC(0)"><div class="cnum done">0</div><div><div class="ctitle">Τι Είναι Αξία</div><div class="csub">Αριστοτέλης · Becker</div></div></div>
+        <div class="citem done" onclick="openC(1)"><div class="cnum done">1</div><div><div class="ctitle">Το Επιτόκιο</div><div class="csub">Fisher · Ονομαστικό vs Πραγματικό</div></div></div>
+      </div>
+    </div>
+    <div class="psec">
+      <div class="phdr" onclick="toggleP('pB')"><div class="phdr-left"><div class="pnum blue">Β</div><div><div class="phdr-title">Μαθηματικά Εργαλεία</div><div class="phdr-sub">6 κεφάλαια · Σε εξέλιξη</div></div></div><div class="parr" id="arr-pB">›</div></div>
+      <div class="cgrid" id="pB">
+        <div class="citem done" onclick="openC(2)"><div class="cnum done">2</div><div><div class="ctitle">Απλός Τόκος</div><div class="csub">I=P·i·t · ΕΓΔΔ</div></div></div>
+        <div class="citem curr" onclick="openC(3)"><div class="cnum curr">3</div><div><div class="ctitle">Ανατοκισμός</div><div class="csub">FV=PV·(1+i)^t</div></div></div>
+        <div class="citem" onclick="openC(4)"><div class="cnum">4</div><div><div class="ctitle">Προεξόφληση</div><div class="csub">PV=FV·v^t</div></div></div>
+        <div class="citem" onclick="openC(5)"><div class="cnum">5</div><div><div class="ctitle">Ράντες</div><div class="csub">A(t|i) · Δόση δανείου</div></div></div>
+        <div class="citem" onclick="openC(6)"><div class="cnum">6</div><div><div class="ctitle">Διηνεκείς Ράντες</div><div class="csub">PV=C/i · Gordon</div></div></div>
+        <div class="citem" onclick="openC(7)"><div class="cnum">7</div><div><div class="ctitle">NPV &amp; IRR</div><div class="csub">Απόφαση επένδυσης</div></div></div>
+      </div>
+    </div>
+    <div class="psec">
+      <div class="phdr" onclick="toggleP('pC')"><div class="phdr-left"><div class="pnum amber">Γ</div><div><div class="phdr-title">Αγορά &amp; Προϊόντα</div><div class="phdr-sub">9 κεφάλαια · Δεν έχει ξεκινήσει</div></div></div><div class="parr" id="arr-pC">›</div></div>
+      <div class="cgrid" id="pC">
+        <div class="citem" onclick="openC(8)"><div class="cnum">8</div><div><div class="ctitle">Έντοκα Γραμμάτια</div><div class="csub">ΕΓΔΔ · Αφορολόγητα</div></div></div>
+        <div class="citem" onclick="openC(9)"><div class="cnum">9</div><div><div class="ctitle">Ομόλογα</div><div class="csub">Αποτίμηση · Κουπόνι</div></div></div>
+        <div class="citem" onclick="openC(10)"><div class="cnum">10</div><div><div class="ctitle">Αμοιβαία &amp; NAV</div><div class="csub">UCITS · SRI</div></div></div>
+        <div class="citem" onclick="openC(11)"><div class="cnum">11</div><div><div class="ctitle">Μετοχές</div><div class="csub">Gordon · HPR · DCA</div></div></div>
+        <div class="citem" onclick="openC(12)"><div class="cnum">12</div><div><div class="ctitle">Unit-Linked</div><div class="csub">RIY · Life-cycling</div></div></div>
+        <div class="citem" onclick="openC(13)"><div class="cnum">13</div><div><div class="ctitle">Forex</div><div class="csub">Ισοτιμίες · Μόχλευση</div></div></div>
+        <div class="citem" onclick="openC(14)"><div class="cnum">14</div><div><div class="ctitle">Μετατροπές Επιτοκίων</div><div class="csub">EAR · Fisher</div></div></div>
+        <div class="citem" onclick="openC(15)"><div class="cnum">15</div><div><div class="ctitle">Solvency II &amp; ESG</div><div class="csub">SCR · SFDR</div></div></div>
+        <div class="citem" onclick="openC(16)"><div class="cnum">16</div><div><div class="ctitle">Ελληνική Αγορά 2026</div><div class="csub">ΟΔΔΗΧ · Φορολογία</div></div></div>
+      </div>
+    </div>
+    <div class="psec">
+      <div class="phdr" onclick="toggleP('pD')"><div class="phdr-left"><div class="pnum coral">Δ</div><div><div class="phdr-title">Κανονιστικό Πλαίσιο</div><div class="phdr-sub">3 κεφάλαια · Δεν έχει ξεκινήσει</div></div></div><div class="parr" id="arr-pD">›</div></div>
+      <div class="cgrid" id="pD">
+        <div class="citem" onclick="openC(17)"><div class="cnum">17</div><div><div class="ctitle">PRIIPs &amp; KID</div><div class="csub">SRI · Σενάρια · RIY</div></div></div>
+        <div class="citem" onclick="openC(18)"><div class="cnum">18</div><div><div class="ctitle">IDD &amp; Διανομή</div><div class="csub">Needs Test · Υπαναχώρηση</div></div></div>
+        <div class="citem" onclick="openC(19)"><div class="cnum">19</div><div><div class="ctitle">Ο Σύμβουλος</div><div class="csub">Τρεις φάσεις · Ηθική</div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHAPTER VIEW -->
+<div id="s-chapter" class="screen">
+  <div class="chap-hdr">
+    <div><div id="cbadge" class="badge teal">Κεφ. 3 · Μέρος Β</div><div id="ctitle" class="chap-title">Ανατοκισμός</div></div>
+    <div class="ring-wrap"><svg width="56" height="56" viewBox="0 0 56 56"><circle class="ring-bg" cx="28" cy="28" r="22.5"/><circle class="ring-fill" id="ringFill" cx="28" cy="28" r="22.5"/></svg><div class="ring-lbl" id="ringLbl">0%</div></div>
+  </div>
+  <div class="sflow" id="sflow"></div>
+  <div class="cpanel" id="cpanel"></div>
+  <div class="chap-nav">
+    <button class="btn-s" onclick="prevC()">← Προηγούμενο</button>
+    <div class="chap-nav-info" id="cinfo"></div>
+    <button class="btn-p" id="nextBtn" onclick="nextSorC()">Επόμενο →</button>
+  </div>
+</div>
+
+<!-- CALCULATOR (+ ενσωματωμένα παραρτήματα κάτω, κλειστά) -->
+<div id="s-calc" class="screen">
+  <div style="margin-bottom:16px"><div style="font-family:'DM Serif Display',serif;font-size:24px;margin-bottom:4px">Εργαλεία</div><div style="font-size:12px;color:var(--muted)">Κάθε καρτέλα ενημερώνει τους σχετικούς τύπους· κάτω από αυτούς εμφανίζεται η αντικατάσταση με τα νούμερα των sliders.</div></div>
+  <div class="ctabs">
+    <button type="button" class="ctab active" data-calc="compound" onclick="sw('compound',this)">Ανατοκισμός</button>
+    <button type="button" class="ctab" data-calc="pv" onclick="sw('pv',this)">Προεξόφληση</button>
+    <button type="button" class="ctab" data-calc="r72" onclick="sw('r72',this)">Κανόνας 72</button>
+    <button type="button" class="ctab" data-calc="gordon" onclick="sw('gordon',this)">Gordon</button>
+    <button type="button" class="ctab" data-calc="npv" onclick="sw('npv',this)">NPV</button>
+  </div>
+  <div id="calcContextStrip" class="calc-ctx" aria-live="polite">
+    <div id="calcCtxStatic"></div>
+    <div id="calcCtxLive" class="calc-ctx-live"></div>
+  </div>
+  <div id="cc-compound">
+    <div class="cgrid2">
+      <div class="panel"><div class="ptitle">Παράμετροι</div>
+        <div class="slg"><div class="sll"><span class="sln">Αρχικό κεφάλαιο</span><span class="slv"><span id="c-pv">10.000</span><span class="u"> €</span></span></div><input type="range" min="1000" max="100000" step="1000" value="10000" oninput="cCalc()"></div>
+        <div class="slg"><div class="sll"><span class="sln">Επιτόκιο</span><span class="slv"><span id="c-r">6,0</span><span class="u"> %</span></span></div><input type="range" min="1" max="20" step="0.5" value="6" class="tr" oninput="cCalc()"></div>
+        <div class="slg"><div class="sll"><span class="sln">Χρόνια</span><span class="slv"><span id="c-t">20</span><span class="u"> έτη</span></span></div><input type="range" min="1" max="40" step="1" value="20" class="br" oninput="cCalc()"></div>
+      </div>
+      <div class="panel">
+        <div class="resmain"><div class="reslbl">Τελική Αξία (FV)</div><div class="resnum" id="c-fv">32.071 €</div><div class="reshint" id="c-hint">σε 20 χρόνια</div></div>
+        <div class="bkdn">
+          <div class="br2"><span>Αρχικό κεφάλαιο</span><span id="c-b1">10.000 €</span></div>
+          <div class="br2"><span>Απλός τόκος</span><span id="c-b2">12.000 €</span></div>
+          <div class="br2 hl"><span>Τόκος στον τόκο</span><span id="c-b3">+10.071 €</span></div>
+          <hr class="brdiv">
+          <div class="br2"><span>Κανόνας 72</span><span id="c-b4" style="color:var(--amber3)">~12 χρόνια</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="cpan2"><h3>Εξέλιξη κεφαλαίου</h3><canvas id="gc" height="160"></canvas></div>
+  </div>
+  <div id="cc-pv" style="display:none">
+    <div class="cgrid2">
+      <div class="panel"><div class="ptitle">Παράμετροι</div>
+        <div class="slg"><div class="sll"><span class="sln">Μελλοντική αξία</span><span class="slv"><span id="p-fv">50.000</span><span class="u"> €</span></span></div><input type="range" min="5000" max="500000" step="5000" value="50000" oninput="pvCalc()"></div>
+        <div class="slg"><div class="sll"><span class="sln">Επιτόκιο</span><span class="slv"><span id="p-r">5,0</span><span class="u"> %</span></span></div><input type="range" min="1" max="15" step="0.5" value="5" class="tr" oninput="pvCalc()"></div>
+        <div class="slg"><div class="sll"><span class="sln">Χρόνια</span><span class="slv"><span id="p-t">10</span><span class="u"> έτη</span></span></div><input type="range" min="1" max="30" step="1" value="10" class="br" oninput="pvCalc()"></div>
+      </div>
+      <div class="panel">
+        <div class="resmain"><div class="reslbl">Παρούσα Αξία (PV)</div><div class="resnum" style="color:var(--blue3)" id="p-res">30.696 €</div><div class="reshint">χρειάζεσαι σήμερα</div></div>
+        <div class="bkdn">
+          <div class="br2"><span>Στόχος μέλλον</span><span id="p-b1">50.000 €</span></div>
+          <div class="br2 hl"><span>Αξία σήμερα</span><span id="p-b2" style="color:var(--blue3)">30.696 €</span></div>
+          <div class="br2 wn"><span>Απαξίωση χρόνου</span><span id="p-b3">−19.304 €</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="cc-r72" style="display:none">
+    <div class="r72c">
+      <div class="fbox" style="max-width:280px;margin:0 auto"><div class="fbox-main">72 ÷ i (%)</div><div class="fbox-sub">= χρόνια για διπλασιασμό</div></div>
+      <div class="slg" style="max-width:340px;margin:20px auto 0"><div class="sll"><span class="sln">Επιτόκιο</span><span class="slv"><span id="r-v">6,0</span><span class="u"> %</span></span></div><input type="range" min="1" max="20" step="0.5" value="6" class="tr" oninput="r72Calc(this)"></div>
+      <div class="r72big" id="r-ans">12</div>
+      <div style="font-size:15px;color:var(--muted);margin-bottom:20px">χρόνια για διπλασιασμό</div>
+      <div class="tbox"><p>Με πληθωρισμό <strong id="r-inf">6,0</strong>%, η αγοραστική δύναμη υποδιπλασιάζεται σε <strong id="r-iyr">12</strong> χρόνια.</p></div>
+    </div>
+  </div>
+  <div id="cc-gordon" style="display:none">
+    <div class="cgrid2">
+      <div class="panel"><div class="ptitle">P = D₁ / (k − g)</div>
+        <div class="slg"><div class="sll"><span class="sln">Μέρισμα D₁</span><span class="slv"><span id="g-d">2,00</span><span class="u"> €</span></span></div><input type="range" min="0.5" max="10" step="0.5" value="2" oninput="gCalc()"></div>
+        <div class="slg"><div class="sll"><span class="sln">Απαιτ. απόδοση k</span><span class="slv"><span id="g-k">8,0</span><span class="u"> %</span></span></div><input type="range" min="3" max="20" step="0.5" value="8" class="tr" oninput="gCalc()"></div>
+        <div class="slg"><div class="sll"><span class="sln">Ανάπτυξη g</span><span class="slv"><span id="g-g">3,0</span><span class="u"> %</span></span></div><input type="range" min="0" max="15" step="0.5" value="3" class="br" oninput="gCalc()"></div>
+      </div>
+      <div class="panel">
+        <div class="resmain"><div class="reslbl">Θεωρητική Τιμή P</div><div class="resnum" style="color:var(--amber3)" id="g-res">40,00 €</div><div class="reshint">P = D₁ / (k − g)</div></div>
+        <div class="bkdn">
+          <div class="br2"><span>Αν τιμή &lt; P</span><span style="color:var(--teal3)">ΥΠΟΤΙΜΗΜΕΝΗ ✓</span></div>
+          <div class="br2"><span>Αν τιμή &gt; P</span><span style="color:var(--coral3)">ΥΠΕΡΤΙΜΗΜΕΝΗ ✗</span></div>
+          <hr class="brdiv">
+          <div class="br2"><span>Παρονομαστής (k−g)</span><span id="g-sp">5,0%</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="tbox" style="margin-top:14px"><p>Όταν τα επιτόκια ανεβαίνουν, το k μεγαλώνει και η τιμή <strong>πέφτει</strong>.</p></div>
+  </div>
+  <div id="cc-npv" style="display:none">
+    <div class="cgrid2">
+      <div class="panel"><div class="ptitle">NPV = Σ[CF/(1+r)^t] − I₀</div>
+        <div class="slg"><div class="sll"><span class="sln">Αρχική επένδυση</span><span class="slv"><span id="n-inv">20.000</span><span class="u"> €</span></span></div><input type="range" min="5000" max="200000" step="5000" value="20000" oninput="nCalc()"></div>
+        <div class="slg"><div class="sll"><span class="sln">Ετήσια ροή CF</span><span class="slv"><span id="n-cf">6.000</span><span class="u"> €</span></span></div><input type="range" min="1000" max="50000" step="1000" value="6000" class="tr" oninput="nCalc()"></div>
+        <div class="slg"><div class="sll"><span class="sln">Επιτόκιο</span><span class="slv"><span id="n-r">8,0</span><span class="u"> %</span></span></div><input type="range" min="1" max="20" step="0.5" value="8" class="br" oninput="nCalc()"></div>
+        <div class="slg"><div class="sll"><span class="sln">Χρόνια</span><span class="slv"><span id="n-t">5</span><span class="u"> έτη</span></span></div><input type="range" min="2" max="20" step="1" value="5" oninput="nCalc()"></div>
+      </div>
+      <div class="panel">
+        <div class="resmain"><div class="reslbl">NPV</div><div class="resnum" id="n-res" style="font-size:30px">−128 €</div><div class="reshint" id="n-vrd">Οριακά αρνητικό</div></div>
+        <div class="bkdn">
+          <div class="br2"><span>Σύνολο PV ροών</span><span id="n-pv">19.872 €</span></div>
+          <div class="br2 wn"><span>Αρχική επένδυση</span><span id="n-i0">20.000 €</span></div>
+          <hr class="brdiv">
+          <div class="br2"><span>Απόφαση</span><span id="n-dec" style="color:var(--coral3)">Απόρριψη ✗</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <details class="calc-ref-drawer" id="calcRefDrawer">
+    <summary>Πλήρης αναφορά — όλοι οι τύποι, χάρτης ασκήσεων, 10 ασκήσεις, γλωσσάριο</summary>
+    <div id="calcRefMount">
+      <div class="app-tabs">
+        <button type="button" class="app-tab active" data-app="A" onclick="showApp('A')">Παρ. Α — Τύποι</button>
+        <button type="button" class="app-tab" data-app="B" onclick="showApp('B')">Παρ. Β — Χάρτης</button>
+        <button type="button" class="app-tab" data-app="C" onclick="showApp('C')">Παρ. Γ — 10 Ασκήσεις</button>
+        <button type="button" class="app-tab" data-app="D" onclick="showApp('D')">Παρ. Δ — Γλωσσάριο</button>
+      </div>
+      <div id="appA" class="app-panel active">
+        <div class="slbl">Όλοι οι τύποι οργανωμένοι</div>
+        <div class="card" style="padding:0;overflow:hidden">
+          <div class="formula-row"><span class="formula-phrase">ΑΠΛΟΣ ΤΟΚΟΣ</span><span class="formula-eq">I = P · i · t</span></div>
+          <div class="formula-row"><span class="formula-phrase">Τελικό κεφάλαιο</span><span class="formula-eq">FV = P · (1 + i·t)</span></div>
+          <div class="formula-row"><span class="formula-phrase">Προεξόφληση απλή</span><span class="formula-eq">PV = FV / (1 + i·t)</span></div>
+          <div class="formula-row"><span class="formula-phrase">Μήνες: t=m/12 · Ημέρες: t=n/360</span><span class="formula-eq">—</span></div>
+          <div class="formula-row" style="border-top:1px solid var(--border);margin-top:8px;padding-top:12px"><span class="formula-phrase">ΑΝΑΤΟΚΙΣΜΟΣ</span><span class="formula-eq">FV = PV · (1+i)^t</span></div>
+          <div class="formula-row"><span class="formula-phrase">Προεξόφληση</span><span class="formula-eq">PV = FV · v^t</span></div>
+          <div class="formula-row"><span class="formula-phrase">Εύρεση i</span><span class="formula-eq">i = (FV/PV)^(1/t) − 1</span></div>
+          <div class="formula-row"><span class="formula-phrase">Κανόνας 72</span><span class="formula-eq">t ≈ 72 / i%</span></div>
+          <div class="formula-row" style="border-top:1px solid var(--border);margin-top:8px;padding-top:12px"><span class="formula-phrase">ΜΕΤΑΤΡΟΠΕΣ ΕΠΙΤΟΚΙΩΝ</span><span class="formula-eq">EAR = (1+i/m)^m − 1</span></div>
+          <div class="formula-row"><span class="formula-phrase">Fisher</span><span class="formula-eq">(1+i) = (1+r)(1+π)</span></div>
+          <div class="formula-row"><span class="formula-phrase">Πραγματικό</span><span class="formula-eq">r = (1+i)/(1+π) − 1 ≈ i − π</span></div>
+          <div class="formula-row" style="border-top:1px solid var(--border);margin-top:8px;padding-top:12px"><span class="formula-phrase">ΡΑΝΤΕΣ</span><span class="formula-eq">a(t|i) = (1−v^t)/i</span></div>
+          <div class="formula-row"><span class="formula-phrase">PV ράντας</span><span class="formula-eq">A = P · a(t|i)</span></div>
+          <div class="formula-row"><span class="formula-phrase">FV ράντας</span><span class="formula-eq">S = P · s(t|i)</span></div>
+          <div class="formula-row"><span class="formula-phrase">Διηνεκής</span><span class="formula-eq">PV = C / i</span></div>
+          <div class="formula-row"><span class="formula-phrase">Gordon</span><span class="formula-eq">PV = C / (i−g)</span></div>
+          <div class="formula-row" style="border-top:1px solid var(--border);margin-top:8px;padding-top:12px"><span class="formula-phrase">Ομόλογο</span><span class="formula-eq">P = C·a(n|i) + F·v^n</span></div>
+          <div class="formula-row"><span class="formula-phrase">Μετοχή Gordon</span><span class="formula-eq">P = D₁ / (k−g)</span></div>
+          <div class="formula-row"><span class="formula-phrase">NPV</span><span class="formula-eq">Σ[CFt/(1+r)^t] − I₀</span></div>
+          <div class="formula-row"><span class="formula-phrase">HPR</span><span class="formula-eq">[(P₁−P₀)+D] / P₀</span></div>
+        </div>
+      </div>
+      <div id="appB" class="app-panel">
+        <div class="slbl">Χάρτης αναγνώρισης ασκήσεων</div>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:14px">Αν δεις αυτή τη λέξη/φράση στην άσκηση, χρησιμοποίησε αυτόν τον τύπο:</p>
+        <div class="card" style="padding:0;overflow:hidden">
+          <table class="chart-table">
+            <tr><th>Λέξη/Φράση</th><th>Τύπος</th></tr>
+            <tr><td>«τόκος», «απόδοση σε μήνες/ημέρες»</td><td>I = P · i · t</td></tr>
+            <tr><td>«τελικό κεφάλαιο» + σταθερός τόκος</td><td>FV = P · (1+i·t)</td></tr>
+            <tr><td>«ανατοκισμός», «σύνθετος τόκος»</td><td>FV = PV · (1+i)^t</td></tr>
+            <tr><td>«παρούσα αξία», «σήμερα αξίζει»</td><td>PV = FV · v^t</td></tr>
+            <tr><td>«επιτόκιο από FV και PV»</td><td>i = (FV/PV)^(1/t) − 1</td></tr>
+            <tr><td>«μηνιαίο σε ετήσιο», «πραγματικό ετήσιο»</td><td>EAR = (1+i/m)^m − 1</td></tr>
+            <tr><td>«μετά τον πληθωρισμό», «πραγματικό»</td><td>r = (1+i)/(1+π) − 1</td></tr>
+            <tr><td>«σειρά πληρωμών», «δόσεις», «σύνταξη»</td><td>A = P·a(t|i) ή S = P·s(t|i)</td></tr>
+            <tr><td>«μέρισμα για πάντα», «αποτίμηση μετοχής»</td><td>P = D₁/(k−g) Gordon</td></tr>
+            <tr><td>«αξίζει η επένδυση;», «cash flows»</td><td>NPV = Σ[CFt/(1+r)^t] − Κόστος</td></tr>
+            <tr><td>«τι κέρδισα που κράτησα»</td><td>HPR = [(P₁−P₀)+D] / P₀</td></tr>
+            <tr><td>«τιμή ομολόγου»</td><td>P = C·a(n|i) + F·v^n</td></tr>
+          </table>
+        </div>
+      </div>
+      <div id="appC" class="app-panel">
+        <div class="slbl">Δέκα τυπικές ασκήσεις εξετάσεων</div>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:14px">Κλικ για να δεις τη λύση</p>
+        <div id="exList"></div>
+      </div>
+      <div id="appD" class="app-panel">
+        <div class="slbl">Γλωσσάριο — 40 βασικοί όροι</div>
+        <input type="text" class="gloss-search" id="glossSearch" placeholder="Αναζήτηση όρου (π.χ. NPV, Gordon, RIY)..." oninput="filterGloss()">
+        <div id="glossList"></div>
+      </div>
+    </div>
+  </details>
+</div>
+
+<!-- QUIZ (αρχική οθόνη) -->
+<div id="s-quiz" class="screen active">
+  <div class="quiz-screen-title">Ερωτηματολόγιο</div>
+
+  <!-- Quiz start: choose mode -->
+  <div id="qStart">
+    <div class="quiz-mode-grid">
+      <div id="quizModeCardPraktoras" class="quiz-mode-card praktoras" role="button" tabindex="0" aria-pressed="false" onclick="startPraktorasMode()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();startPraktorasMode()}">
+        <h3>📋 Ασφαλιστικός πράκτορας</h3>
+        <p>600 θέματα · Τράπεζα ΤτΕ</p>
+      </div>
+      <div class="quiz-mode-ul-group">
+        <div id="quizModeCardUl" class="quiz-mode-card" role="button" tabindex="0" aria-pressed="false" onclick="startQuizMode()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();startQuizMode()}">
+          <h3>📂 Unit Linked</h3>
+          <p>608 θέματα · Τράπεζα ΤτΕ</p>
+        </div>
+      </div>
+    </div>
+    <div id="qCatOpts" style="display:none;margin-top:16px">
+      <div class="quiz-filters">
+        <div class="quiz-chapter-row">
+          <div class="quiz-chapter-wrap" id="catChapterWrap">
+            <select id="catChapter" class="quiz-cat-sr" tabindex="-1" aria-hidden="true"></select>
+            <button type="button" class="quiz-chapter-trigger" id="catChapterTrigger" aria-expanded="false" aria-haspopup="listbox" aria-controls="catChapterMenu">ΕΠΙΛΕΞΤΕ ΚΕΦΑΛΑΙΟ</button>
+            <div class="quiz-chapter-menu" id="catChapterMenu" role="listbox" hidden></div>
+          </div>
+          <span id="catChapterCount" class="quiz-chapter-count" role="status" aria-live="polite">—</span>
+        </div>
+        <label class="quiz-check" style="display:flex;align-items:center;gap:8px;margin-top:6px;cursor:pointer;font-size:15px">
+          <input type="checkbox" id="catShuffleQ" checked>
+          Τυχαία σειρά ερωτήσεων
+        </label>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+        <button class="btn-p" onclick="launchCategories()">Έναρξη Εξάσκησης</button>
+        <button type="button" class="btn-s" onclick="openUlTableGuideModal()">Οδηγός πινάκων προεξόφλησης</button>
+        <button class="btn-s" onclick="cancelQuizCatOpts()">Ακύρωση</button>
+      </div>
+    </div>
+    <div id="qPraktorasOpts" style="display:none;margin-top:16px">
+      <div id="qmPraBrowse">
+        <div id="qmPraLoadErr" class="quiz-load-err" style="display:none"></div>
+        <div id="qmPraUnitPickerPanel" class="quiz-filters" style="display:none;margin-bottom:20px;padding:16px 18px;border-radius:14px;border:1px solid var(--border);background:var(--navy2)">
+          <div class="quiz-chapter-row">
+            <div class="quiz-chapter-wrap" id="qmPraUnitWrap">
+              <select id="qmPraUnitSel" class="quiz-cat-sr" tabindex="-1" aria-hidden="true"></select>
+              <button type="button" class="quiz-chapter-trigger" id="qmPraUnitTrigger" aria-expanded="false" aria-haspopup="listbox" aria-controls="qmPraUnitMenu">ΕΠΙΛΕΞΤΕ ΕΝΟΤΗΤΑ</button>
+              <div class="quiz-chapter-menu" id="qmPraUnitMenu" role="listbox" hidden></div>
+            </div>
+            <span id="qmPraUnitCount" class="quiz-chapter-count" role="status" aria-live="polite">—</span>
+          </div>
+          <label class="quiz-check" style="display:flex;align-items:center;gap:8px;margin-top:10px;cursor:pointer;font-size:15px">
+            <input type="checkbox" id="qmPraShuffleQ" checked>
+            Τυχαία σειρά ερωτήσεων
+          </label>
+        </div>
+        <div id="qmPraCatMount" class="parts-list"></div>
+      </div>
+      <div id="qmPraRun" style="display:none">
+        <div class="yli-run-title quiz-screen-title" id="qmPraRunTitle" style="font-size:20px;margin-bottom:8px"></div>
+        <p class="quiz-hint" id="qmPraRunHint" style="margin-bottom:16px;font-size:12px"></p>
+        <div class="qprow">
+          <div class="qpbar" style="flex:1"><div class="qpfill" id="qmPraFill" style="width:0%"></div></div>
+          <div class="qplbl" id="qmPraLbl">1/1</div>
+        </div>
+        <div id="qmPraArea"></div>
+        <div class="qnav" id="qmPraNav">
+          <button type="button" class="btn-s" id="qmPraNavPrev" onclick="yliPrev()" style="display:none">← Προηγούμενο</button>
+          <button type="button" class="btn-p" id="qmPraNavNext" onclick="yliNext()" style="display:none">Επόμενο →</button>
+          <button type="button" class="btn-s" id="qmPraNavExit" onclick="insuranceQuizYliExit()">Έξοδος</button>
+        </div>
+      </div>
+      <div id="qmPraktorasFooter" style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;align-items:center">
+        <button type="button" class="btn-p" onclick="openPraktorasSelectedFromPicker('q')">Έναρξη Εξάσκησης</button>
+        <button type="button" class="btn-s" onclick="cancelPraktorasQuizOpts()">Ακύρωση</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="qLoadErr" class="quiz-load-err" style="display:none"></div>
+  <div id="qLoading" class="quiz-loading" style="display:none">Φόρτωση ερωτηματολογίου…</div>
+
+  <div id="qRun" style="display:none">
+    <div class="qprow">
+      <div class="qptimer" id="qTimer" style="display:none">00:00</div>
+      <div class="qpbar"><div class="qpfill" id="qFill" style="width:0%"></div></div>
+      <div class="qplbl" id="qLbl">1/50</div>
+    </div>
+    <div id="qArea"></div>
+    <div id="qNav" class="qnav">
+      <button class="btn-s" id="qNavPrev" onclick="quizPrev()" style="display:none">← Προηγούμενο</button>
+      <button class="btn-p" id="qNavNext" onclick="quizNext()" style="display:none">Επόμενο →</button>
+      <button class="btn-s" id="qNavExit" onclick="quizExit()">Έξοδος</button>
+    </div>
+  </div>
+
+  <div id="qRes" style="display:none" class="rscreen">
+    <div class="rscore" id="qScore"></div>
+    <div class="rmsg" id="qMsg"></div>
+    <p class="rreview" id="qReviewHint"></p>
+    <button type="button" class="btn-p" id="qRetryWrongBtn" style="display:none;margin-bottom:10px" onclick="retryWrongQuestions()">↻ Επανάληψη μόνο των λανθασμένων</button>
+    <button class="btn-p" onclick="backToQuizStart()">← Επιστροφή στο μενού</button>
+  </div>
+</div>
+
+<!-- Ύλη ασφαλιστικού πράκτορα (insurance_agent_yli · πηγή Excel: Τραπεζα Ελλαδος/Praktoras/) -->
+<div id="s-praktoras" class="screen">
+  <div id="praBrowse">
+    <div class="quiz-screen-title">Ασφαλιστικός πράκτορας</div>
+    <p style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:18px">Τράπεζα θεμάτων για το πιστοποιητικό επαγγελματικών γνώσεων <strong>ασφαλιστικού πράκτορα</strong> (ΤτΕ). Οι 600 ερωτήσεις ομαδοποιούνται σε <strong>θεματικά κεφάλαια</strong>· υπάρχει και επιλογή για <strong>όλο το ερωτηματολόγιο</strong> με τη σειρά του αρχείου.</p>
+    <div id="praLoadErr" class="quiz-load-err" style="display:none"></div>
+    <div id="praUnitPickerPanel" class="quiz-filters" style="display:none;margin-bottom:20px;padding:16px 18px;border-radius:14px;border:1px solid var(--border);background:var(--navy2)">
+      <div class="quiz-chapter-row">
+        <div class="quiz-chapter-wrap" id="praUnitWrap">
+          <select id="praUnitSel" class="quiz-cat-sr" tabindex="-1" aria-hidden="true"></select>
+          <button type="button" class="quiz-chapter-trigger" id="praUnitTrigger" aria-expanded="false" aria-haspopup="listbox" aria-controls="praUnitMenu">ΕΠΙΛΕΞΤΕ ΕΝΟΤΗΤΑ</button>
+          <div class="quiz-chapter-menu" id="praUnitMenu" role="listbox" hidden></div>
+        </div>
+        <span id="praUnitCount" class="quiz-chapter-count" role="status" aria-live="polite">—</span>
+      </div>
+      <label class="quiz-check" style="display:flex;align-items:center;gap:8px;margin-top:10px;cursor:pointer;font-size:15px">
+        <input type="checkbox" id="praShuffleQ" checked>
+        Τυχαία σειρά ερωτήσεων
+      </label>
+      <button type="button" class="btn-p" style="margin-top:12px" onclick="openPraktorasSelectedFromPicker('s')">Έναρξη Εξάσκησης</button>
+    </div>
+    <div id="praCatMount" class="parts-list"></div>
+  </div>
+  <div id="praRun" style="display:none">
+    <div class="yli-run-title quiz-screen-title" id="praRunTitle" style="font-size:20px;margin-bottom:8px"></div>
+    <p class="quiz-hint" id="praRunHint" style="margin-bottom:16px;font-size:12px"></p>
+    <div class="qprow">
+      <div class="qpbar" style="flex:1"><div class="qpfill" id="praFill" style="width:0%"></div></div>
+      <div class="qplbl" id="praLbl">1/1</div>
+    </div>
+    <div id="praArea"></div>
+    <div class="qnav" id="praNav">
+      <button type="button" class="btn-s" onclick="yliBackToBrowse()">← Κατάλογος</button>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button type="button" class="btn-s" id="praNavPrev" onclick="yliPrev()" style="display:none">← Προηγούμενο</button>
+        <button type="button" class="btn-p" id="praNavNext" onclick="yliNext()" style="display:none">Επόμενο →</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div id="ulSolModal" class="ul-modal-overlay" style="display:none" role="dialog" aria-modal="true" aria-labelledby="ulSolModalTitle" onclick="ulSolModalBackdropClick(event)">
+  <div class="ul-modal-panel" role="document" onclick="event.stopPropagation()">
+    <div class="ul-modal-head">
+      <h2 id="ulSolModalTitle" class="ul-modal-title">Ανάλυση</h2>
+      <button type="button" class="ul-modal-close" onclick="closeUlSolutionModal()" aria-label="Κλείσιμο">&times;</button>
+    </div>
+    <div id="ulSolModalMeta" class="ul-modal-meta"></div>
+    <div id="ulSolModalBody" class="ul-modal-body"></div>
+  </div>
+</div>
+
+<script>
+/* AE006: Unit Linked + πράκτορας — μόνο σωστή απάντηση ανά ερώτηση (χωρίς τυχαία σειρά απαντήσεων). */
+const CHAPS=[
+  {id:0,t:"Τι Είναι Αξία και Πού Γεννιέται",p:"Α",c:"teal",steps:[
+    {l:"Αρχή",t:"Η Αρχαία Αντίρρηση",h:`<p>Ο Αριστοτέλης έγραψε ότι το χρήμα είναι <strong style="color:var(--teal3)">στείρο</strong>. Η σύγχρονη θεωρία απάντησε:</p><div class="fbox"><div class="fbox-main">Ο χρόνος και η αβεβαιότητα έχουν τιμή</div><div class="fbox-sub">Ο τόκος αποζημιώνει για στέρηση σήμερα και κίνδυνο αύριο</div></div>`},
+    {l:"Θεωρία",t:"Ανθρώπινο Κεφάλαιο",h:`<div class="ibox"><p><strong>Gary Becker (Νόμπελ):</strong> Κάθε άνθρωπος γεννιέται με δυνητική οικονομική αξία = PV όλων των μελλοντικών εισοδημάτων.<br><br>Φάση Α (20-40): Unit-Linked επιθετικό<br>Φάση Β (40-60): Rebalancing, διασπορά<br>Φάση Γ (60+): Ράντες εισοδήματος</p></div>`},
+    {l:"Εχθροί",t:"Οι 4 Εχθροί της Αξίας",h:`<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div style="background:rgba(153,60,29,0.1);border:1px solid rgba(153,60,29,0.25);border-radius:10px;padding:12px"><div style="font-size:11px;font-weight:500;color:var(--coral3);margin-bottom:4px">Χρόνος</div><div style="font-size:11px;color:var(--gray)">Αδρανή χρήματα χάνουν ευκαιρία</div></div><div style="background:rgba(153,60,29,0.1);border:1px solid rgba(153,60,29,0.25);border-radius:10px;padding:12px"><div style="font-size:11px;font-weight:500;color:var(--coral3);margin-bottom:4px">Πληθωρισμός</div><div style="font-size:11px;color:var(--gray)">Κάθε ευρώ αγοράζει λιγότερα</div></div><div style="background:rgba(153,60,29,0.1);border:1px solid rgba(153,60,29,0.25);border-radius:10px;padding:12px"><div style="font-size:11px;font-weight:500;color:var(--coral3);margin-bottom:4px">Κίνδυνος</div><div style="font-size:11px;color:var(--gray)">Αβεβαιότητα απαιτεί αποζημίωση</div></div><div style="background:rgba(29,158,117,0.1);border:1px solid rgba(29,158,117,0.25);border-radius:10px;padding:12px"><div style="font-size:11px;font-weight:500;color:var(--teal3);margin-bottom:4px">Άγνοια</div><div style="font-size:11px;color:var(--gray)">Λάθος εργαλείο = λάθος αποτέλεσμα</div></div></div>`},
+    {l:"Εξετάσεις",t:"Τι Πρέπει να Ξέρεις",h:`<div class="ibox"><p>✓ Ορισμός χρηματοοικονομικής αξίας<br>✓ Οι 3 φάσεις ανθρώπινου κεφαλαίου<br>✓ Οι 4 εχθροί της αξίας και τα αντίδοτά τους</p></div>`},
+    {l:"Σύμβουλος",t:"Ερώτηση Συμβούλου",h:`<div class="tbox"><p>«Πελάτης 35 ετών, σταθερό εισόδημα, μηδέν αποταμιεύσεις — ποιος είναι ο μεγαλύτερος κίνδυνος;»<br><br>Απάντηση: η <strong>αδράνεια</strong>. Κάθε χρόνος που δεν επενδύεται είναι ανατοκισμός που χάνεται.</p></div>`}
+  ]},
+  {id:1,t:"Το Επιτόκιο — Η Τιμή του Χρόνου",p:"Α",c:"teal",steps:[
+    {l:"Αρχή",t:"Το Ενοίκιο του Χρήματος",h:`<p>Το επιτόκιο είναι «πακέτο» τεσσάρων συνιστωσών: <strong style="color:var(--teal3)">πληθωρισμός + κίνδυνος + ρευστότητα + εναλλακτικό κόστος</strong>.</p>`},
+    {l:"Τύπος",t:"Τύπος Fisher",h:`<div class="fbox"><div class="fbox-main">(1 + i) = (1 + r) · (1 + π)</div></div><div class="fbox"><div class="fbox-main">r ≈ i − π</div><div class="fbox-sub">i = ονομαστικό · r = πραγματικό · π = πληθωρισμός</div></div>`},
+    {l:"Παράδειγμα",t:"Το Καλάθι του Σούπερ Μάρκετ",h:`<p>Κατάθεση 3%, πληθωρισμός 4%:</p><div style="background:rgba(153,60,29,0.1);border:1px solid rgba(153,60,29,0.3);border-radius:10px;padding:14px;margin:12px 0;text-align:center"><div style="font-family:'DM Serif Display',serif;font-size:24px;color:var(--coral3)">r = (1,03/1,04) − 1 = −0,96%</div><div style="font-size:11px;color:var(--muted);margin-top:4px">Ο αριθμός ανεβαίνει. Το καλάθι μικραίνει.</div></div>`},
+    {l:"Εξετάσεις",t:"Τυπικές Ερωτήσεις",h:`<div class="ibox"><p>Ονομαστικό 6%, πληθωρισμός 2,5%:<br>r = (1,06/1,025) − 1 = <strong>3,41%</strong></p></div>`},
+    {l:"Σύμβουλος",t:"Ερώτηση Συμβούλου",h:`<div class="tbox"><p>«Ο πελάτης έχει προθεσμιακή 2% ενώ ο πληθωρισμός είναι 3,2%. Πώς του εξηγείς ότι χάνει αγοραστική δύναμη παρόλο που ο λογαριασμός ανεβαίνει;»</p></div>`}
+  ]},
+  {id:2,t:"Απλός Τόκος",p:"Β",c:"blue",steps:[
+    {l:"Αρχή",t:"Γραμμική Αύξηση",h:`<p>Τόκος μόνο πάνω στο αρχικό κεφάλαιο. Κάθε χρόνο κερδίζεις <strong style="color:var(--blue3)">το ίδιο ποσό</strong>.</p><div class="ibox"><p>Χρήση: βραχυπρόθεσμες συναλλαγές, ΕΓΔΔ, τραπεζικές χρεώσεις.</p></div>`},
+    {l:"Τύπος",t:"Οι Τύποι",h:`<div class="fbox"><div class="fbox-main">I = P · i · t</div></div><div class="fbox"><div class="fbox-main">FV = P · (1 + i · t)</div></div><div class="tbox"><p>Μήνες: t = m/12 &nbsp;|&nbsp; Ημέρες: t = n/360</p></div>`},
+    {l:"Παράδειγμα",t:"4 Μορφές Άσκησης",h:`<div style="font-size:12px;color:var(--gray);line-height:2.2"><strong style="color:var(--white)">Τόκος:</strong> P=2.000€, i=5%, t=3 → I = <strong style="color:var(--teal3)">300€</strong><br><strong style="color:var(--white)">FV:</strong> 2.000·(1+0,05·3) = <strong style="color:var(--teal3)">2.300€</strong><br><strong style="color:var(--white)">Επιτόκιο:</strong> i = 300/(2.000·3) = <strong style="color:var(--teal3)">5%</strong><br><strong style="color:var(--white)">Χρόνος:</strong> t = 300/(2.000·0,05) = <strong style="color:var(--teal3)">3 χρόνια</strong></div>`},
+    {l:"ΕΓΔΔ",t:"Εφαρμογή: ΕΓΔΔ",h:`<div class="fbox"><div class="fbox-main">Τιμή = Ονομαστική / (1 + i·t)</div></div><div class="ibox"><p>Ονομαστική 10.000€, απόδοση 3%, 1 έτος:<br>Τιμή = 10.000/1,03 = <strong>9.708,74€</strong> — κέρδος <strong>ΑΦΟΡΟΛΟΓΗΤΟ</strong></p></div>`},
+    {l:"Σύμβουλος",t:"Ερώτηση Συμβούλου",h:`<div class="tbox"><p>«50.000€ σε κατάθεση 0,5% vs ΕΓΔΔ 2,8%. Ποια η διαφορά ετησίως; Και πώς επηρεάζει η φορολογία;»</p></div>`}
+  ]},
+  {id:3,t:"Ανατοκισμός",p:"Β",c:"blue",steps:[
+    {l:"Αρχή",t:"Η Χιονοστιβάδα",h:`<p>Ο τόκος κάθε χρόνου <strong style="color:var(--teal3)">προστίθεται στο κεφάλαιο</strong> και τοκίζεται κι αυτός την επόμενη χρονιά.</p><div id="barViz" style="margin-top:16px"></div><div class="legend"><div class="leg"><div class="ldot" style="background:rgba(55,138,221,0.7)"></div>Απλός τόκος</div><div class="leg"><div class="ldot" style="background:rgba(29,158,117,0.85)"></div>Ανατοκισμός</div></div>`},
+    {l:"Τύπος",t:"Ο Τύπος",h:`<div class="fbox"><div class="fbox-main">FV = PV · (1 + i)<sup>t</sup></div><div class="fbox-sub">FV=τελική · PV=αρχικό · i=επιτόκιο · t=χρόνια</div></div><div class="tbox"><p><strong>Κανόνας 72:</strong> 72 ÷ i(%) = χρόνια διπλασιασμού. Με 6%: 12 χρόνια.</p></div>`},
+    {l:"Παράδειγμα",t:"1.000€, 10%, 20 χρόνια",h:`<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0"><div style="background:rgba(55,138,221,0.1);border:1px solid rgba(55,138,221,0.25);border-radius:12px;padding:14px;text-align:center"><div style="font-size:10px;color:var(--muted);margin-bottom:6px;text-transform:uppercase">Απλός τόκος</div><div style="font-family:'DM Serif Display',serif;font-size:28px;color:var(--blue3)">3.000 €</div></div><div style="background:rgba(29,158,117,0.1);border:1px solid rgba(29,158,117,0.25);border-radius:12px;padding:14px;text-align:center"><div style="font-size:10px;color:var(--muted);margin-bottom:6px;text-transform:uppercase">Ανατοκισμός</div><div style="font-family:'DM Serif Display',serif;font-size:28px;color:var(--teal3)">6.727 €</div></div></div><p>Διαφορά: <strong style="color:var(--amber3)">+3.727€</strong> από «τόκο πάνω στον τόκο».</p>`},
+    {l:"Εξετάσεις",t:"Τυπικές Ασκήσεις",h:`<div style="font-size:12px;color:var(--gray);line-height:2.2"><strong style="color:var(--white)">Α:</strong> 5.000€, 7%, 4 έτη → FV = 5.000·(1,07)⁴ = <strong style="color:var(--teal3)">6.554€</strong><br><strong style="color:var(--white)">Β:</strong> 1.000€→1.331€ σε 3 έτη → i = <strong style="color:var(--teal3)">10%</strong><br><strong style="color:var(--white)">Γ:</strong> Εξαμηνιαίος 7%, 4 έτη → t=8, i=3,5% → <strong style="color:var(--teal3)">1.316,80€</strong></div>`},
+    {l:"Σύμβουλος",t:"Ερώτηση Συμβούλου",h:`<div class="tbox"><p>«Πελάτης 30 ετών, 200€/μήνα, 6% απόδοση. Στα 65 πόσα θα έχει; Και αν περιμένει ως τα 40;»</p></div>`}
+  ]},
+  {id:4,t:"Προεξόφληση",p:"Β",c:"blue",steps:[
+    {l:"Αρχή",t:"Φέρνω το Μέλλον στο Σήμερα",h:`<p>Η <strong style="color:var(--blue3)">αντίστροφη</strong> του ανατοκισμού: «Πόσο αξίζει σήμερα αυτό που υπόσχονται για το μέλλον;»</p>`},
+    {l:"Τύπος",t:"Ο Τύπος",h:`<div class="fbox"><div class="fbox-main">PV = FV / (1 + i)<sup>t</sup> = FV · v<sup>t</sup></div><div class="fbox-sub">v = 1/(1+i) = συντελεστής προεξόφλησης</div></div>`},
+    {l:"Παράδειγμα",t:"Η Υπόσχεση του Φίλου",h:`<div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:10px;padding:14px;font-size:12px;color:var(--gray);line-height:1.8">Φίλος ζητά 1.000€ σήμερα, υπόσχεται 1.100€ σε 2 χρόνια (i=6%):<br>PV = 1.100/(1,06)² = <strong style="color:var(--coral3)">979€</strong><br>Δίνεις 1.000€ για αξία 979€ → <strong style="color:var(--coral3)">Χάνεις 21€</strong></div>`},
+    {l:"Εξετάσεις",t:"Τυπικές Ασκήσεις",h:`<div style="font-size:12px;color:var(--gray);line-height:2.2"><strong style="color:var(--white)">Α:</strong> FV=150.000€, i=5%, t=6 → PV = <strong style="color:var(--teal3)">111.930€</strong><br><strong style="color:var(--white)">Β:</strong> 50.000€ τώρα ή 70.000€ σε 5 χρόνια (i=8%);<br>PV(70k) = 47.642€ &lt; 50.000€ → <strong style="color:var(--teal3)">Παίρνεις μετρητά</strong></div>`},
+    {l:"Σύμβουλος",t:"Ερώτηση Συμβούλου",h:`<div class="tbox"><p>«Ασφαλιστήριο υπόσχεται 100.000€ σε 20 χρόνια. Με i=4%, πόσο αξίζει σήμερα; Με i=6%;»</p></div>`}
+  ]},
+  {id:5,t:"Ράντες",p:"Β",c:"blue",steps:[
+    {l:"Αρχή",t:"Η Αλυσίδα των Πληρωμών",h:`<p>Σειρά <strong style="color:var(--blue3)">ίσων πληρωμών</strong> σε ίσα χρονικά διαστήματα.</p><div class="ibox"><p><strong>Ληξιπρόθεσμη:</strong> πληρωμή στο ΤΕΛΟΣ κάθε περιόδου (μισθός, κουπόνι)<br><strong>Προκαταβλητέα:</strong> πληρωμή στην ΑΡΧΗ (ενοίκιο)</p></div>`},
+    {l:"Τύπος",t:"Οι Τύποι",h:`<div class="fbox"><div class="fbox-main">PV = P · a(t|i)</div><div class="fbox-sub">a(t|i) = (1 − v<sup>t</sup>) / i</div></div><div class="fbox"><div class="fbox-main">FV = P · s(t|i)</div><div class="fbox-sub">s(t|i) = ((1+i)<sup>t</sup> − 1) / i</div></div>`},
+    {l:"Παράδειγμα",t:"Δόση Δανείου",h:`<div class="ibox"><p>Δάνειο 80.000€, i=6%, 15 χρόνια:<br>P = 80.000 / a(15|6%) = 80.000/9,712 = <strong>8.237€/έτος</strong></p></div>`},
+    {l:"Εξετάσεις",t:"Σύγκριση Επιλογών",h:`<div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:10px;padding:14px;font-size:12px;color:var(--gray);line-height:1.8">5.000€ τώρα ή 1.200€/έτος για 5 χρόνια (i=8%);<br>PV = 1.200·a(5|8%) = 4.791€ &lt; 5.000€<br>→ <strong style="color:var(--teal3)">Παίρνεις εφάπαξ</strong></div>`},
+    {l:"Σύμβουλος",t:"Ερώτηση Συμβούλου",h:`<div class="tbox"><p>«Πελάτης θέλει σύνταξη 1.500€/μήνα για 20 χρόνια (i=4%). Πόσο κεφάλαιο χρειάζεται;»</p></div>`}
+  ]},
+  {id:6,t:"Διηνεκείς Ράντες",p:"Β",c:"blue",steps:[
+    {l:"Αρχή",t:"Χρήμα που Δεν Τελειώνει",h:`<p>Όταν μια ράντα δεν έχει τέλος, το άθροισμα των άπειρων πληρωμών <strong style="color:var(--teal3)">συγκλίνει</strong> σε πεπερασμένο αριθμό.</p>`},
+    {l:"Τύπος",t:"Οι Τύποι",h:`<div class="fbox"><div class="fbox-main">PV = C / i</div><div class="fbox-sub">Σταθερή διηνεκής ράντα</div></div><div class="fbox"><div class="fbox-main">PV = C / (i − g)</div><div class="fbox-sub">Αυξανόμενη — Μοντέλο Gordon</div></div>`},
+    {l:"Παράδειγμα",t:"Μετοχές & Ακίνητα",h:`<div style="font-size:12px;color:var(--gray);line-height:2.2"><strong style="color:var(--white)">Μετοχή (Gordon):</strong> D₁=2€, k=8%, g=3%<br>P = 2/(0,08-0,03) = <strong style="color:var(--teal3)">40€</strong><br><strong style="color:var(--white)">Ακίνητο:</strong> Ενοίκιο 12.000€, g=2%, i=5%<br>Αξία = 12.000/0,03 = <strong style="color:var(--teal3)">400.000€</strong></div>`},
+    {l:"Εξετάσεις",t:"Κρίσιμη Παρατήρηση",h:`<div class="tbox"><p>Όταν τα επιτόκια ανεβαίνουν, ο παρονομαστής (i−g) μεγαλώνει και η αξία <strong>ΠΕΦΤΕΙ</strong>. Γι΄αυτό μετοχές, ακίνητα και ομόλογα πέφτουν μαζί.</p></div>`},
+    {l:"Σύμβουλος",t:"Ερώτηση Συμβούλου",h:`<div class="tbox"><p>«Μετοχή στα 35€. D₁=2€, k=9%, g=4%. Υποτιμημένη ή υπερτιμημένη;»</p></div>`}
+  ]},
+  {id:7,t:"NPV & IRR",p:"Β",c:"blue",steps:[
+    {l:"Αρχή",t:"Η Απόφαση Επένδυσης",h:`<p>Μεταφέρω όλες τις μελλοντικές ροές στο παρόν.</p><div class="ibox"><p>NPV &gt; 0 → Προχωράς ✓<br>NPV = 0 → Αδιάφορο<br>NPV &lt; 0 → Απορρίπτεις ✗</p></div>`},
+    {l:"Τύπος",t:"Οι Τύποι",h:`<div class="fbox"><div class="fbox-main">NPV = Σ [CF<sub>t</sub> / (1+r)<sup>t</sup>] − I₀</div></div><p style="margin-top:10px;font-size:15px;color:var(--gray)"><strong style="color:var(--white)">IRR:</strong> Επιτόκιο που κάνει NPV=0. Αν IRR &gt; κόστος κεφαλαίου: αξίζει.</p>`},
+    {l:"Παράδειγμα",t:"Λυμένη Άσκηση",h:`<div style="font-size:12px;color:var(--gray);line-height:2">Επένδυση 10.000€, ροές 4.000€/έτος, 3 χρόνια, i=5%<br>PV = 3.810 + 3.628 + 3.455 = 10.893€<br>NPV = <strong style="color:var(--teal3)">+893€ ✓</strong></div>`},
+    {l:"IRR",t:"Εύρεση IRR",h:`<div class="ibox"><p>Επένδυση 10.000€, ροές 2.500€/έτος, 5 χρόνια:<br>10.000/2.500 = 4,00 → a(5|i)=4,00 → IRR ≈ <strong>8%</strong></p></div>`},
+    {l:"Σύμβουλος",t:"Ερώτηση Συμβούλου",h:`<div class="tbox"><p>«Επένδυση 50.000€, ροές 15.000€/έτος, 5 χρόνια, κόστος κεφαλαίου 8%. Αξίζει;»</p></div>`}
+  ]},
+  {id:8,t:"Έντοκα Γραμμάτια",p:"Γ",c:"amber",steps:[
+    {l:"Αρχή",t:"Σύντομη Τοποθέτηση",h:`<div class="ibox"><p>Βραχυπρόθεσμοι κρατικοί τίτλοι. Πωλούνται κάτω από ονομαστική. <strong>ΑΦΟΡΟΛΟΓΗΤΑ</strong> για φυσικά πρόσωπα.</p></div><div class="fbox"><div class="fbox-main">Τιμή = Ονομαστική / (1 + i·t)</div></div>`},
+    {l:"Παράδειγμα",t:"Παράδειγμα",h:`<div class="ibox"><p>Ονομαστική 10.000€, απόδοση 3%, 1 έτος:<br>Τιμή = 10.000/1,03 = <strong>9.708,74€</strong><br>Ισοδύναμη κατάθεση: 3%/(1−0,15) = <strong>3,53%</strong></p></div>`},
+    {l:"Πρακτική",t:"Πρακτική Χρήση",h:`<div class="tbox"><p>Αγορά μέσω τράπεζας, 3 ημέρες πριν δημοπρασία. Όριο 15.000€/άτομο στην πρωτογενή αγορά.</p></div>`}
+  ]},
+  {id:9,t:"Ομόλογα",p:"Γ",c:"amber",steps:[
+    {l:"Τύπος",t:"Αποτίμηση Ομολόγου",h:`<div class="fbox"><div class="fbox-main">P = C·a(n|i) + F·v<sup>n</sup></div><div class="fbox-sub">C=κουπόνι · F=ονομαστική · i=επιτόκιο αγοράς</div></div>`},
+    {l:"Παράδειγμα",t:"Παράδειγμα",h:`<div class="ibox"><p>Ομόλογο 1.000€, κουπόνι 4%, 5 χρόνια, i_αγοράς=6%:<br>P = 40·a(5|6%) + 1.000·v⁵ = 40·4,212 + 1.000·0,7473 = <strong>915,78€</strong></p></div><div class="tbox"><p>Τιμή ομολόγου και επιτόκιο αγοράς κινούνται <strong>ΠΑΝΤΑ αντίθετα</strong>.</p></div>`},
+    {l:"Φορολογία",t:"Φορολογία",h:`<div class="ibox"><p>ΟΕΔ (αγορά έκδοση→λήξη): <strong>0%</strong><br>Εταιρικά ομόλογα: <strong>15%</strong> επί κουπονιού</p></div>`}
+  ]},
+  {id:10,t:"Αμοιβαία Κεφάλαια & NAV",p:"Γ",c:"amber",steps:[
+    {l:"Αρχή",t:"Συλλογική Διαχείριση",h:`<div class="fbox"><div class="fbox-main">NAV = (Αξία − Έξοδα) / Μερίδια</div><div class="fbox-sub">Υπολογίζεται μία φορά/ημέρα</div></div>`},
+    {l:"SRI",t:"Κατηγορίες Κινδύνου",h:`<div class="ibox"><p>SRI 1-2: Χρηματαγοράς (πολύ χαμηλός κίνδυνος)<br>SRI 2-4: Ομολογιακά<br>SRI 3-4: Μικτά<br>SRI 5-7: Μετοχικά (υψηλός κίνδυνος)</p></div>`},
+    {l:"UCITS",t:"Φορολογία UCITS",h:`<div class="ibox"><p>Αμοιβαία UCITS (έδρα ΕΕ): <strong>0% υπεραξία</strong> για ιδιώτες στην Ελλάδα.</p></div>`}
+  ]},
+  {id:11,t:"Μετοχές — Gordon & HPR",p:"Γ",c:"amber",steps:[
+    {l:"Gordon",t:"Μοντέλο Gordon",h:`<div class="fbox"><div class="fbox-main">P = D₁ / (k − g)</div><div class="fbox-sub">D₁=επόμενο μέρισμα · k=απαιτούμενη απόδοση · g=ανάπτυξη</div></div>`},
+    {l:"HPR",t:"Holding Period Return",h:`<div class="fbox"><div class="fbox-main">HPR = [(P₁ − P₀) + D] / P₀</div></div>`},
+    {l:"DCA",t:"Στρατηγικές",h:`<div class="ibox"><p><strong>DCA:</strong> Σταθερή μηνιαία επένδυση ανεξάρτητα τιμών<br><strong>Rebalancing:</strong> Επαναφορά κατανομής 1 φορά/έτος</p></div>`}
+  ]},
+  {id:12,t:"Unit-Linked",p:"Γ",c:"amber",steps:[
+    {l:"Αρχή",t:"Επένδυση + Κάλυψη",h:`<p>Κάθε ασφάλιστρο: μέρος για κάλυψη + μέρος σε μερίδια αμοιβαίων. Ο επενδυτικός κίνδυνος βαρύνει τον ασφαλισμένο.</p>`},
+    {l:"RIY",t:"RIY — Reduction in Yield",h:`<div class="fbox"><div class="fbox-main">RIY = Μείωση ετήσιας απόδοσης</div><div class="fbox-sub">από τα έξοδα του προϊόντος</div></div><div class="tbox"><p>10.000€, 20 χρόνια: RIY 0,8% → 22.740€ vs RIY 2,5% → 17.494€. Διαφορά: <strong>5.246€</strong> μόνο από έξοδα!</p></div>`},
+    {l:"Life-cycling",t:"Life-Cycling",h:`<div class="ibox"><p>Αυτόματη μετατόπιση από επιθετικό σε συντηρητικό προφίλ καθώς πλησιάζεις τη λήξη.</p></div>`}
+  ]},
+  {id:13,t:"Forex — Αγορά Συναλλάγματος",p:"Γ",c:"amber",steps:[
+    {l:"Βασικά",t:"Ισοτιμίες",h:`<p>EUR/USD=1,10: 1€=1,10$. Αγορά 24/5.</p><div class="ibox"><p><strong>Bid</strong> (αγορά τράπεζας) &lt; <strong>Ask</strong> (πώληση τράπεζας)<br><strong>Cross rate:</strong> EUR/JPY = EUR/USD × USD/JPY</p></div>`},
+    {l:"Κίνδυνος",t:"Συναλλαγματικός Κίνδυνος",h:`<div class="tbox"><p>Apple 200$, ισοτιμία 1,10 → κόστος 181,8€. Μετοχή→220$, ισοτιμία→1,25.<br>Αξία σε €: 220/1,25 = <strong>176€</strong> → Απόδοση: <strong style="color:var(--coral3)">−3,2%</strong> παρόλο που κέρδισες σε $!</p></div>`},
+    {l:"Μόχλευση",t:"Leverage",h:`<div class="tbox"><p>Leverage 1:30: με 1.000€ ελέγχεις 30.000€.<br>+1%: κέρδος 300€ &nbsp;|&nbsp; −3%: ζημιά 900€<br><strong>ESMA: ανώτατο 1:30, προστασία αρνητικού υπολοίπου</strong></p></div>`}
+  ]},
+  {id:14,t:"Μετατροπές Επιτοκίων",p:"Γ",c:"amber",steps:[
+    {l:"EAR",t:"Πραγματικό Ετήσιο Επιτόκιο",h:`<div class="fbox"><div class="fbox-main">EAR = (1 + i/m)<sup>m</sup> − 1</div></div><div class="ibox"><p>Ονομαστικό 5%, μηνιαίος ανατοκισμός:<br>EAR = (1+0,05/12)¹² − 1 = <strong>5,12%</strong></p></div>`},
+    {l:"Fisher",t:"Τύπος Fisher",h:`<div class="fbox"><div class="fbox-main">r = (1+i)/(1+π) − 1</div></div><div class="tbox"><p>Κατάθεση 3%, πληθωρισμός 2,5%:<br>r = (1,03/1,025) − 1 = <strong style="color:var(--coral3)">0,49%</strong> — Σχεδόν μηδενικό πραγματικό κέρδος!</p></div>`},
+    {l:"Ελλάδα",t:"Ελληνική Πραγματικότητα",h:`<div class="tbox"><p>Προθεσμιακές ~1,5-2%, πληθωρισμός ~2,5-3%: πραγματικό επιτόκιο <strong>ΑΡΝΗΤΙΚΟ</strong>. Τα χρήματα χάνουν αγοραστική δύναμη.</p></div>`}
+  ]},
+  {id:15,t:"Solvency II & ESG",p:"Γ",c:"amber",steps:[
+    {l:"Solvency II",t:"Κεφαλαιακή Επάρκεια",h:`<div class="ibox"><p>Ν.4364/2016: SCR (κεφαλαιακή επάρκεια), ORSA (διαχείριση κινδύνων), SFCR (διαφάνεια).<br>Δείκτης 150-200% = υγιής · Κοντά στο 100% = ανησυχητικό</p></div>`},
+    {l:"ESG",t:"ESG & SFDR",h:`<div class="ibox"><p>E=Περιβαλλοντικό · S=Κοινωνικό · G=Διακυβέρνηση<br><br><strong>SFDR Άρθρο 8:</strong> περιβαλλοντικά χαρακτηριστικά<br><strong>SFDR Άρθρο 9:</strong> αμιγώς βιώσιμες επενδύσεις</p></div>`},
+    {l:"Σύμβουλος",t:"Πρακτική",h:`<div class="tbox"><p>Έλεγξε τον δείκτη φερεγγυότητας πριν επιλέξεις ασφαλιστική. Ρώτα για ESG κατηγορία αμοιβαίου αν ο πελάτης ενδιαφέρεται για βιώσιμες επενδύσεις.</p></div>`}
+  ]},
+  {id:16,t:"Ελληνική Αγορά 2026",p:"Γ",c:"amber",steps:[
+    {l:"Φορείς",t:"Βασικοί Φορείς",h:`<div class="ibox"><p><strong>ΟΔΔΗΧ:</strong> ΕΓΔΔ και ΟΕΔ<br><strong>ΧΑ/ATHEX:</strong> Μετοχές και εταιρικά ομόλογα<br><strong>ΑΕΔΑΚ:</strong> Αμοιβαία κεφάλαια<br><strong>ΤτΕ:</strong> Εποπτεία ασφαλιστικών</p></div>`},
+    {l:"Φορολογία",t:"Οδηγός Φορολογίας 2026",h:`<div style="font-size:12px;color:var(--gray);line-height:2.2">ΕΓΔΔ/ΟΕΔ (έκδοση→λήξη): <strong style="color:var(--teal3)">0%</strong><br>UCITS αμοιβαία: <strong style="color:var(--teal3)">0%</strong> υπεραξία<br>Τόκοι καταθέσεων: <strong style="color:var(--amber3)">15%</strong><br>Μερίσματα ελληνικών: <strong style="color:var(--amber3)">5%</strong><br>Εταιρικά ομόλογα: <strong style="color:var(--amber3)">15%</strong><br>Πρόωρη εξαγορά ασφαλιστικών: <strong style="color:var(--coral3)">20%</strong></div>`},
+    {l:"2026",t:"Τρέχουσα Εικόνα",h:`<div class="ibox"><p>ΕΓΔΔ 52 εβδ.: ~2% · 10ετές ΟΕΔ: ~3,7%<br>ΓΔ ΧΑ: υψηλά 16ετίας<br>Τράπεζες: NPL 3,6% — χαμηλό από ένταξη στην ευρωζώνη</p></div>`}
+  ]},
+  {id:17,t:"PRIIPs & KID",p:"Δ",c:"coral",steps:[
+    {l:"Αρχή",t:"Το Δικαίωμα στην Πληροφόρηση",h:`<p>Το KID είναι τυποποιημένο έγγραφο <strong style="color:var(--coral3)">3 σελίδων</strong> που κάθε πάροχος οφείλει να δίνει πριν την επένδυση.</p>`},
+    {l:"4 Σημεία",t:"Τι Κοιτάς στο KID",h:`<div class="ibox"><p>1. <strong>SRI (1-7):</strong> Δείκτης κινδύνου<br>2. <strong>Σενάρια:</strong> Stress · Δυσμενές · Μέτριο · Ευνοϊκό<br>3. <strong>RIY:</strong> Έξοδα που μειώνουν απόδοση<br>4. <strong>Διακράτηση:</strong> Συνιστώμενη ελάχιστη διάρκεια</p></div>`},
+    {l:"Σύμβουλος",t:"Χρυσή Ερώτηση",h:`<div class="tbox"><p>«Αν η αγορά δώσει 0% απόδοση φέτος, πόσα χρήματα θα χάσω από τα έξοδα;» — Αποκαλύπτει το πραγματικό κόστος.</p></div>`}
+  ]},
+  {id:18,t:"IDD & Διανομή",p:"Δ",c:"coral",steps:[
+    {l:"IDD",t:"Νομική Βάση",h:`<p>IDD (Ν.4583/2018): η διανομή οφείλει να ενεργεί <strong style="color:var(--coral3)">πάντα προς το συμφέρον του πελάτη</strong>.</p>`},
+    {l:"Υποχρεώσεις",t:"4 Υποχρεώσεις",h:`<div class="ibox"><p><strong>Needs Test:</strong> Υποχρεωτικός έλεγχος καταλληλότητας<br><strong>IPID/KID:</strong> Παράδοση πριν υπογραφή<br><strong>Σύγκρουση:</strong> Απαγόρευση σύγκρουσης συμφερόντων<br><strong>Κατάρτιση:</strong> 15 ώρες ετήσιας εκπαίδευσης</p></div>`},
+    {l:"Υπαναχώρηση",t:"Δικαίωμα Υπαναχώρησης",h:`<div class="ibox"><p>Εναντίωση: <strong>15 ημέρες</strong> από παραλαβή<br>Υπαναχώρηση γενικές: <strong>14 ημέρες</strong><br>Υπαναχώρηση ζωή/Unit-Linked: <strong>30 ημέρες</strong></p></div>`}
+  ]},
+  {id:19,t:"Ο Σύμβουλος απέναντι στον Πελάτη",p:"Δ",c:"coral",steps:[
+    {l:"Αρχή",t:"Η Ηθική Επιλογή",h:`<p>Το υψηλότερο επίπεδο επαγγελματισμού δεν είναι να πουλάς ό,τι ζητά ο πελάτης. Είναι να του εξηγείς τι <strong style="color:var(--teal3)">χρειάζεται</strong>.</p>`},
+    {l:"Πότε Λες Όχι",t:"Πότε Λες Όχι",h:`<div class="tbox"><p>Αν πελάτης 68 ετών ζητά 20ετές Unit-Linked επιθετικό προφίλ, έχεις <strong>υποχρέωση</strong> να εξηγήσεις γιατί δεν ταιριάζει — ακόμα κι αν σημαίνει μικρότερη προμήθεια.</p></div>`},
+    {l:"Επίλογος",t:"Ο Σκοπός",h:`<div class="fbox"><div class="fbox-main">«Η τέχνη και η ευθύνη»</div><div class="fbox-sub">Κάθε αριθμός κρύβει ώρες ζωής κάποιου άλλου ανθρώπου</div></div>`}
+  ]}
+];
+
+let curC=3,curS=0;
+let QBANK=null,qIdx=0,qScore=0,qAns=false,qList=[],qTimerId=null,qTimerMins=0,qTimerSecs=0,qAnsByIdx={},qTimerPaused=false,qLastWrongList=[],qShuffleQuestionOrder=false,qShuffleAnswers=false,qOptOrderByIdx={};
+const UL_QUIZ_STATE_KEY="ae006_ul_quiz_state_v1";
+function ulQuizPanelVisible(id){const el=document.getElementById(id);return !!el&&el.style.display!=="none";}
+function ulQuizHasActiveWork(){return Array.isArray(qList)&&qList.length>0&&(ulQuizPanelVisible("qRun")||ulQuizPanelVisible("qRes"));}
+function clearUlQuizState(){try{localStorage.removeItem(UL_QUIZ_STATE_KEY);}catch(e){}}
+function saveUlQuizState(){
+  if(!ulQuizPanelVisible("qRun")||!Array.isArray(qList)||!qList.length)return;
+  try{
+    const ids=qList.map(q=>q&&q.id!=null?String(q.id):"");
+    if(ids.some(id=>!id))return;
+    localStorage.setItem(UL_QUIZ_STATE_KEY,JSON.stringify({v:1,ts:Date.now(),ids,qIdx,qAnsByIdx,qShuffleQuestionOrder,qShuffleAnswers,qOptOrderByIdx}));
+  }catch(e){}
+}
+function tryRestoreUlQuizState(){
+  if(!QBANK||!Array.isArray(QBANK.questions))return false;
+  let st=null;
+  try{st=JSON.parse(localStorage.getItem(UL_QUIZ_STATE_KEY)||"null");}catch(e){return false;}
+  if(!st||st.v!==1||!Array.isArray(st.ids)||!st.ids.length)return false;
+  if(st.ts&&Date.now()-st.ts>7*24*60*60*1000){clearUlQuizState();return false;}
+  const byId=new Map(QBANK.questions.map(q=>[String(q.id),q]));
+  const restored=st.ids.map(id=>byId.get(String(id))).filter(Boolean);
+  if(restored.length!==st.ids.length){clearUlQuizState();return false;}
+  qList=restored;
+  qIdx=Math.max(0,Math.min(Number(st.qIdx)||0,qList.length-1));
+  qAnsByIdx=st.qAnsByIdx&&typeof st.qAnsByIdx==="object"?st.qAnsByIdx:{};
+  qScore=Object.values(qAnsByIdx).filter(a=>a&&a.ok===true).length;
+  qAns=!!qAnsByIdx[qIdx];
+  qShuffleQuestionOrder=!!st.qShuffleQuestionOrder;
+  qShuffleAnswers=!!st.qShuffleAnswers;
+  qOptOrderByIdx=st.qOptOrderByIdx&&typeof st.qOptOrderByIdx==="object"?st.qOptOrderByIdx:{};
+  qTimerPaused=false;
+  if(qTimerId){clearInterval(qTimerId);qTimerId=null;}
+  document.getElementById("qStart").style.display="none";
+  document.getElementById("qRun").style.display="block";
+  document.getElementById("qRes").style.display="none";
+  document.getElementById("qCatOpts").style.display="none";
+  document.getElementById("qTimer").style.display="none";
+  const pr=document.getElementById("qPraktorasOpts");if(pr)pr.style.display="none";
+  const ms=document.getElementById("qMesitiOpts");if(ms)ms.style.display="none";
+  renderQ();
+  return true;
+}
+function htmlEsc(s){
+  /* Stylianos — ασφαλής εμφάνιση κειμένου στο HTML */
+  return String(s??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+const UL_PINAKON_GUIDE_HTML=`<p class="ul-guide-lead">Στις δοκιμασίες Unit Linked της ΤτΕ εμφανίζονται θέματα που βασίζονται στους <strong>πίνακες προεξόφλησης</strong> και στο <strong>τυπολόγιο</strong>. Παρακάτω τι σημαίνει κάθε σύμβολο και πώς το χρησιμοποιείς.</p><ul class="ul-guide-ul"><li><strong>Επιτόκιο <code>i</code></strong> — συνήθως ετήσιο εκτός αν η εκφώνηση ορίζει άλλη περίοδο μεταξύ των πληρωμών ή ανατοκισμό.</li><li><strong><code>v = 1/(1+i)</code></strong> — συντελεστής προεξόφλησης για ένα έτος μπροστά («φέρω το μέλλον στο σήμερα»).</li><li><strong><code>v<sup>n</sup></code></strong> — παρούσα αξία της μονάδας στην περίοδο <code>n</code>.</li><li><strong>Ληξιπρόθεσμη ράντα:</strong> <code>PV = R · a<sub>n|i</sub></code> με <code>a<sub>n|i</sub> = (1 − v<sup>n</sup>)/i</code>.</li><li><strong>Μέλλουσα αξία ράντας:</strong> <code>FV = R · s<sub>n|i</sub></code> με <code>s<sub>n|i</sub> = ((1+i)<sup>n</sup> − 1)/i</code>.</li><li><strong>Αναβαλλόμενη ή προκαταβλητέα ράντα:</strong> διορθώνεις το άκρο του χρόνου (π.χ. επιπλέον <code>v<sup>k</sup></code> για <code>k</code> περιόδους αναμονής).</li></ul><p><strong>Πώς διαβάζεις τον πίνακα:</strong> εντοπίζεις τη γραμμή ή στήλη με το δοσμένο <code>i</code>, το <code>n</code> και διαβάζεις το κελί που αντιστοιχεί στον παράγοντα που ζητά η άσκηση (<code>v<sup>n</sup></code>, <code>a<sub>n|i</sub></code> κ.λπ.) σύμφωνα με την κεφαλίδα του εκάστοτε πίνακα του τυπολογίου.</p><p>Όταν η εκφώνηση λέει «από πίνακες», κράτα τις ίδιες στρογγυλοποιήσεις με την τράπεζα — αποφεύγεις ασυμφωνίες λόγω δεκαδικών.</p><p class="ul-guide-pdfs">Αν έχεις αντιγράψει PDF στον φάκελο <code>unit-linked/</code>: <a href="unit-linked/PINAKES_PROEXOFLESHS.pdf" target="_blank" rel="noopener">Πίνακες προεξόφλησης</a> · <a href="unit-linked/TYPOLOGIO_UL.pdf" target="_blank" rel="noopener">Τυπολόγιο</a> (αν λείπουν τα αρχεία, ο σύνδεσμος δεν ανοίγει — δες το αρχείο οδηγιών στον ίδιο φάκελο).</p>`;
+const YLI_CTX_AGENT={
+  basePath:"insurance_agent_yli/",
+  manifest:null,list:[],idx:0,ans:{},
+  pidPrefix:"pra-p-",
+  ids:{
+    browse:"praBrowse",loadErr:"praLoadErr",catMount:"praCatMount",
+    run:"praRun",runTitle:"praRunTitle",runHint:"praRunHint",
+    fill:"praFill",lbl:"praLbl",area:"praArea",fb:"praFb",
+    navPrev:"praNavPrev",navNext:"praNavNext"
+  },
+  pick:{
+    panel:"praUnitPickerPanel",sel:"praUnitSel",trigger:"praUnitTrigger",menu:"praUnitMenu",
+    count:"praUnitCount",wrap:"praUnitWrap",which:"s"
+  },
+  errManifestHtml:'Δεν φορτώθηκε το <code>insurance_agent_yli/manifest.json</code>. Τρέξε <code>npm run build:insurance-agent-yli</code> και <code>python3 scripts/tag-praktoras-chapters.py</code>.'
+};
+const YLI_CTX_AGENT_QUIZ={
+  basePath:"insurance_agent_yli/",
+  manifest:null,list:[],idx:0,ans:{},
+  pidPrefix:"pra-qm-",
+  ids:{
+    browse:"qmPraBrowse",loadErr:"qmPraLoadErr",catMount:"qmPraCatMount",
+    run:"qmPraRun",runTitle:"qmPraRunTitle",runHint:"qmPraRunHint",
+    fill:"qmPraFill",lbl:"qmPraLbl",area:"qmPraArea",fb:"qmPraFb",
+    navPrev:"qmPraNavPrev",navNext:"qmPraNavNext"
+  },
+  pick:{
+    panel:"qmPraUnitPickerPanel",sel:"qmPraUnitSel",trigger:"qmPraUnitTrigger",menu:"qmPraUnitMenu",
+    count:"qmPraUnitCount",wrap:"qmPraUnitWrap",which:"q"
+  },
+  errManifestHtml:YLI_CTX_AGENT.errManifestHtml
+};
+let yliAct=YLI_CTX_AGENT;
+let PRA_UNIT_PICK_ROWS=[];
+const THEME_KEY="axiaXronou_time_theme_v1";
+const THEME_MANUAL_TS_KEY="axiaXronou_time_theme_manual_ts_v1";
+const THEME_MANUAL_MS=3600000;
+const THEME_ARIA_TEXT={day:"Ξεκούραστο φως (ημέρα)",auto:"Αυτόματα ανά ώρα",night:"Σκοτεινό (νύχτα)"};
+const THEME_ARIA_VAL={day:0,auto:1,night:2};
+let themeMode="auto";
+let themeTimerId=null;
+
+function hourBasedIsDay(){
+  const h=new Date().getHours();
+  return h>=7&&h<21;
+}
+function loadThemeMode(){
+  try{
+    const v=localStorage.getItem(THEME_KEY);
+    if(v==="day"||v==="night"){
+      const tsRaw=localStorage.getItem(THEME_MANUAL_TS_KEY);
+      const ts=tsRaw?parseInt(tsRaw,10):NaN;
+      if(!Number.isFinite(ts)){
+        localStorage.setItem(THEME_MANUAL_TS_KEY,String(Date.now()));
+        return v;
+      }
+      if(Date.now()-ts>=THEME_MANUAL_MS){
+        localStorage.removeItem(THEME_MANUAL_TS_KEY);
+        localStorage.setItem(THEME_KEY,"auto");
+        return "auto";
+      }
+      return v;
+    }
+    if(v==="auto")return "auto";
+  }catch(e){}
+  return "auto";
+}
+function saveThemeMode(m){
+  try{localStorage.setItem(THEME_KEY,m);}catch(e){}
+}
+function resolveTimeTheme(){
+  if(themeMode==="day")return"day";
+  if(themeMode==="night")return"night";
+  return hourBasedIsDay()?"day":"night";
+}
+function applyTimeTheme(){
+  document.documentElement.setAttribute("data-time-theme",resolveTimeTheme());
+  const ctl=document.getElementById("themeCtl");
+  if(ctl){
+    ctl.setAttribute("data-mode",themeMode);
+    ctl.setAttribute("aria-valuenow",String(THEME_ARIA_VAL[themeMode]??1));
+    ctl.setAttribute("aria-valuetext",THEME_ARIA_TEXT[themeMode]||THEME_ARIA_TEXT.auto);
+  }
+}
+function setThemeMode(m){
+  if(m!=="day"&&m!=="night"&&m!=="auto")return;
+  themeMode=m;
+  saveThemeMode(m);
+  try{
+    if(m==="auto")localStorage.removeItem(THEME_MANUAL_TS_KEY);
+    else localStorage.setItem(THEME_MANUAL_TS_KEY,String(Date.now()));
+  }catch(e){}
+  applyTimeTheme();
+}
+function themeTick(){
+  if(themeMode==="day"||themeMode==="night"){
+    let ts=0;
+    try{
+      const r=localStorage.getItem(THEME_MANUAL_TS_KEY);
+      ts=r?parseInt(r,10):0;
+    }catch(e){}
+    if(ts&&Date.now()-ts>=THEME_MANUAL_MS)setThemeMode("auto");
+  }
+  applyTimeTheme();
+}
+function startThemeTicker(){
+  if(themeTimerId){clearInterval(themeTimerId);themeTimerId=null;}
+  themeTimerId=setInterval(themeTick,60000);
+}
+function initThemeControls(){
+  themeMode=loadThemeMode();
+  applyTimeTheme();
+  startThemeTicker();
+  const themeCtl=document.getElementById("themeCtl");
+  const themeTrack=document.getElementById("themeTrack");
+  if(!themeCtl||!themeTrack)return;
+  const MODE_ORDER=["day","auto","night"];
+  function pickFromClientX(clientX){
+    const r=themeTrack.getBoundingClientRect();
+    if(r.width<=0)return themeMode;
+    const p=(clientX-r.left)/r.width;
+    if(p<1/3)return"day";
+    if(p<2/3)return"auto";
+    return"night";
+  }
+  function themePreviewPick(m){
+    themeCtl.setAttribute("data-mode",m);
+    themeCtl.setAttribute("aria-valuenow",String(THEME_ARIA_VAL[m]??1));
+    themeCtl.setAttribute("aria-valuetext",THEME_ARIA_TEXT[m]||THEME_ARIA_TEXT.auto);
+    let resolved;
+    if(m==="day")resolved="day";
+    else if(m==="night")resolved="night";
+    else resolved=hourBasedIsDay()?"day":"night";
+    document.documentElement.setAttribute("data-time-theme",resolved);
+  }
+  let dragging=false;
+  let themeLastClientX=0;
+  function onPointerDown(e){
+    if(e.button!==0)return;
+    dragging=true;
+    themeCtl.classList.add("theme-dragging");
+    themeLastClientX=e.clientX;
+    try{themeTrack.setPointerCapture(e.pointerId);}catch(err){}
+    themePreviewPick(pickFromClientX(themeLastClientX));
+    e.preventDefault();
+  }
+  function onPointerMove(e){
+    if(!dragging)return;
+    themeLastClientX=e.clientX;
+    themePreviewPick(pickFromClientX(themeLastClientX));
+  }
+  function endDrag(e){
+    if(!dragging)return;
+    dragging=false;
+    themeCtl.classList.remove("theme-dragging");
+    try{themeTrack.releasePointerCapture(e.pointerId);}catch(err){}
+    const x=Number.isFinite(e.clientX)&&e.clientX!==0?e.clientX:themeLastClientX;
+    setThemeMode(pickFromClientX(x));
+  }
+  themeTrack.addEventListener("pointerdown",onPointerDown);
+  themeTrack.addEventListener("pointermove",onPointerMove);
+  themeTrack.addEventListener("pointerup",endDrag);
+  themeTrack.addEventListener("pointercancel",endDrag);
+  themeCtl.addEventListener("keydown",ev=>{
+    if(ev.key!=="ArrowLeft"&&ev.key!=="ArrowRight")return;
+    ev.preventDefault();
+    const i=MODE_ORDER.indexOf(themeMode);
+    const ni=ev.key==="ArrowLeft"?Math.max(0,i-1):Math.min(2,i+1);
+    if(ni!==i)setThemeMode(MODE_ORDER[ni]);
+  });
+  document.addEventListener("visibilitychange",()=>{
+    if(document.visibilityState==="visible"){
+      themeTick();
+    }
+  });
+}
+
+function refreshHomeStats(){
+  const chEl=document.getElementById("statChCount");
+  if(chEl)chEl.textContent=String(CHAPS.length);
+  const parts=new Set(CHAPS.map(c=>c.p));
+  const pEl=document.getElementById("statPartCount");
+  if(pEl)pEl.textContent=String(parts.size);
+  if(QBANK&&Array.isArray(QBANK.questions))updateQuizCountUI(QBANK.questions.length);
+}
+
+function updateQuizCountUI(count){
+  const n=Math.max(0,Math.floor(+count||0));
+  if(!n)return;
+  const stat=document.getElementById("statQCount");
+  if(stat)stat.textContent=String(n);
+  const span=document.getElementById("quizBankCount");
+  if(span)span.textContent=String(n);
+}
+
+function refreshChaptersUI(){
+  const curId=CHAPS[curC]?CHAPS[curC].id:curC;
+  document.querySelectorAll("#s-chapters .citem").forEach(el=>{
+    const on=el.getAttribute("onclick")||"";
+    const m=on.match(/openC\((\d+)\)/);
+    const idx=m?+m[1]:NaN;
+    if(!Number.isFinite(idx))return;
+    const id=CHAPS[idx]?CHAPS[idx].id:idx;
+    const num=el.querySelector(".cnum");
+    el.classList.remove("done","curr");
+    if(num)num.classList.remove("done","curr");
+    if(id===curId){el.classList.add("curr");if(num)num.classList.add("curr");}
+  });
+}
+
+function go(name){
+  closeUlSolutionModal();
+  if(name==="appendices")name="calc";
+  ["home","chapters","chapter","calc","quiz","praktoras"].forEach(s=>{const el=document.getElementById("s-"+s);if(el)el.classList.remove("active");});
+  document.querySelectorAll(".nav-tab").forEach((t,i)=>{
+    const map={quiz:0};
+    const idx=map[name];
+    t.classList.toggle("active",idx!==undefined&&i===idx);
+  });
+  const target=document.getElementById("s-"+name);
+  if(target)target.classList.add("active");
+  if(name==="home")refreshHomeStats();
+  if(name==="chapters")setTimeout(refreshChaptersUI,0);
+  if(name==="calc")setTimeout(runCalcScreenInit,50);
+  if(name==="quiz"){
+    if(!QBANK)loadQuestionBank();
+    if(!ulQuizHasActiveWork()&&!tryRestoreUlQuizState())showQuizStart();
+  }
+  if(name==="praktoras"){yliAct=YLI_CTX_AGENT;showYliBrowse();loadYliManifestIfNeeded();}
+}
+
+function toggleP(id){
+  const g=document.getElementById(id),a=document.getElementById("arr-"+id),o=g.classList.contains("open");
+  g.classList.toggle("open",!o);a.classList.toggle("open",!o);
+}
+
+const EXERCISES=[
+  {title:"Απλός τόκος — Τόκος",data:"P=2.000€, i=5%, t=3 έτη",sol:"I = P·i·t = 2.000·0,05·3 = 300€"},
+  {title:"Απλός τόκος — FV",data:"P=2.000€, i=5%, t=3 έτη",sol:"FV = P·(1+i·t) = 2.000·1,15 = 2.300€"},
+  {title:"Ανατοκισμός — FV",data:"PV=5.000€, i=7%, t=4 έτη",sol:"FV = 5.000·(1,07)⁴ = 6.554€"},
+  {title:"Ανατοκισμός — Επιτόκιο",data:"1.000€→1.331€ σε 3 έτη",sol:"i = (1.331/1.000)^(1/3) − 1 = 10%"},
+  {title:"Προεξόφληση",data:"FV=150.000€, i=5%, t=6 έτη",sol:"PV = 150.000/(1,05)⁶ = 111.930€"},
+  {title:"Fisher — Πραγματικό επιτόκιο",data:"i=6%, π=2,5%",sol:"r = (1,06/1,025) − 1 = 3,41%"},
+  {title:"Ράντα — Δόση δανείου",data:"Δάνειο 80.000€, i=6%, 15 έτη",sol:"P = 80.000/a(15|6%) = 80.000/9,712 ≈ 8.237€/έτος"},
+  {title:"Gordon — Αποτίμηση μετοχής",data:"D₁=2€, k=8%, g=3%",sol:"P = D₁/(k−g) = 2/0,05 = 40€"},
+  {title:"NPV",data:"I₀=20.000€, CF=6.000€/έτος, 5 έτη, r=8%",sol:"PV ροών ≈ 23.956€, NPV = 3.956€ ✓ Αξίζει"},
+  {title:"HPR",data:"Αγορά 50€, πώληση 55€, μέρισμα 2€",sol:"HPR = (55−50+2)/50 = 14%"}
+];
+
+const GLOSSARY=[
+  {term:"NPV",def:"Καθαρή παρούσα αξία. NPV = Σ[CFt/(1+r)^t] − I₀. NPV>0 → αξίζει η επένδυση.",ref:"Κεφ.7"},
+  {term:"IRR",def:"Εσωτερικός συντελεστής απόδοσης. Το r που κάνει NPV=0.",ref:"Κεφ.7"},
+  {term:"Gordon",def:"Μοντέλο αποτίμησης μετοχής: P = D₁/(k−g). Διηνεκής ράντα με ανάπτυξη g.",ref:"Κεφ.6"},
+  {term:"Fisher",def:"(1+i)=(1+r)(1+π). Σύνδεση ονομαστικού, πραγματικού επιτοκίου και πληθωρισμού.",ref:"Κεφ.1"},
+  {term:"HPR",def:"Holding Period Return. [(P₁−P₀)+D]/P₀. Απόδοση περιόδου κατοχής.",ref:"Κεφ.7"},
+  {term:"PV",def:"Παρούσα αξία. Αξία μελλοντικών ροών σε σημερινές τιμές.",ref:"Κεφ.4"},
+  {term:"FV",def:"Τελική αξία. Αξία κεφαλαίου μετά από t περιόδους.",ref:"Κεφ.2-3"},
+  {term:"EAR",def:"Effective Annual Rate. Πραγματικό ετήσιο επιτόκιο: (1+i/m)^m − 1.",ref:"Κεφ.2"},
+  {term:"Ράντα",def:"Σειρά ίσων πληρωμών σε ίσα διαστήματα. a(t|i), s(t|i).",ref:"Κεφ.5"},
+  {term:"Διηνεκής",def:"Άπειρη ράντα. PV = C/i ή PV = C/(i−g) με Gordon.",ref:"Κεφ.6"},
+  {term:"RIY",def:"Reduction Yield. Επιτόκιο μείωσης για ασφαλιστικά προϊόντα.",ref:"Κεφ.12"},
+  {term:"KID",def:"Key Information Document. Κλειστό εγγραφό πληροφόρησης για PRIIPs.",ref:"Κεφ.17"},
+  {term:"IDD",def:"Insurance Distribution Directive. Οδηγία διανομής ασφαλιστικών προϊόντων.",ref:"Κεφ.17"},
+  {term:"Unit-Linked",def:"Ασφαλιστικό προϊόν με επενδυτική συνιστώσα. Αξία συνδέεται με υποκείμενα.",ref:"Κεφ.10"},
+  {term:"ΕΓΔΔ",def:"Έντοκα Γραμμάτια Δημοσίου Δανείου. Βραχυπρόθεσμοι κρατικοί τίτλοι.",ref:"Κεφ.8"},
+  {term:"Ομόλογο",def:"P = C·a(n|i) + F·v^n. Τιμή και επιτόκιο αγοράς κινούνται αντίθετα.",ref:"Κεφ.9"},
+  {term:"Συστηματικός κίνδυνος",def:"Κίνδυνος αγοράς. Δεν αποφεύγεται με διαφοροποίηση.",ref:"Κεφ.0"},
+  {term:"Μη συστηματικός",def:"Ειδικός κίνδυνος εταιρείας. Μειώνεται με διαφοροποίηση.",ref:"Κεφ.0"},
+  {term:"Solvency II",def:"Κανονιστικό πλαίσιο ασφαλιστών. Απαιτήσεις κεφαλαίου.",ref:"Κεφ.19"},
+  {term:"Προεξόφληση",def:"Φέρνω μέλλον στο παρόν. PV = FV·v^t.",ref:"Κεφ.4"},
+  {term:"Ανατοκισμός",def:"Τόκος πάνω στον τόκο. FV = PV·(1+i)^t.",ref:"Κεφ.3"},
+  {term:"Απλός τόκος",def:"I = P·i·t. Τόκος μόνο πάνω στο αρχικό κεφάλαιο.",ref:"Κεφ.2"},
+  {term:"Κανόνας 72",def:"72 ÷ i(%) = χρόνια διπλασιασμού. Προσέγγιση.",ref:"Κεφ.3"},
+  {term:"v (nu)",def:"Συντελεστής προεξόφλησης. v = 1/(1+i).",ref:"Κεφ.4"},
+  {term:"a(t|i)",def:"Παρούσα αξία ράντας 1€ για t περιόδους. (1−v^t)/i.",ref:"Κεφ.5"},
+  {term:"s(t|i)",def:"Τελική αξία ράντας. ((1+i)^t − 1)/i.",ref:"Κεφ.5"},
+  {term:"Πληθωρισμός",def:"Αύξηση γενικού επιπέδου τιμών. Μειώνει πραγματική αξία.",ref:"Κεφ.1"},
+  {term:"Ονομαστικό επιτόκιο",def:"Επιτόκιο χωρίς διόρθωση πληθωρισμού.",ref:"Κεφ.1"},
+  {term:"Πραγματικό επιτόκιο",def:"r ≈ i − π. Επιτόκιο μετά τον πληθωρισμό.",ref:"Κεφ.1"},
+  {term:"Διαφοροποίηση",def:"Ενίσχυση χαρτοφυλακίου. Μείωση μη συστηματικού κινδύνου.",ref:"Κεφ.0"},
+  {term:"Rebalancing",def:"Επαναπροσαρμογή βαρών χαρτοφυλακίου. Διατήρηση στόχου.",ref:"Κεφ.0"},
+  {term:"MIFID II",def:"Markets in Financial Instruments Directive. Κανονισμός χρηματοοικονομικών αγορών.",ref:"Κεφ.17"},
+  {term:"PRIIPs",def:"Packaged Retail Investment Products. Συμπεριλαμβάνει Unit-Linked.",ref:"Κεφ.17"},
+  {term:"Cost of capital",def:"Κόστος κεφαλαίου. Το r για προεξόφληση NPV.",ref:"Κεφ.7"},
+  {term:"Διηνεκής ράντα",def:"Άπειρες πληρωμές. PV = C/i ή C/(i−g).",ref:"Κεφ.6"},
+  {term:"Ληξιπρόθεσμη",def:"Πληρωμή στο τέλος περιόδου. Συνήθης ράντα.",ref:"Κεφ.5"},
+  {term:"Προκαταβλητέα",def:"Πληρωμή στην αρχή περιόδου. Π.χ. ενοίκιο.",ref:"Κεφ.5"}
+];
+
+function initAppendices(){
+  const root=document.getElementById("calcRefMount");
+  if(!root)return;
+  root.querySelectorAll(".app-tab").forEach((t,i)=>{t.classList.toggle("active",i===0);});
+  root.querySelectorAll(".app-panel").forEach((p,i)=>{p.classList.toggle("active",i===0);});
+  const exList=document.getElementById("exList");
+  if(exList&&!exList.dataset.done){
+    exList.innerHTML=EXERCISES.map((e,i)=>`<details class="ex-card"><summary>${i+1}. ${e.title}</summary><div class="ex-data">${e.data}</div><div class="ex-sol">${e.sol}</div></details>`).join("");
+    exList.dataset.done="1";
+  }
+  const glossList=document.getElementById("glossList");
+  if(glossList&&!glossList.dataset.done){
+    glossList.innerHTML=GLOSSARY.map(g=>`<div class="gloss-item" data-search="${(g.term+" "+g.def+" "+g.ref).toLowerCase()}"><div class="gloss-term">${g.term}</div><div class="gloss-def">${g.def}</div><div class="gloss-ref">${g.ref}</div></div>`).join("");
+    glossList.dataset.done="1";
+  }
+}
+
+function showApp(letter){
+  const root=document.getElementById("calcRefMount");
+  if(!root)return;
+  root.querySelectorAll(".app-tab").forEach(t=>{t.classList.toggle("active",t.dataset.app===letter);});
+  root.querySelectorAll(".app-panel").forEach(p=>{p.classList.toggle("active",p.id==="app"+letter);});
+}
+
+function getActiveCalcTab(){
+  const b=document.querySelector("#s-calc .ctab.active");
+  return b&&b.dataset.calc?b.dataset.calc:"compound";
+}
+
+const CALC_CTX_HTML={
+  compound:`<div class="calc-ctx-heads"><span class="calc-ctx-eq">FV = PV · (1+i)<sup>t</sup></span><span class="calc-ctx-eq">t<sub>διπλ.</sub> ≈ 72 / i%</span></div><p class="calc-ctx-map">Χάρτης: «ανατοκισμός», «σύνθετος τόκος» → FV = PV·(1+i)<sup>t</sup> · Κεφ. 3</p>`,
+  pv:`<div class="calc-ctx-heads"><span class="calc-ctx-eq">PV = FV · v<sup>t</sup></span><span class="calc-ctx-eq">v = 1/(1+i)</span></div><p class="calc-ctx-map">Χάρτης: «παρούσα αξία», «σήμερα αξίζει» → PV = FV·v<sup>t</sup> · Κεφ. 4</p>`,
+  r72:`<div class="calc-ctx-heads"><span class="calc-ctx-eq">t ≈ 72 / i(%)</span></div><p class="calc-ctx-map">Προσέγγιση διπλασιασμού κεφαλαίου · ίδια λογική για «διπλασιασμό» πληθωρισμού στο κείμενο από κάτω · Κεφ. 3</p>`,
+  gordon:`<div class="calc-ctx-heads"><span class="calc-ctx-eq">P = D₁ / (k − g)</span><span class="calc-ctx-eq">k &gt; g</span></div><p class="calc-ctx-map">Χάρτης: «μέρισμα για πάντα», «αποτίμηση μετοχής» → Gordon · Κεφ. 6</p>`,
+  npv:`<div class="calc-ctx-heads"><span class="calc-ctx-eq">NPV = Σ CF<sub>t</sub>/(1+r)<sup>t</sup> − I₀</span></div><p class="calc-ctx-map">Χάρτης: «αξίζει η επένδυση;», «cash flows» → NPV · Κεφ. 7</p>`
+};
+
+function updateCalcContext(tab){
+  const st=document.getElementById("calcCtxStatic");
+  const live=document.getElementById("calcCtxLive");
+  if(st)st.innerHTML=CALC_CTX_HTML[tab]||"";
+  if(live)live.textContent="";
+}
+
+function runCalcScreenInit(){
+  initAppendices();
+  const tab=getActiveCalcTab();
+  updateCalcContext(tab);
+  if(tab==="compound")cCalc();
+  else if(tab==="pv")pvCalc();
+  else if(tab==="r72"){
+    const sl=document.querySelector("#cc-r72 input[type=range]");
+    if(sl)r72Calc(sl);
+  }else if(tab==="gordon")gCalc();
+  else if(tab==="npv")nCalc();
+}
+
+function filterGloss(){
+  const q=(document.getElementById("glossSearch")||{}).value.toLowerCase().trim();
+  document.querySelectorAll("#glossList .gloss-item").forEach(el=>{
+    const search=el.dataset.search||"";
+    el.style.display=!q||search.includes(q)?"":"none";
+  });
+}
+
+function openC(id){curC=id;curS=0;go("chapter");renderC();refreshChaptersUI();}
+
+function renderC(){
+  const c=CHAPS[curC];
+  document.getElementById("cbadge").textContent="Κεφ."+c.id+" · Μέρος "+c.p;
+  document.getElementById("cbadge").className="badge "+c.c;
+  document.getElementById("ctitle").textContent=c.t;
+  document.getElementById("cinfo").textContent=(curC+1)+" / "+CHAPS.length;
+  document.getElementById("nextBtn").textContent=curS<c.steps.length-1?"Επόμενο →":"Επόμενο Κεφάλαιο →";
+  renderS(0);
+}
+
+function renderS(i){
+  curS=i;
+  const c=CHAPS[curC],n=c.steps.length;
+  const off=141-(141*(i+1)/n);
+  document.getElementById("ringFill").style.strokeDashoffset=off;
+  document.getElementById("ringLbl").textContent=Math.round((i+1)/n*100)+"%";
+  const sf=document.getElementById("sflow");
+  sf.innerHTML=c.steps.map((s,j)=>`${j>0?'<div class="sarr">›</div>':""}
+    <div class="snode${j===i?" active":""}" onclick="renderS(${j})"><div class="snum">0${j+1}</div><div class="slbl2">${s.l}</div></div>`).join("");
+  const cp=document.getElementById("cpanel");
+  cp.style.animation="none";cp.offsetHeight;cp.style.animation="fadeUp .3s ease";
+  cp.innerHTML=`<h3>${c.steps[i].t}</h3>${c.steps[i].h}`;
+  if(curC===3&&i===0)setTimeout(drawBars,80);
+  document.getElementById("nextBtn").textContent=i<n-1?"Επόμενο →":"Επόμενο Κεφάλαιο →";
+}
+
+function nextSorC(){
+  const c=CHAPS[curC];
+  if(curS<c.steps.length-1){renderS(curS+1);return;}
+  if(curC<CHAPS.length-1)openC(curC+1);
+  else{refreshChaptersUI();go("quiz");}
+}
+
+function prevC(){if(curC>0)openC(curC-1);}
+
+function drawBars(){
+  const w=document.getElementById("barViz");
+  if(!w)return;
+  const yrs=[5,10,15,20],P=1000,r=0.1,mx=P*Math.pow(1+r,20);
+  w.innerHTML=`<div class="bwrap">${yrs.map(y=>`<div class="bcol"><div class="bc" id="bc${y}" style="height:0px"></div><div class="bs" id="bs${y}" style="height:0px;margin-top:2px"></div><div class="byr">${y}έτη</div></div>`).join("")}</div>`;
+  setTimeout(()=>yrs.forEach(y=>{
+    document.getElementById("bc"+y).style.height=Math.round((P*Math.pow(1+r,y)/mx)*105)+"px";
+    document.getElementById("bs"+y).style.height=Math.round((P*(1+r*y)/mx)*105)+"px";
+  }),60);
+}
+
+function sw(name,btn){
+  updateCalcContext(name);
+  ["compound","pv","r72","gordon","npv"].forEach(n=>document.getElementById("cc-"+n).style.display=n===name?"block":"none");
+  document.querySelectorAll("#s-calc .ctab").forEach(t=>t.classList.remove("active"));
+  btn.classList.add("active");
+  if(name==="compound")cCalc();
+  if(name==="pv")pvCalc();
+  if(name==="r72"){
+    const sl=document.querySelector("#cc-r72 input[type=range]");
+    if(sl)r72Calc(sl);
+  }
+  if(name==="gordon")gCalc();
+  if(name==="npv")nCalc();
+}
+
+function fmt(n){return Math.round(n).toLocaleString("el-GR")+" €";}
+
+function cCalc(){
+  const sl=document.querySelectorAll("#cc-compound input[type=range]");
+  const PV=+sl[0].value,r=+sl[1].value/100,t=+sl[2].value;
+  document.getElementById("c-pv").textContent=Math.round(PV).toLocaleString("el-GR");
+  document.getElementById("c-r").textContent=(r*100).toFixed(1).replace(".",",");
+  document.getElementById("c-t").textContent=t;
+  const FV=PV*Math.pow(1+r,t),si=PV*r*t,ex=FV-PV-si,r72=Math.round(72/(r*100)*10)/10;
+  document.getElementById("c-fv").textContent=fmt(FV);
+  document.getElementById("c-hint").textContent="σε "+t+" χρόνια με "+(r*100).toFixed(1).replace(".",",")+"% ";
+  document.getElementById("c-b1").textContent=fmt(PV);
+  document.getElementById("c-b2").textContent=fmt(si);
+  document.getElementById("c-b3").textContent="+"+fmt(ex);
+  document.getElementById("c-b4").textContent="~"+r72+" χρόνια";
+  drawG(PV,r,t);
+  const liveC=document.getElementById("calcCtxLive");
+  if(liveC&&getActiveCalcTab()==="compound"){
+    const pvs=Math.round(PV).toLocaleString("el-GR");
+    const ir=(r*100).toFixed(1).replace(".",",");
+    liveC.textContent=`FV = ${pvs} € · (1+${ir}%)${t} ≈ ${Math.round(FV).toLocaleString("el-GR")} €`;
+  }
+}
+
+function pvCalc(){
+  const sl=document.querySelectorAll("#cc-pv input[type=range]");
+  const FV=+sl[0].value,r=+sl[1].value/100,t=+sl[2].value;
+  document.getElementById("p-fv").textContent=Math.round(FV).toLocaleString("el-GR");
+  document.getElementById("p-r").textContent=(r*100).toFixed(1).replace(".",",");
+  document.getElementById("p-t").textContent=t;
+  const PV=FV/Math.pow(1+r,t);
+  document.getElementById("p-res").textContent=fmt(PV);
+  document.getElementById("p-b1").textContent=fmt(FV);
+  document.getElementById("p-b2").textContent=fmt(PV);
+  document.getElementById("p-b3").textContent="−"+fmt(FV-PV);
+  const liveP=document.getElementById("calcCtxLive");
+  if(liveP&&getActiveCalcTab()==="pv"){
+    const fvs=Math.round(FV).toLocaleString("el-GR");
+    const ir=(r*100).toFixed(1).replace(".",",");
+    liveP.textContent=`PV = ${fvs} € / (1+${ir}%)${t} ≈ ${Math.round(PV).toLocaleString("el-GR")} €`;
+  }
+}
+
+function r72Calc(sl){
+  const r=+sl.value,yrs=(72/r).toFixed(1);
+  document.getElementById("r-v").textContent=r.toFixed(1).replace(".",",");
+  document.getElementById("r-ans").textContent=yrs;
+  document.getElementById("r-inf").textContent=r.toFixed(1).replace(".",",");
+  document.getElementById("r-iyr").textContent=yrs;
+  const liveR=document.getElementById("calcCtxLive");
+  if(liveR&&getActiveCalcTab()==="r72"){
+    const ir=r.toFixed(1).replace(".",",");
+    liveR.textContent=`72 / ${ir} ≈ ${yrs.replace(".",",")} έτη (διπλασιασμός κεφαλαίου)`;
+  }
+}
+
+function gCalc(){
+  const sl=document.querySelectorAll("#cc-gordon input[type=range]");
+  const D=+sl[0].value,k=+sl[1].value/100,g=+sl[2].value/100;
+  document.getElementById("g-d").textContent=D.toFixed(2).replace(".",",");
+  document.getElementById("g-k").textContent=(k*100).toFixed(1).replace(".",",");
+  document.getElementById("g-g").textContent=(g*100).toFixed(1).replace(".",",");
+  const sp=k-g;
+  const liveG=document.getElementById("calcCtxLive");
+  if(sp<=0){
+    document.getElementById("g-res").textContent="∞";
+    document.getElementById("g-sp").textContent="—";
+    if(liveG&&getActiveCalcTab()==="gordon")liveG.textContent="Αν k ≤ g ο τύπος Gordon δεν ορίζεται πεπερασμένα.";
+    return;
+  }
+  document.getElementById("g-res").textContent=(D/sp).toFixed(2).replace(".",",")+" €";
+  document.getElementById("g-sp").textContent=(sp*100).toFixed(1).replace(".",",")+"%";
+  if(liveG&&getActiveCalcTab()==="gordon"){
+    const d1=D.toFixed(2).replace(".",",");
+    const gk=(k*100).toFixed(1).replace(".",",");
+    const gg=(g*100).toFixed(1).replace(".",",");
+    const gsp=(sp*100).toFixed(1).replace(".",",");
+    liveG.textContent=`P = ${d1} / (${gk}% − ${gg}%) = ${d1} / ${gsp}% ≈ ${(D/sp).toFixed(2).replace(".",",")} €`;
+  }
+}
+
+function nCalc(){
+  const sl=document.querySelectorAll("#cc-npv input[type=range]");
+  const inv=+sl[0].value,cf=+sl[1].value,r=+sl[2].value/100,t=+sl[3].value;
+  document.getElementById("n-inv").textContent=Math.round(inv).toLocaleString("el-GR");
+  document.getElementById("n-cf").textContent=Math.round(cf).toLocaleString("el-GR");
+  document.getElementById("n-r").textContent=(r*100).toFixed(1).replace(".",",");
+  document.getElementById("n-t").textContent=t;
+  let pv=0;for(let i=1;i<=t;i++)pv+=cf/Math.pow(1+r,i);
+  const npv=pv-inv;
+  document.getElementById("n-res").textContent=(npv>=0?"+":"")+fmt(npv);
+  document.getElementById("n-res").style.color=npv>=0?"var(--teal3)":"var(--coral3)";
+  document.getElementById("n-vrd").textContent=npv>1000?"Θετικό":npv>0?"Οριακά θετικό":npv>-1000?"Οριακά αρνητικό":"Αρνητικό";
+  document.getElementById("n-pv").textContent=fmt(pv);
+  document.getElementById("n-i0").textContent=fmt(inv);
+  document.getElementById("n-dec").textContent=npv>=0?"Αποδοχή ✓":"Απόρριψη ✗";
+  document.getElementById("n-dec").style.color=npv>=0?"var(--teal3)":"var(--coral3)";
+  const liveN=document.getElementById("calcCtxLive");
+  if(liveN&&getActiveCalcTab()==="npv"){
+    const ir=(r*100).toFixed(1).replace(".",",");
+    liveN.textContent=`PV ροών (${t} έτη) ≈ ${Math.round(pv).toLocaleString("el-GR")} €  →  NPV = ${Math.round(pv).toLocaleString("el-GR")} − ${Math.round(inv).toLocaleString("el-GR")} = ${(npv>=0?"+":"")+Math.round(npv).toLocaleString("el-GR")} €`;
+  }
+}
+
+function drawG(PV,r,t){
+  const cv=document.getElementById("gc");if(!cv)return;
+  const dpr=window.devicePixelRatio||1,W=cv.clientWidth||600,H=160;
+  cv.width=W*dpr;cv.height=H*dpr;
+  const ctx=cv.getContext("2d");ctx.scale(dpr,dpr);
+  const pl=36,pr=12,pt=12,pb=20,cW=W-pl-pr,cH=H-pt-pb;
+  const mx=PV*Math.pow(1+r,t);
+  ctx.clearRect(0,0,W,H);
+  for(let i=0;i<=4;i++){
+    const y=pt+cH*(1-i/4);
+    ctx.strokeStyle="rgba(255,255,255,0.05)";ctx.lineWidth=0.5;
+    ctx.beginPath();ctx.moveTo(pl,y);ctx.lineTo(pl+cW,y);ctx.stroke();
+    ctx.fillStyle="rgba(255,255,255,0.25)";ctx.font="9px DM Sans";ctx.textAlign="right";
+    ctx.fillText(Math.round(mx*i/4/1000)+"k",pl-4,y+3);
+  }
+  ctx.beginPath();ctx.strokeStyle="rgba(55,138,221,0.55)";ctx.lineWidth=1.5;ctx.setLineDash([4,3]);
+  for(let i=0;i<=t;i++){const x=pl+cW*(i/t);const y=pt+cH*(1-PV*(1+r*i)/mx);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+  ctx.stroke();ctx.setLineDash([]);
+  ctx.beginPath();
+  for(let i=0;i<=t;i++){const x=pl+cW*(i/t);const y=pt+cH*(1-PV*Math.pow(1+r,i)/mx);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+  ctx.lineTo(pl+cW,pt+cH);ctx.lineTo(pl,pt+cH);ctx.closePath();
+  const gd=ctx.createLinearGradient(0,pt,0,pt+cH);
+  gd.addColorStop(0,"rgba(29,158,117,0.3)");gd.addColorStop(1,"rgba(29,158,117,0.02)");
+  ctx.fillStyle=gd;ctx.fill();
+  ctx.beginPath();ctx.strokeStyle="rgba(29,158,117,0.9)";ctx.lineWidth=2;
+  for(let i=0;i<=t;i++){const x=pl+cW*(i/t);const y=pt+cH*(1-PV*Math.pow(1+r,i)/mx);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+  ctx.stroke();
+}
+
+function loadQuestionBank(){
+  document.getElementById("qLoading").style.display="block";
+  document.getElementById("qLoadErr").style.display="none";
+  return fetch("questions_bank.json").then(r=>{
+    if(!r.ok)throw new Error("Δεν βρέθηκε το questions_bank.json");
+    return r.json();
+  }).then(data=>{
+    QBANK=data;
+    document.getElementById("qLoading").style.display="none";
+    refreshHomeStats();
+    populateChapterSelect();
+    if(document.getElementById("s-quiz")&&document.getElementById("s-quiz").classList.contains("active")&&!ulQuizHasActiveWork())tryRestoreUlQuizState();
+    return data;
+  }).catch(err=>{
+    document.getElementById("qLoading").style.display="none";
+    document.getElementById("qLoadErr").style.display="block";
+    document.getElementById("qLoadErr").innerHTML=`<strong>Σφάλμα φόρτωσης:</strong> ${err.message}. Βεβαιωθείτε ότι το <code>questions_bank.json</code> βρίσκεται στον ίδιο φάκελο με το index.html. Για τοπική εκτέλεση χρησιμοποιήστε local server (π.χ. <code>npx serve .</code> ή Live Server).`;
+    throw err;
+  });
+}
+
+function chapterSortKey(code){
+  const ul=/^UL-Μ(\d+)(·(\d+))?$/.exec(code);
+  if(ul){
+    const maj=+ul[1];
+    const sub=ul[3]!=null?+ul[3]:0;
+    return{grp:0,maj,sub};
+  }
+  const xr=/^ΧΡΗΜ-Κ(\d+)(½)?$/.exec(code);
+  if(xr)return{grp:1,num:+xr[1]+(xr[2]?0.5:0)};
+  return{grp:2,raw:String(code)};
+}
+function compareChapterCodes(a,b){
+  const A=chapterSortKey(a),B=chapterSortKey(b);
+  if(A.grp!==B.grp)return A.grp-B.grp;
+  if(A.grp===0){
+    if(A.maj!==B.maj)return A.maj-B.maj;
+    return A.sub-B.sub;
+  }
+  if(A.grp===1)return A.num-B.num;
+  return String(a).localeCompare(String(b),"el");
+}
+function chapterDisplayLabel(id){
+  if(!id)return"";
+  if(!QBANK||!Array.isArray(QBANK.chapterCatalog))return id;
+  const row=QBANK.chapterCatalog.find(x=>x.id===id);
+  if(row&&row.title)return row.title;
+  return id;
+}
+function chapterShortLabel(id){
+  const t=chapterDisplayLabel(id);
+  if(t.length<=52)return t;
+  return t.slice(0,49)+"…";
+}
+
+const CAT_CHAPTER_PROMPT_VALUE="__prompt__";
+const LS_UL_CHAPTER_READ="axiaXronou_ul_chapter_read_v1";
+const LS_UL_CHAPTER_LAST="axiaXronou_ul_chapter_last_v1";
+const LS_PRA_UNIT_READ="axiaXronou_praktoras_unit_read_v1";
+const LS_PRA_UNIT_LAST_IDX="axiaXronou_praktoras_unit_last_idx_v1";
+function ulChapterReadMap(){
+  try{return JSON.parse(localStorage.getItem(LS_UL_CHAPTER_READ)||"{}");}catch(e){return{};}
+}
+function ulChapterSetRead(code,on){
+  const m=ulChapterReadMap();
+  if(on)m[code]=1;else delete m[code];
+  localStorage.setItem(LS_UL_CHAPTER_READ,JSON.stringify(m));
+}
+function ulChapterIsRead(code){return !!ulChapterReadMap()[code];}
+function praUnitReadMap(){
+  try{return JSON.parse(localStorage.getItem(LS_PRA_UNIT_READ)||"{}");}catch(e){return{};}
+}
+function praUnitSetRead(title,on){
+  const m=praUnitReadMap();
+  if(on)m[title]=1;else delete m[title];
+  localStorage.setItem(LS_PRA_UNIT_READ,JSON.stringify(m));
+}
+function praUnitIsRead(title){return !!praUnitReadMap()[title];}
+
+function insuranceBankTotalQuestionCount(rows){
+  if(!rows||!rows.length)return 0;
+  const first=rows[0];
+  return first&&Number(first.count)>0?Number(first.count):0;
+}
+function insuranceBankCheckedQuestionSum(rows,map){
+  if(!rows||!rows.length)return 0;
+  const bankTotal=insuranceBankTotalQuestionCount(rows);
+  const first=rows[0];
+  if(first&&first.title&&map[first.title]){
+    const n=Number(first.count)||0;
+    return bankTotal>0?Math.min(n,bankTotal):n;
+  }
+  let s=0;
+  for(let i=1;i<rows.length;i++){
+    const r=rows[i];
+    if(r&&r.title&&map[r.title])s+=Number(r.count)||0;
+  }
+  return bankTotal>0?Math.min(s,bankTotal):s;
+}
+function appendQuizChapterMenuFooter(menu,elementId){
+  if(!menu)return;
+  let foot=document.getElementById(elementId);
+  if(!foot){
+    foot=document.createElement("p");
+    foot.id=elementId;
+    foot.className="quiz-checked-footer quiz-chapter-menu-footer";
+    foot.setAttribute("role","status");
+    foot.setAttribute("aria-live","polite");
+  }
+  menu.appendChild(foot);
+}
+
+function updateQuizHomeCheckedFooters(){
+  const ulFoot=document.getElementById("quizUlCheckedFooter");
+  if(ulFoot){
+    let checked=0,total=0;
+    if(QBANK&&Array.isArray(QBANK.questions)){
+      const chaps=[...new Set(QBANK.questions.map(q=>q.chapter))].sort(compareChapterCodes);
+      const m=ulChapterReadMap();
+      for(let i=0;i<chaps.length;i++){
+        const c=chaps[i];
+        if(m[c])checked+=countQuestionsForChapter(c);
+      }
+      total=QBANK.questions.length;
+      if(total>0)checked=Math.min(checked,total);
+    }
+    ulFoot.textContent="Τσεκαρισμένες ερωτήσεις · "+checked+" / "+total;
+  }
+  const praFoot=document.getElementById("quizPraCheckedFooter");
+  if(praFoot&&PRA_UNIT_PICK_ROWS&&PRA_UNIT_PICK_ROWS.length){
+    const pm=praUnitReadMap();
+    const tot=insuranceBankTotalQuestionCount(PRA_UNIT_PICK_ROWS);
+    const checked=insuranceBankCheckedQuestionSum(PRA_UNIT_PICK_ROWS,pm);
+    praFoot.textContent="Τσεκαρισμένες ερωτήσεις · "+checked+" / "+tot;
+  }
+}
+
+function formatQuestionCount(n){
+  return n===1?"1 ερώτηση":n+" ερωτήσεις";
+}
+
+function countQuestionsForChapter(ch){
+  if(!QBANK||!Array.isArray(QBANK.questions))return 0;
+  if(ch===CAT_CHAPTER_PROMPT_VALUE)return 0;
+  return ch?QBANK.questions.filter(q=>q.chapter===ch).length:QBANK.questions.length;
+}
+
+function setCatChapterCountTextForValue(ch){
+  const out=document.getElementById("catChapterCount");
+  if(!out)return;
+  if(!QBANK||!Array.isArray(QBANK.questions)){out.textContent="—";return;}
+  if(ch===CAT_CHAPTER_PROMPT_VALUE){out.textContent="—";return;}
+  out.textContent=formatQuestionCount(countQuestionsForChapter(ch));
+}
+
+function updateCatChapterCount(){
+  const sel=document.getElementById("catChapter");
+  if(!sel)return;
+  setCatChapterCountTextForValue(sel.value);
+}
+
+function syncCatChapterTriggerLabel(){
+  const sel=document.getElementById("catChapter");
+  const trig=document.getElementById("catChapterTrigger");
+  if(!sel||!trig)return;
+  if(sel.value===CAT_CHAPTER_PROMPT_VALUE){trig.textContent="ΕΠΙΛΕΞΤΕ ΚΕΦΑΛΑΙΟ";return;}
+  const opt=sel.selectedOptions[0];
+  trig.textContent=opt?opt.textContent:"ΕΠΙΛΕΞΤΕ ΚΕΦΑΛΑΙΟ";
+}
+
+function refreshCatChapterAriaSelected(){
+  const sel=document.getElementById("catChapter");
+  const menu=document.getElementById("catChapterMenu");
+  if(!sel||!menu)return;
+  const v=sel.value;
+  menu.querySelectorAll(".quiz-chapter-item").forEach(btn=>{
+    btn.setAttribute("aria-selected",btn.dataset.chapter===v?"true":"false");
+  });
+}
+
+function closeCatChapterMenu(){
+  const menu=document.getElementById("catChapterMenu");
+  const trig=document.getElementById("catChapterTrigger");
+  if(menu)menu.hidden=true;
+  if(trig)trig.setAttribute("aria-expanded","false");
+  document.removeEventListener("click",catChapterOutsideClose,true);
+}
+
+function catChapterOutsideClose(e){
+  const wrap=document.getElementById("catChapterWrap");
+  if(wrap&&!wrap.contains(e.target))closeCatChapterMenu();
+}
+
+function openCatChapterMenu(){
+  const menu=document.getElementById("catChapterMenu");
+  const trig=document.getElementById("catChapterTrigger");
+  if(!menu||!trig)return;
+  menu.hidden=false;
+  trig.setAttribute("aria-expanded","true");
+  updateQuizHomeCheckedFooters();
+  requestAnimationFrame(()=>document.addEventListener("click",catChapterOutsideClose,true));
+}
+
+function toggleCatChapterMenu(e){
+  e.stopPropagation();
+  const menu=document.getElementById("catChapterMenu");
+  if(!menu)return;
+  if(menu.hidden)openCatChapterMenu();
+  else closeCatChapterMenu();
+}
+
+function catChapterPickerKey(e){
+  if(e.key!=="Escape")return;
+  const menu=document.getElementById("catChapterMenu");
+  if(menu&&!menu.hidden)closeCatChapterMenu();
+  closeMesUnitMenu();
+}
+
+function initCatChapterPicker(){
+  const trig=document.getElementById("catChapterTrigger");
+  const menu=document.getElementById("catChapterMenu");
+  if(trig&&!trig.dataset.bound){
+    trig.dataset.bound="1";
+    trig.addEventListener("click",toggleCatChapterMenu);
+  }
+  if(menu&&!menu.dataset.leaveBound){
+    menu.dataset.leaveBound="1";
+    menu.addEventListener("mouseleave",()=>updateCatChapterCount());
+    menu.addEventListener("focusout",e=>{
+      if(!menu.contains(e.relatedTarget))updateCatChapterCount();
+    });
+  }
+}
+
+function populateChapterSelect(){
+  if(!QBANK)return;
+  initCatChapterPicker();
+  const chaps=[...new Set(QBANK.questions.map(q=>q.chapter))].sort(compareChapterCodes);
+  const sel=document.getElementById("catChapter");
+  const menu=document.getElementById("catChapterMenu");
+  if(!sel||!menu)return;
+  const PROMPT=CAT_CHAPTER_PROMPT_VALUE;
+  sel.innerHTML="";
+  const oPrompt=document.createElement("option");
+  oPrompt.value=PROMPT;
+  oPrompt.textContent="ΕΠΙΛΕΞΤΕ ΚΕΦΑΛΑΙΟ";
+  sel.appendChild(oPrompt);
+  const oAll=document.createElement("option");
+  oAll.value="";
+  oAll.textContent="Όλα τα κεφάλαια";
+  sel.appendChild(oAll);
+  chaps.forEach(c=>{
+    const o=document.createElement("option");
+    o.value=c;
+    o.textContent=chapterDisplayLabel(c);
+    sel.appendChild(o);
+  });
+  const last=localStorage.getItem(LS_UL_CHAPTER_LAST);
+  if(last!==null&&[...sel.options].some(o=>o.value===last))sel.value=last;
+  else sel.value=PROMPT;
+  menu.innerHTML="";
+  const addItem=(value,label,withMark)=>{
+    const n=countQuestionsForChapter(value);
+    const row=document.createElement("div");
+    row.className="quiz-chapter-menu-row";
+    const btn=document.createElement("button");
+    btn.type="button";
+    btn.className="quiz-chapter-item";
+    btn.setAttribute("role","option");
+    btn.dataset.chapter=value;
+    btn.textContent=label;
+    btn.title=formatQuestionCount(n);
+    btn.addEventListener("mouseenter",()=>setCatChapterCountTextForValue(value));
+    btn.addEventListener("focus",()=>setCatChapterCountTextForValue(value));
+    btn.addEventListener("click",()=>{
+      sel.value=value;
+      try{localStorage.setItem(LS_UL_CHAPTER_LAST,sel.value);}catch(e){}
+      syncCatChapterTriggerLabel();
+      refreshCatChapterAriaSelected();
+      closeCatChapterMenu();
+      updateCatChapterCount();
+    });
+    row.appendChild(btn);
+    if(withMark){
+      const cb=document.createElement("input");
+      cb.type="checkbox";
+      cb.className="quiz-chapter-done-cb";
+      cb.title="Σημείωση για μένα: το έχω διαβάσει / εξασκήσει";
+      cb.setAttribute("aria-label","Σημείωση: ολοκληρώθηκε");
+      cb.checked=ulChapterIsRead(value);
+      cb.addEventListener("click",e=>e.stopPropagation());
+      cb.addEventListener("change",()=>{ulChapterSetRead(value,cb.checked);updateQuizHomeCheckedFooters();});
+      row.appendChild(cb);
+    }else{
+      const sp=document.createElement("span");
+      sp.className="quiz-chapter-done-spacer";
+      sp.setAttribute("aria-hidden","true");
+      row.appendChild(sp);
+    }
+    menu.appendChild(row);
+  };
+  addItem("","Όλα τα κεφάλαια",false);
+  chaps.forEach(c=>addItem(c,chapterDisplayLabel(c),true));
+  appendQuizChapterMenuFooter(menu,"quizUlCheckedFooter");
+  syncCatChapterTriggerLabel();
+  refreshCatChapterAriaSelected();
+  updateCatChapterCount();
+  updateQuizHomeCheckedFooters();
+}
+
+function setQuizModeSelection(mode){
+  const ul=document.getElementById("quizModeCardUl");
+  const pr=document.getElementById("quizModeCardPraktoras");
+  const catOpts=document.getElementById("qCatOpts");
+  const praOpts=document.getElementById("qPraktorasOpts");
+  if(catOpts){
+    catOpts.classList.remove("quiz-options-accent-ul");
+  }
+  if(praOpts){
+    praOpts.classList.remove("quiz-options-accent-praktoras");
+  }
+  if(ul){
+    ul.classList.remove("quiz-mode-selected-ul");
+    ul.setAttribute("aria-pressed","false");
+  }
+  if(pr){
+    pr.classList.remove("quiz-mode-selected-praktoras");
+    pr.setAttribute("aria-pressed","false");
+  }
+  if(mode==="ul"&&ul){
+    ul.classList.add("quiz-mode-selected-ul");
+    ul.setAttribute("aria-pressed","true");
+    if(catOpts)catOpts.classList.add("quiz-options-accent-ul");
+  }
+  if(mode==="praktoras"&&pr){
+    pr.classList.add("quiz-mode-selected-praktoras");
+    pr.setAttribute("aria-pressed","true");
+    if(praOpts)praOpts.classList.add("quiz-options-accent-praktoras");
+  }
+}
+
+function cancelQuizCatOpts(){
+  document.getElementById("qCatOpts").style.display="none";
+  setQuizModeSelection(null);
+}
+
+function resetQuizPraktorasBrowseState(){
+  const g=document.querySelector("#s-quiz .quiz-mode-grid");
+  if(g)g.style.display="";
+  const saved=yliAct;
+  yliAct=YLI_CTX_AGENT_QUIZ;
+  showYliBrowse();
+  YLI_CTX_AGENT_QUIZ.list=[];YLI_CTX_AGENT_QUIZ.idx=0;
+  for(const k of Object.keys(YLI_CTX_AGENT_QUIZ.ans))delete YLI_CTX_AGENT_QUIZ.ans[k];
+  YLI_CTX_AGENT_QUIZ.optOrderByIdx={};
+  YLI_CTX_AGENT_QUIZ.shuffleAns=false;
+  YLI_CTX_AGENT_QUIZ._mesShuffledQ=false;
+  yliAct=saved;
+}
+
+function cancelPraktorasQuizOpts(){
+  resetQuizPraktorasBrowseState();
+  document.getElementById("qPraktorasOpts").style.display="none";
+  setQuizModeSelection(null);
+}
+
+function startPraktorasMode(){
+  setQuizModeSelection("praktoras");
+  document.getElementById("qCatOpts").style.display="none";
+  document.getElementById("qPraktorasOpts").style.display="block";
+  yliAct=YLI_CTX_AGENT_QUIZ;
+  loadYliManifestIfNeeded();
+}
+
+function showQuizStart(){
+  document.getElementById("qStart").style.display="block";
+  document.getElementById("qRun").style.display="none";
+  document.getElementById("qRes").style.display="none";
+  document.getElementById("qCatOpts").style.display="none";
+  document.getElementById("qPraktorasOpts").style.display="none";
+  resetQuizPraktorasBrowseState();
+  setQuizModeSelection(null);
+}
+
+function startQuizMode(){
+  document.getElementById("qPraktorasOpts").style.display="none";
+  resetQuizPraktorasBrowseState();
+  setQuizModeSelection("ul");
+  document.getElementById("qCatOpts").style.display="block";
+  updateCatChapterCount();
+}
+
+function correctAnswerText(q){
+  const k=q&&q.correct;
+  return k&&q.options&&q.options[k]!=null?String(q.options[k]).trim():"";
+}
+function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function launchCategories(){
+  /* Στυλιανός — εκκίνηση quiz Unit Linked από επιλεγμένο κεφάλαιο. */
+  if(!QBANK){loadQuestionBank();setTimeout(launchCategories,500);return;}
+  const ch=document.getElementById("catChapter").value;
+  if(ch===CAT_CHAPTER_PROMPT_VALUE){alert("Επίλεξε κεφάλαιο από τη λίστα (ή «Όλα τα κεφάλαια»).");return;}
+  let filtered=QBANK.questions;
+  if(ch)filtered=filtered.filter(q=>q.chapter===ch);
+  qShuffleQuestionOrder=!!document.getElementById("catShuffleQ").checked;
+  qShuffleAnswers=false;
+  const copy=filtered.slice();
+  qList=qShuffleQuestionOrder?shuffle(copy):copy;
+  if(qList.length===0){alert("Δεν βρέθηκαν ερωτήσεις με τα επιλεγμένα κριτήρια.");return;}
+  document.getElementById("qCatOpts").style.display="none";
+  startQuizRun(0);
+}
+
+function startQuizRun(timerMins){
+  qIdx=0;qScore=0;qAns=false;qAnsByIdx={};qOptOrderByIdx={};qTimerPaused=false;
+  document.getElementById("qStart").style.display="none";
+  document.getElementById("qRun").style.display="block";
+  document.getElementById("qRes").style.display="none";
+  document.getElementById("qNavPrev").style.display="none";
+  document.getElementById("qNavNext").style.display="none";
+  if(timerMins>0){
+    qTimerMins=timerMins;qTimerSecs=0;
+    document.getElementById("qTimer").style.display="block";
+    document.getElementById("qTimer").textContent=String(qTimerMins).padStart(2,"0")+":00";
+    if(qTimerId)clearInterval(qTimerId);
+    qTimerId=setInterval(()=>{
+      if(qTimerSecs===0){qTimerSecs=59;qTimerMins--;}else qTimerSecs--;
+      if(qTimerMins<0){clearInterval(qTimerId);qTimerId=null;finishQuiz();return;}
+      document.getElementById("qTimer").textContent=String(qTimerMins).padStart(2,"0")+":"+String(qTimerSecs).padStart(2,"0");
+    },1000);
+  }else document.getElementById("qTimer").style.display="none";
+  renderQ();
+  saveUlQuizState();
+}
+
+function finishQuiz(){
+  clearUlQuizState();
+  if(qTimerId){clearInterval(qTimerId);qTimerId=null;}
+  document.getElementById("qRun").style.display="none";
+  document.getElementById("qRes").style.display="block";
+  const retryBtn=document.getElementById("qRetryWrongBtn");
+  const answered=Object.keys(qAnsByIdx).length;
+  const denom=answered||qList.length;
+  document.getElementById("qScore").textContent=qScore+"/"+(answered?answered:qList.length)+(answered<qList.length?" (από "+qList.length+")":"");
+  const p=denom?Math.round(qScore/denom*100):0;
+  document.getElementById("qMsg").textContent=p===100?"Άριστα! Πλήρης κατανόηση.":p>=71?"Πολύ καλά! Επανέλαβε τις λανθασμένες.":"Χρειάζεται λίγη ακόμα εξάσκηση.";
+  document.getElementById("qReviewHint").textContent="Κάθε ερώτηση εμφανίζει την σωστή απάντηση και την εξήγηση μετά την επιλογή σου.";
+  qLastWrongList=[];
+  for(let i=0;i<qList.length;i++){
+    const a=qAnsByIdx[i];
+    if(a&&a.ok===false)qLastWrongList.push(qList[i]);
+  }
+  if(retryBtn)retryBtn.style.display=qLastWrongList.length>0?"inline-block":"none";
+}
+
+function retryWrongQuestions(){
+  if(!qLastWrongList.length)return;
+  const w=qLastWrongList.slice();
+  qList=qShuffleQuestionOrder?shuffle(w):w;
+  document.getElementById("qRes").style.display="none";
+  startQuizRun(0);
+}
+
+function backToQuizStart(){
+  clearUlQuizState();
+  if(qTimerId){clearInterval(qTimerId);qTimerId=null;}
+  showQuizStart();
+}
+
+function optionKeysForQuestion(q,idx){
+  if(q&&q.correct&&q.options&&q.options[q.correct])return [q.correct];
+  return ["α","β","γ","δ"].filter(k=>q.options&&q.options[k]);
+}
+
+function formatQuizSolutionBody(raw){
+  const hrCls="ul-sol-hr";
+  let s=String(raw??"");
+  const re=/\[\[(Y|R)\]\]([\s\S]*?)\[\[\/\1\]\]/g;
+  const chunks=[];
+  let last=0,m;
+  while((m=re.exec(s))!==null){
+    chunks.push({t:"p",v:s.slice(last,m.index)});
+    chunks.push({t:m[1]==="Y"?"y":"r",v:m[2]});
+    last=re.lastIndex;
+  }
+  chunks.push({t:"p",v:s.slice(last)});
+  function fmtPlain(t){
+    let x=htmlEsc(t);
+    x=x.replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>");
+    x=x.replace(/^---[\s]*$/gm,'<hr class="'+hrCls+'">');
+    return x.replace(/\n/g,"<br>");
+  }
+  function fmtYellow(t){
+    let x=htmlEsc(t);
+    x=x.replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>");
+    return `<span class="sol-hl-yellow">${x}</span>`.replace(/\n/g,"<br>");
+  }
+  function fmtRed(t){
+    let x=htmlEsc(t);
+    x=x.replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>");
+    return `<span class="sol-hl-neon-red">${x}</span>`.replace(/\n/g,"<br>");
+  }
+  return chunks.map(c=>c.t==="p"?fmtPlain(c.v):c.t==="y"?fmtYellow(c.v):fmtRed(c.v)).join("");
+}
+function quizModalMetaHtml(q){
+  const parts=[];
+  if(q.id!=null&&String(q.id).length)parts.push("<span>"+htmlEsc("id "+String(q.id))+"</span>");
+  if(q.chapter)parts.push("<span>"+htmlEsc(q.chapter)+"</span>");
+  const t=q.topic?String(q.topic):"";
+  if(t)parts.push("<span>"+htmlEsc(t.length>140?t.slice(0,137)+"…":t)+"</span>");
+  return parts.length?`<span class="ul-modal-meta-line">${parts.join(" · ")}</span>`:"";
+}
+function yliModalMetaHtml(q){
+  const parts=[];
+  if(q.sheetName)parts.push("<span>"+htmlEsc(q.sheetName)+"</span>");
+  if(q.chapter)parts.push("<span>"+htmlEsc(q.chapter)+"</span>");
+  const ht=q.headerTitle?String(q.headerTitle):"";
+  if(ht)parts.push("<span>"+htmlEsc(ht.length>80?ht.slice(0,77)+"…":ht)+"</span>");
+  return parts.length?`<span class="ul-modal-meta-line">${parts.join(" · ")}</span>`:"";
+}
+function openUlSolutionModal(spec){
+  const ov=document.getElementById("ulSolModal");
+  if(!ov)return;
+  const ttl=document.getElementById("ulSolModalTitle");
+  const mt=document.getElementById("ulSolModalMeta");
+  const bd=document.getElementById("ulSolModalBody");
+  if(ttl)ttl.textContent=spec.title||"Ανάλυση";
+  if(mt)mt.innerHTML=spec.metaHtml||"";
+  if(bd)bd.innerHTML=spec.bodyHtml||"";
+  ov.style.display="flex";
+  document.body.style.overflow="hidden";
+}
+function closeUlSolutionModal(){
+  const ov=document.getElementById("ulSolModal");
+  if(!ov)return;
+  ov.style.display="none";
+  document.body.style.overflow="";
+}
+
+function ulSolModalBackdropClick(ev){
+  if(ev.target.id==="ulSolModal")closeUlSolutionModal();
+}
+function openUlSolutionModalFromQuiz(){
+  if(!qList.length||qIdx<0||qIdx>=qList.length)return;
+  const q=qList[qIdx];
+  const sol=String(q.solution||"").trim();
+  if(!sol)return;
+  openUlSolutionModal({
+    title:"Αναλυτική μέθοδος & βήματα",
+    metaHtml:quizModalMetaHtml(q),
+    bodyHtml:formatQuizSolutionBody(sol)
+  });
+}
+function openUlSolutionModalFromYli(){
+  const ctx=window.yliAct;
+  if(!ctx||!ctx.list||ctx.idx<0||ctx.idx>=ctx.list.length)return;
+  const q=ctx.list[ctx.idx];
+  const sol=String(q.solution||"").trim();
+  if(!sol)return;
+  openUlSolutionModal({
+    title:"Αναλυτική μέθοδος & βήματα",
+    metaHtml:yliModalMetaHtml(q),
+    bodyHtml:formatQuizSolutionBody(sol)
+  });
+}
+function openUlTableGuideModal(){
+  openUlSolutionModal({
+    title:"Οδηγός πινάκων προεξόφλησης (ΤτΕ)",
+    metaHtml:'<span class="ul-modal-muted">Σύντομη μεθοδολογία για τις χρηματοοικονομικές ασκήσεις</span>',
+    bodyHtml:UL_PINAKON_GUIDE_HTML
+  });
+}
+function ulSolutionModalOnKeydown(e){
+  if(e.key!=="Escape")return;
+  const m=document.getElementById("ulSolModal");
+  if(m&&m.style.display==="flex")closeUlSolutionModal();
+}
+
+function quizSolutionDetailsHtml(q){
+  const sol=String(q.solution||"").trim();
+  if(!sol)return"";
+  const body=formatQuizSolutionBody(sol);
+  const btn=`<div class="ul-sol-modal-actions"><button type="button" class="btn-s ul-sol-open-modal" onclick="openUlSolutionModalFromQuiz()">Πλήρης ανάλυση σε παράθυρο</button></div>`;
+  return `<details class="quiz-fb-sol"><summary class="quiz-fb-sum">Σύντομη αναλυτική λύση (επέκταση εδώ)</summary><div class="quiz-fb-exp quiz-fb-solbody">${body}</div></details>${btn}`;
+}
+
+function quizFeedbackHtml(ok,q,orderKeys,chosenIdx){
+  const exp=String(q.explanation||"").trim();
+  const solD=quizSolutionDetailsHtml(q);
+  const rt=correctAnswerText(q);
+  const head=rt?`<p class="quiz-fb-line">✓ Σωστή απάντηση: ${htmlEsc(rt)}</p>`:`<p class="quiz-fb-line">✓ Σωστή απάντηση</p>`;
+  const expP=exp?`<p class="quiz-fb-exp">${htmlEsc(exp)}</p>`:"";
+  return head+expP+solD;
+}
+
+function markUlQuestionSeen(){
+  if(!qList.length||qIdx<0||qIdx>=qList.length)return;
+  if(!qAnsByIdx[qIdx]){
+    qAnsByIdx[qIdx]={i:0,correctIdx:0,ok:true};
+    qScore++;
+  }
+  qAns=true;
+  if(qTimerId){pauseTimer();}
+}
+
+function renderQ(){
+  if(qIdx>=qList.length){finishQuiz();return;}
+  const q=qList[qIdx];
+  const ansText=correctAnswerText(q)||"—";
+  markUlQuestionSeen();
+  document.getElementById("qFill").style.width=Math.round(qIdx/qList.length*100)+"%";
+  document.getElementById("qLbl").textContent=(qIdx+1)+"/"+qList.length;
+  const ansBlock=`<div class="ans-only seen">${htmlEsc(ansText)}</div>`;
+  const qidBadge=(q.id!=null&&String(q.id).length)?`<span class="qjsonid" title="${htmlEsc("Αναγνωριστικό id στο αρχείο questions_bank.json")}">${htmlEsc(String(q.id))}</span>`:"";
+  document.getElementById("qArea").innerHTML=`<div class="qcard">
+    <div class="qmeta qmeta-row-split">
+      <div class="qmeta-main"><span class="qmetatag" title="${htmlEsc(q.chapter||"")}">${htmlEsc(chapterShortLabel(q.chapter))}</span>${qidBadge}<span class="qmetatag">${q.difficultyStr||""}</span><span class="qmetatag" title="${(q.topic||"").slice(0,80)}">${(q.topic||"").slice(0,30)}${(q.topic||"").length>30?"…":""}</span></div>
+      <div class="qmeta-tts-inline"></div>
+    </div>
+    <div class="qtag">Ερώτηση ${qIdx+1} από ${qList.length}</div>
+    <div class="qtext">${q.text}</div>
+    <div class="slbl" style="margin-top:12px;margin-bottom:8px">Σωστή απάντηση</div>
+    ${ansBlock}
+  </div>`;
+  document.getElementById("qNavPrev").style.display=qIdx>0?"inline-block":"none";
+  document.getElementById("qNavNext").style.display="inline-block";
+}
+
+function pauseTimer(){
+  if(qTimerId){clearInterval(qTimerId);qTimerId=null;qTimerPaused=true;}
+}
+function resumeTimer(){
+  if(qTimerPaused&&qTimerMins>=0){qTimerId=setInterval(()=>{
+    if(qTimerSecs===0){qTimerSecs=59;qTimerMins--;}else qTimerSecs--;
+    if(qTimerMins<0){clearInterval(qTimerId);qTimerId=null;finishQuiz();return;}
+    document.getElementById("qTimer").textContent=String(qTimerMins).padStart(2,"0")+":"+String(qTimerSecs).padStart(2,"0");
+  },1000);qTimerPaused=false;}
+}
+
+function quizPrev(){
+  if(qIdx<=0)return;
+  qIdx--;
+  renderQ();
+  saveUlQuizState();
+}
+function quizNext(){
+  saveUlQuizState();
+  if(qIdx>=qList.length-1){finishQuiz();return;}
+  qIdx++;
+  renderQ();
+  saveUlQuizState();
+}
+function quizExit(){
+  if(confirm("Θέλεις να τερματίσεις το ερωτηματολόγιο; Τα αποτελέσματα θα υπολογιστούν μέχρι τις απαντήσεις που έδωσες."))finishQuiz();
+}
+
+function insuranceQuizYliExit(){
+  if(yliAct!==YLI_CTX_AGENT_QUIZ)return;
+  if(!confirm("Θέλεις να τερματίσεις την εξάσκηση; Θα επιστρέψεις στην επιλογή ενότητας."))return;
+  yliBackToBrowse();
+}
+
+/* ——— Τράπεζα θεμάτων / ύλη: κοινή μηχανή (κεφαλαιαγορά: yli/ · μεσίτης: insurance_yli/ · πράκτορας: insurance_agent_yli/) ——— */
+function insuranceAgentCtx(ctx){
+  return ctx===YLI_CTX_AGENT||ctx===YLI_CTX_AGENT_QUIZ;
+}
+function insuranceAuxCtx(ctx){
+  return insuranceAgentCtx(ctx);
+}
+function syncAgentManifestRef(data){
+  YLI_CTX_AGENT.manifest=YLI_CTX_AGENT_QUIZ.manifest=data;
+}
+let activeMesMenuCfg=null;
+function yliEsc(s){return htmlEsc(s);}
+
+function yliFetchPath(rel){
+  return rel.split("/").map(p=>encodeURIComponent(p)).join("/");
+}
+
+function showYliBrowse(){
+  const id=yliAct.ids;
+  const br=document.getElementById(id.browse),rn=document.getElementById(id.run);
+  if(br)br.style.display="block";
+  if(rn)rn.style.display="none";
+  if(yliAct===YLI_CTX_AGENT_QUIZ){
+    const foot=document.getElementById("qmPraktorasFooter");
+    if(foot)foot.style.display="flex";
+  }
+  if(yliAct===YLI_CTX_AGENT_QUIZ)updateQuizHomeCheckedFooters();
+}
+
+async function loadYliManifestIfNeeded(){
+  /* Στυλιανός — μόνο insurance_agent_yli. */
+  const errEl=document.getElementById(yliAct.ids.loadErr);
+  if(errEl){errEl.style.display="none";errEl.textContent="";}
+  const shared=YLI_CTX_AGENT.manifest||YLI_CTX_AGENT_QUIZ.manifest;
+  if(shared){
+    syncAgentManifestRef(shared);
+    yliAct.manifest=shared;
+    renderYliCategories();
+    return;
+  }
+  try{
+    const r=await fetch(yliAct.basePath+yliFetchPath("manifest.json"));
+    if(!r.ok)throw new Error(r.status+" "+r.statusText);
+    const data=await r.json();
+    syncAgentManifestRef(data);
+    yliAct.manifest=data;
+    renderYliCategories();
+  }catch(e){
+    if(errEl){
+      errEl.innerHTML=yliAct.errManifestHtml;
+      errEl.style.display="block";
+    }
+  }
+}
+
+function insuranceBankExpandRows(f){
+  const n=Number(f.questionCount)||0;
+  const rows=[];
+  const catalog=f.chapterCatalog;
+  if(catalog&&catalog.length){
+    rows.push({
+      json:f.json,
+      title:`Όλο το ερωτηματολόγιο — ${n} ερωτήσεις`,
+      sub:`Από το «${f.title}» · πλήρης τράπεζα`,
+      count:n,
+      sliceStart:null,
+      sliceLen:null,
+      chapterId:null
+    });
+    for(const ch of catalog){
+      rows.push({
+        json:f.json,
+        title:ch.title,
+        sub:`${ch.id} · ${ch.count} ερωτήσεις`,
+        count:ch.count,
+        sliceStart:null,
+        sliceLen:null,
+        chapterId:ch.id,
+        unitChapter:true
+      });
+    }
+    return rows;
+  }
+  if(n!==601)return null;
+  rows.push({
+    json:f.json,
+    title:"Όλο το ερωτηματολόγιο — 601 ερωτήσεις",
+    sub:`Από το αρχείο «${f.title}» · πλήρης τράπεζα`,
+    count:601,
+    sliceStart:null,
+    sliceLen:null,
+    chapterId:null
+  });
+  for(let u=0;u<23;u++){
+    const a=u*25+1,b=a+24;
+    rows.push({
+      json:f.json,
+      title:`Ενότητα ${u+1} — ερωτήσεις ${a}–${b}`,
+      sub:`Από το αρχείο «${f.title}» · 25 ερωτήσεις`,
+      count:25,
+      sliceStart:u*25,
+      sliceLen:25,
+      unitChapter:true
+    });
+  }
+  rows.push({
+    json:f.json,
+    title:"Ενότητα 24 — ερωτήσεις 576–601",
+    sub:`Από το αρχείο «${f.title}» · 26 ερωτήσεις`,
+    count:26,
+    sliceStart:575,
+    sliceLen:26,
+    unitChapter:true
+  });
+  return rows;
+}
+
+function yliBrowseRowsForCategory(ctx,cat){
+  const rows=[];
+  for(const f of cat.files||[]){
+    const n=Number(f.questionCount)||0;
+    if(insuranceAuxCtx(ctx)){
+      const exp=insuranceBankExpandRows(f);
+      if(exp)rows.push(...exp);
+      else{
+        rows.push({
+          json:f.json,
+          title:f.title,
+          sub:`${f.sheetCount} φύλλα`,
+          count:n,
+          sliceStart:null,
+          sliceLen:null
+        });
+      }
+    }else{
+      rows.push({
+        json:f.json,
+        title:f.title,
+        sub:`${f.sheetCount} φύλλα`,
+        count:n,
+        sliceStart:null,
+        sliceLen:null
+      });
+    }
+  }
+  return rows;
+}
+
+function yliBrowseRowHtml(r){
+  const j=JSON.stringify(r.json),t=JSON.stringify(r.title);
+  const s0=r.sliceStart==null?"null":String(r.sliceStart);
+  const s1=r.sliceLen==null?"null":String(r.sliceLen);
+  const cid=r.chapterId==null||r.chapterId===undefined?"null":JSON.stringify(String(r.chapterId));
+  const unitCls=r.unitChapter?" yli-agent-unit":"";
+  return `<div class="citem${unitCls}" role="button" tabindex="0" onclick='openYliFile(${j},${t},${s0},${s1},${cid})' onkeydown="if(event.key==='Enter'||event.key===' ')openYliFile(${j},${t},${s0},${s1},${cid})"><div class="cnum">${r.count}</div><div><div class="ctitle">${yliEsc(r.title)}</div><div class="csub">${yliEsc(r.sub)}</div></div></div>`;
+}
+
+function renderYliCategories(){
+  const ctx=yliAct;
+  const mount=document.getElementById(ctx.ids.catMount);
+  if(!mount||!ctx.manifest||!ctx.manifest.categories){
+    if(insuranceAgentCtx(ctx)&&ctx.pick){
+      const pp=document.getElementById(ctx.pick.panel);
+      if(pp)pp.style.display="none";
+    }
+    return;
+  }
+  const flat=[];
+  for(const cat of ctx.manifest.categories){
+    for(const r of yliBrowseRowsForCategory(ctx,cat))flat.push(yliBrowseRowHtml(r));
+  }
+  mount.innerHTML=`<div class="cgrid agent-cat-flat">${flat.join("")}</div>`;
+  populatePraktorasUnitPicker();
+}
+
+function formatAgentQuestionCount(n){
+  return n===1?"1 ερώτηση":n+" ερωτήσεις";
+}
+
+function dismissMesMenuOutside(e){
+  const cfg=activeMesMenuCfg;
+  if(!cfg)return;
+  const wrap=document.getElementById(cfg.wrap);
+  if(wrap&&!wrap.contains(e.target))closeMesUnitMenu();
+}
+
+function closeMesUnitMenu(){
+  if(activeMesMenuCfg){
+    const m=document.getElementById(activeMesMenuCfg.menu);
+    const t=document.getElementById(activeMesMenuCfg.trigger);
+    if(m)m.hidden=true;
+    if(t)t.setAttribute("aria-expanded","false");
+    document.removeEventListener("click",dismissMesMenuOutside,true);
+    activeMesMenuCfg=null;
+  }
+}
+
+function openMesUnitMenuFor(cfg){
+  closeMesUnitMenu();
+  const menu=document.getElementById(cfg.menu);
+  const trig=document.getElementById(cfg.trigger);
+  if(!menu||!trig)return;
+  menu.hidden=false;
+  trig.setAttribute("aria-expanded","true");
+  activeMesMenuCfg=cfg;
+  updateQuizHomeCheckedFooters();
+  requestAnimationFrame(()=>document.addEventListener("click",dismissMesMenuOutside,true));
+}
+
+function toggleMesUnitMenuPair(e,cfg){
+  e.stopPropagation();
+  const menu=document.getElementById(cfg.menu);
+  if(!menu)return;
+  if(menu.hidden)openMesUnitMenuFor(cfg);
+  else closeMesUnitMenu();
+}
+
+const PRA_PICK_BIND=[YLI_CTX_AGENT.pick,YLI_CTX_AGENT_QUIZ.pick];
+
+function findPraktoras600File(manifest){
+  if(!manifest||!manifest.categories)return null;
+  for(const cat of manifest.categories){
+    for(const f of cat.files||[]){
+      const n=Number(f.questionCount)||0;
+      if(n===600&&f.chapterCatalog&&f.chapterCatalog.length)return f;
+    }
+  }
+  for(const cat of manifest.categories){
+    for(const f of cat.files||[]){
+      if(Number(f.questionCount)===600)return f;
+    }
+  }
+  return null;
+}
+
+function setPraUnitCountForIndex(i,pick){
+  const out=document.getElementById(pick.count);
+  if(!out)return;
+  if(!Number.isFinite(i)||i<0||i>=PRA_UNIT_PICK_ROWS.length){out.textContent="—";return;}
+  out.textContent=formatAgentQuestionCount(PRA_UNIT_PICK_ROWS[i].count);
+}
+
+function syncPraUnitTriggerLabel(pick){
+  const sel=document.getElementById(pick.sel);
+  const trig=document.getElementById(pick.trigger);
+  if(!sel||!trig)return;
+  if(sel.value===""){trig.textContent="ΕΠΙΛΕΞΤΕ ΕΝΟΤΗΤΑ";return;}
+  const opt=sel.selectedOptions[0];
+  trig.textContent=opt?opt.textContent:"ΕΠΙΛΕΞΤΕ ΕΝΟΤΗΤΑ";
+}
+
+function refreshPraUnitAriaSelected(pick){
+  const sel=document.getElementById(pick.sel);
+  const menu=document.getElementById(pick.menu);
+  if(!sel||!menu)return;
+  const v=sel.value;
+  menu.querySelectorAll(".quiz-chapter-item").forEach(btn=>{
+    btn.setAttribute("aria-selected",btn.dataset.mesIdx===v?"true":"false");
+  });
+}
+
+function initPraktorasUnitPicker(){
+  PRA_PICK_BIND.forEach(cfg=>{
+    const trig=document.getElementById(cfg.trigger);
+    const menu=document.getElementById(cfg.menu);
+    if(trig&&!trig.dataset.praBound){
+      trig.dataset.praBound="1";
+      trig.addEventListener("click",e=>toggleMesUnitMenuPair(e,cfg));
+    }
+    if(menu&&!menu.dataset.praLeave){
+      menu.dataset.praLeave="1";
+      menu.addEventListener("mouseleave",()=>{
+        const sel=document.getElementById(cfg.sel);
+        const c=document.getElementById(cfg.count);
+        if(sel&&sel.value!==""&&PRA_UNIT_PICK_ROWS[+sel.value])setPraUnitCountForIndex(+sel.value,cfg);
+        else if(c)c.textContent="—";
+      });
+      menu.addEventListener("focusout",e=>{
+        if(!menu.contains(e.relatedTarget)){
+          const sel=document.getElementById(cfg.sel);
+          const c=document.getElementById(cfg.count);
+          if(sel&&sel.value!==""&&PRA_UNIT_PICK_ROWS[+sel.value])setPraUnitCountForIndex(+sel.value,cfg);
+          else if(c)c.textContent="—";
+        }
+      });
+    }
+  });
+}
+
+function populatePraktorasUnitPicker(){
+  const man=YLI_CTX_AGENT.manifest||YLI_CTX_AGENT_QUIZ.manifest;
+  const file=findPraktoras600File(man);
+  if(!file){
+    PRA_UNIT_PICK_ROWS=[];
+    PRA_PICK_BIND.forEach(p=>{
+      const pan=document.getElementById(p.panel);
+      if(pan)pan.style.display="none";
+      const c=document.getElementById(p.count);
+      if(c)c.textContent="—";
+    });
+    updateQuizHomeCheckedFooters();
+    return;
+  }
+  PRA_UNIT_PICK_ROWS=insuranceBankExpandRows(file)||[];
+  PRA_PICK_BIND.forEach(pick=>{
+    const panel=document.getElementById(pick.panel);
+    if(panel)panel.style.display="block";
+    const sel=document.getElementById(pick.sel);
+    const menu=document.getElementById(pick.menu);
+    if(!sel||!menu)return;
+    sel.innerHTML="";
+    const oPrompt=document.createElement("option");
+    oPrompt.value="";
+    oPrompt.textContent="ΕΠΙΛΕΞΤΕ ΕΝΟΤΗΤΑ";
+    sel.appendChild(oPrompt);
+    PRA_UNIT_PICK_ROWS.forEach((r,i)=>{
+      const o=document.createElement("option");
+      o.value=String(i);
+      o.textContent=r.title;
+      sel.appendChild(o);
+    });
+    const lastIdx=localStorage.getItem(LS_PRA_UNIT_LAST_IDX);
+    if(lastIdx!==null&&lastIdx!==""&&PRA_UNIT_PICK_ROWS[+lastIdx])sel.value=lastIdx;
+    else sel.value="";
+    menu.innerHTML="";
+    const addItem=(idx,label)=>{
+      const r=PRA_UNIT_PICK_ROWS[idx];
+      const n=r?r.count:0;
+      const row=document.createElement("div");
+      row.className="quiz-chapter-menu-row";
+      const btn=document.createElement("button");
+      btn.type="button";
+      btn.className="quiz-chapter-item"+(r&&r.unitChapter?" yli-agent-unit":"")+(r&&!r.unitChapter&&(r.count===601||r.count===600)?" agent-picker-full":"");
+      btn.setAttribute("role","option");
+      btn.dataset.mesIdx=String(idx);
+      btn.textContent=label;
+      btn.title=formatAgentQuestionCount(n);
+      btn.addEventListener("mouseenter",()=>setPraUnitCountForIndex(idx,pick));
+      btn.addEventListener("focus",()=>setPraUnitCountForIndex(idx,pick));
+      btn.addEventListener("click",()=>{
+        sel.value=String(idx);
+        try{localStorage.setItem(LS_PRA_UNIT_LAST_IDX,String(idx));}catch(e){}
+        syncPraUnitTriggerLabel(pick);
+        refreshPraUnitAriaSelected(pick);
+        closeMesUnitMenu();
+        setPraUnitCountForIndex(idx,pick);
+      });
+      row.appendChild(btn);
+      const cb=document.createElement("input");
+      cb.type="checkbox";
+      cb.className="quiz-chapter-done-cb";
+      cb.title="Σημείωση για μένα: το έχω διαβάσει / εξασκήσει";
+      cb.setAttribute("aria-label","Σημείωση: ολοκληρώθηκε");
+      const markKey=r?r.title:"";
+      cb.checked=!!r&&praUnitIsRead(markKey);
+      cb.addEventListener("click",e=>e.stopPropagation());
+      cb.addEventListener("change",()=>{if(r)praUnitSetRead(markKey,cb.checked);updateQuizHomeCheckedFooters();});
+      row.appendChild(cb);
+      menu.appendChild(row);
+    };
+    PRA_UNIT_PICK_ROWS.forEach((r,i)=>addItem(i,r.title));
+    if(pick.which==="q")appendQuizChapterMenuFooter(menu,"quizPraCheckedFooter");
+    syncPraUnitTriggerLabel(pick);
+    refreshPraUnitAriaSelected(pick);
+    if(PRA_UNIT_PICK_ROWS.length&&sel.value!=="")setPraUnitCountForIndex(+sel.value,pick);
+    else document.getElementById(pick.count).textContent="—";
+  });
+  initPraktorasUnitPicker();
+  updateQuizHomeCheckedFooters();
+}
+
+function openPraktorasSelectedFromPicker(which){
+  which=which||"s";
+  const pick=which==="q"?YLI_CTX_AGENT_QUIZ.pick:YLI_CTX_AGENT.pick;
+  yliAct=which==="q"?YLI_CTX_AGENT_QUIZ:YLI_CTX_AGENT;
+  const sel=document.getElementById(pick.sel);
+  if(!sel||!PRA_UNIT_PICK_ROWS.length)return;
+  if(sel.value===""){
+    alert("Επίλεξε ενότητα από τη λίστα.");
+    return;
+  }
+  const r=PRA_UNIT_PICK_ROWS[+sel.value];
+  if(!r)return;
+  openYliFile(r.json,r.title,r.sliceStart,r.sliceLen,r.chapterId);
+}
+
+function flattenYliPayload(data){
+  const out=[];
+  if(!data||!data.sheets)return out;
+  for(const sh of data.sheets){
+    for(const q of sh.questions||[]){
+      out.push({
+        sheetName:sh.sheetName||"",
+        headerTitle:(sh.headerTitle||"").trim(),
+        n:q.n,
+        id:q.id,
+        text:(q.text||"").trim(),
+        correct:q.correct,
+        options:q.options||{},
+        explanation:String(q.explanation||"").trim(),
+        chapter:String(q.chapter||"").trim(),
+        topic:String(q.topic||"").trim()
+      });
+    }
+  }
+  return out;
+}
+
+async function openYliFile(jsonRel,titleLabel,sliceStart,sliceLen,chapterId){
+  const ctx=yliAct;
+  const id=ctx.ids;
+  const errEl=document.getElementById(id.loadErr);
+  if(errEl)errEl.style.display="none";
+  document.getElementById(id.runTitle).textContent=titleLabel||jsonRel;
+  const url=ctx.basePath+yliFetchPath(jsonRel);
+  let chapterFilter=null;
+  if(chapterId!=null&&chapterId!==undefined&&chapterId!=="null"&&String(chapterId).length){
+    chapterFilter=String(chapterId);
+  }
+  try{
+    const r=await fetch(url);
+    if(!r.ok)throw new Error(r.status+" "+r.statusText);
+    const data=await r.json();
+    let list=flattenYliPayload(data);
+    if(chapterFilter){
+      list=list.filter(q=>q.chapter===chapterFilter);
+    }
+    const ss=sliceStart==null||sliceStart==="null"?NaN:+sliceStart;
+    const sl=sliceLen==null||sliceLen==="null"?NaN:+sliceLen;
+    if(Number.isFinite(ss)&&Number.isFinite(sl)&&sl>0){
+      list=list.slice(ss,ss+sl);
+    }
+    if(insuranceAuxCtx(ctx)){
+      ctx.optOrderByIdx={};
+      ctx.shuffleAns=false;
+      ctx._mesShuffledQ=false;
+      let sid="pra";
+      if(ctx===YLI_CTX_AGENT_QUIZ)sid="qmPra";
+      const elQ=document.getElementById(sid+"ShuffleQ");
+      const wantQ=elQ&&elQ.checked;
+      if(wantQ){
+        for(let i=list.length-1;i>0;i--){
+          const j=Math.floor(Math.random()*(i+1));
+          const t=list[i];list[i]=list[j];list[j]=t;
+        }
+        ctx._mesShuffledQ=true;
+      }
+    }
+    ctx.list=list;
+    ctx.idx=0;
+    for(const k of Object.keys(ctx.ans))delete ctx.ans[k];
+    document.getElementById(id.browse).style.display="none";
+    document.getElementById(id.run).style.display="block";
+    if(ctx===YLI_CTX_AGENT_QUIZ){
+      const g=document.querySelector("#s-quiz .quiz-mode-grid");
+      if(g)g.style.display="none";
+      const foot=document.getElementById("qmPraktorasFooter");
+      if(foot)foot.style.display="none";
+    }
+    const hint=data.sourceRelative?`Πηγή: ${yliEsc(data.sourceRelative)}`:"";
+    document.getElementById(id.runHint).textContent=hint;
+    renderYliQ();
+  }catch(e){
+    if(errEl){
+      errEl.textContent="Σφάλμα φόρτωσης: "+e.message;
+      errEl.style.display="block";
+    }
+  }
+}
+
+function yliBackToBrowse(){
+  showYliBrowse();
+  const ctx=yliAct;
+  if(ctx===YLI_CTX_AGENT_QUIZ){
+    const g=document.querySelector("#s-quiz .quiz-mode-grid");
+    if(g)g.style.display="";
+  }
+  ctx.list=[];ctx.idx=0;
+  for(const k of Object.keys(ctx.ans))delete ctx.ans[k];
+  if(insuranceAuxCtx(ctx)){
+    ctx.optOrderByIdx={};
+    ctx.shuffleAns=false;
+    ctx._mesShuffledQ=false;
+  }
+}
+
+function yliOptOrderBase(q){
+  return ["α","β","γ","δ"].filter(k=>q.options&&q.options[k]);
+}
+function yliOptOrder(q,qIdx){
+  if(q&&q.correct&&q.options&&q.options[q.correct])return [q.correct];
+  return yliOptOrderBase(q);
+}
+
+function initTtsUi(){}
+
+function yliExtraExplainHtml(q){
+  const exp=String(q.explanation||"").trim();
+  const sol=String(q.solution||"").trim();
+  let h="";
+  if(exp)h+=`<p class="quiz-fb-exp">${yliEsc(exp)}</p>`;
+  if(sol){
+    const body=formatQuizSolutionBody(sol);
+    const btn=`<div class="ul-sol-modal-actions"><button type="button" class="btn-s ul-sol-open-modal" onclick="openUlSolutionModalFromYli()">Πλήρης ανάλυση σε παράθυρο</button></div>`;
+    h+=`<details class="quiz-fb-sol"><summary class="quiz-fb-sum">Σύντομη αναλυτική αιτιολόγηση (επέκταση εδώ)</summary><div class="quiz-fb-exp quiz-fb-solbody">${body}</div></details>${btn}`;
+  }
+  return h;
+}
+
+function yliFeedbackHtml(ok,q,chosenIdx){
+  const extra=yliExtraExplainHtml(q);
+  const optText=correctAnswerText(q);
+  const head=optText?`<p class="quiz-fb-line">✓ Σωστή απάντηση: ${yliEsc(optText)}</p>`:`<p class="quiz-fb-line">✓ Σωστή απάντηση</p>`;
+  return head+extra;
+}
+
+function renderYliQ(){
+  /* Στυλιανός — ερώτηση πράκτορα / εξάσκησης, χωρίς εκφώνηση. */
+  const ctx=yliAct;
+  const id=ctx.ids;
+  const area=document.getElementById(id.area),fill=document.getElementById(id.fill),lbl=document.getElementById(id.lbl);
+  const prevBtn=document.getElementById(id.navPrev),nextBtn=document.getElementById(id.navNext);
+  if(!ctx.list.length){
+    area.innerHTML=`<div class="quiz-loading">Άδεια λίστα ερωτήσεων.</div>`;
+    prevBtn.style.display="none";
+    nextBtn.style.display="none";
+    return;
+  }
+  if(ctx.idx>=ctx.list.length){
+    const ok=Object.values(ctx.ans).filter(x=>x&&x.ok).length;
+    const tot=Object.keys(ctx.ans).length;
+    let sub="Ολοκλήρωσες την ανάγνωση αυτού του αρχείου";
+    if(insuranceAuxCtx(ctx)){
+      const bits=[];
+      if(ctx._mesShuffledQ)bits.push("Η σειρά ερωτήσεων ανακατεύτηκε");
+      sub+=bits.length?". "+bits.join(" · ")+".":". Η σειρά ερωτήσεων ακολουθεί το αρχείο.";
+    }
+    area.innerHTML=`<div class="rscreen"><div class="rscore" style="font-size:42px">${ok}/${tot}</div><div class="rmsg">${sub}</div><button type="button" class="btn-p" onclick="yliBackToBrowse()">← Επιστροφή στον κατάλογο</button></div>`;
+    fill.style.width="100%";
+    lbl.textContent=ctx.list.length+"/"+ctx.list.length;
+    prevBtn.style.display="inline-block";
+    nextBtn.style.display="none";
+    return;
+  }
+  const q=ctx.list[ctx.idx];
+  const ansText=correctAnswerText(q)||"—";
+  if(!ctx.ans[ctx.idx])ctx.ans[ctx.idx]={i:0,correctIdx:0,ok:true};
+  fill.style.width=Math.round(ctx.idx/ctx.list.length*100)+"%";
+  lbl.textContent=(ctx.idx+1)+"/"+ctx.list.length;
+  const sheetTag=q.sheetName?`<span class="qmetatag">${yliEsc(q.sheetName)}</span>`:"";
+  const chapTag=q.chapter?`<span class="qmetatag" title="${yliEsc(q.topic||q.chapter)}">${yliEsc(q.chapter)}</span>`:"";
+  const yliJsonKey=q.id!=null&&String(q.id).length?"id":"n";
+  const yliJsonVal=q.id!=null&&String(q.id).length?q.id:q.n;
+  const yliIdBadge=yliJsonVal!=null&&String(yliJsonVal).length?`<span class="qjsonid" title="${yliEsc(yliJsonKey==="id"?"Αναγνωριστικό id στο JSON αυτού του αρχείου":"Αριθμός n (σειρά ερώτησης) στο JSON αυτού του αρχείου")}">${yliEsc(String(yliJsonVal))}</span>`:"";
+  const headTag=q.headerTitle?`<span class="qmetatag" title="${yliEsc(q.headerTitle)}">${yliEsc(q.headerTitle.slice(0,28))}${q.headerTitle.length>28?"…":""}</span>`:"";
+  const qtext=q.text?`<div class="qtext">${yliEsc(q.text).replace(/\n/g,"<br>")}</div>`:`<p class="quiz-hint" style="margin-bottom:14px">Στο αρχείο αυτή η ερώτηση δεν έχει ξεχωριστό κείμενο.</p>`;
+  const ansBlock=`<div class="ans-only seen">${yliEsc(ansText)}</div>`;
+  area.innerHTML=`<div class="qcard">
+    <div class="qmeta qmeta-row-split">
+      <div class="qmeta-main">${sheetTag}${chapTag}${yliIdBadge}${headTag}</div>
+      <div class="qmeta-tts-inline"></div>
+    </div>
+    <div class="qtag">Ερώτηση ${ctx.idx+1} από ${ctx.list.length} (σειρά αρχείου)</div>
+    ${qtext}
+    <div class="slbl" style="margin-top:12px;margin-bottom:8px">Σωστή απάντηση</div>
+    ${ansBlock}
+  </div>`;
+  prevBtn.style.display=ctx.idx>0?"inline-block":"none";
+  nextBtn.style.display="inline-block";
+}
+
+function yliPrev(){
+  const ctx=yliAct;
+  if(ctx.idx<=0)return;
+  ctx.idx--;
+  renderYliQ();
+}
+
+function yliNext(){
+  const ctx=yliAct;
+  if(ctx.idx>=ctx.list.length-1){
+    ctx.idx=ctx.list.length;
+    renderYliQ();
+    return;
+  }
+  ctx.idx++;
+  renderYliQ();
+}
+
+window.addEventListener("beforeunload",saveUlQuizState);
+window.addEventListener("load",()=>{
+  /* Στυλιανός — αρχικοποίηση· το TTS αφαιρέθηκε σκόπιμα σε αυτή την έκδοση. */
+  initTtsUi();
+  initThemeControls();
+  initCatChapterPicker();
+  document.addEventListener("keydown",catChapterPickerKey);
+  document.addEventListener("keydown",ulSolutionModalOnKeydown);
+  toggleP("pB");
+  go("quiz");
+  setTimeout(cCalc,100);
+  refreshHomeStats();
+  refreshChaptersUI();
+});
+</script>
+</body>
+</html>
